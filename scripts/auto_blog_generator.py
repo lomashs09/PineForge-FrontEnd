@@ -140,72 +140,96 @@ OUTPUT FORMAT: Return ONLY valid JSON with these fields:
 """
 
 
-def _fix_json(text):
-    """Attempt to fix common JSON issues from Gemini output."""
-    # Strip markdown code fences if present
-    text = text.strip()
-    if text.startswith("```json"):
-        text = text[7:]
-    if text.startswith("```"):
-        text = text[3:]
-    if text.endswith("```"):
-        text = text[:-3]
-    text = text.strip()
+def _gemini_call(messages, response_mime=None, max_tokens=8192):
+    """Low-level Gemini API call."""
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_API_KEY}"
+    gen_config = {"temperature": 0.8, "maxOutputTokens": max_tokens}
+    if response_mime:
+        gen_config["responseMimeType"] = response_mime
 
-    try:
-        return json.loads(text)
-    except json.JSONDecodeError:
-        pass
+    body = json.dumps({
+        "contents": messages,
+        "generationConfig": gen_config,
+    }).encode()
 
-    # Try extracting JSON object from the text
-    start = text.find("{")
-    end = text.rfind("}") + 1
-    if start >= 0 and end > start:
-        try:
-            return json.loads(text[start:end])
-        except json.JSONDecodeError:
-            pass
-
-    # Last resort: fix unescaped newlines in string values
-    # Replace actual newlines inside strings with \\n
-    fixed = re.sub(r'(?<=: ")(.*?)(?="[,\n}])', lambda m: m.group(0).replace('\n', '\\n'), text, flags=re.DOTALL)
-    try:
-        return json.loads(fixed)
-    except json.JSONDecodeError:
-        raise ValueError(f"Could not parse Gemini response as JSON. First 500 chars: {text[:500]}")
+    req = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=180) as resp:
+        data = json.loads(resp.read())
+    return data["candidates"][0]["content"]["parts"][0]["text"]
 
 
 def gemini_generate_text(prompt):
-    """Call Gemini API for text generation with retry."""
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_API_KEY}"
+    """Generate blog post using two separate calls to avoid JSON+markdown issues."""
+
+    # Call 1: Get metadata as JSON (no markdown content)
+    meta_prompt = f"""{prompt}
+
+Return ONLY a JSON object with these 4 short fields (no blog content):
+{{"title": "SEO title", "excerpt": "150-char description", "image_prompt_hero": "prompt for hero image", "image_prompt_inline1": "prompt for inline image 1", "image_prompt_inline2": "prompt for inline image 2"}}"""
 
     for attempt in range(3):
-        body = json.dumps({
-            "contents": [
-                {"role": "user", "parts": [{"text": SYSTEM_PROMPT}]},
-                {"role": "model", "parts": [{"text": "Understood. I will write SEO-optimized blog posts following PineForge's brand voice, structure, and guidelines. Send me the topic."}]},
-                {"role": "user", "parts": [{"text": prompt}]},
-            ],
-            "generationConfig": {
-                "temperature": 0.7 + attempt * 0.1,
-                "maxOutputTokens": 8192,
-                "responseMimeType": "application/json",
-            },
-        }).encode()
-
-        req = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json"})
         try:
-            with urllib.request.urlopen(req, timeout=120) as resp:
-                data = json.loads(resp.read())
-
-            text = data["candidates"][0]["content"]["parts"][0]["text"]
-            return _fix_json(text)
-        except (json.JSONDecodeError, ValueError, KeyError) as e:
-            print(f"    Attempt {attempt + 1}/3 failed: {e}")
+            meta_text = _gemini_call(
+                [{"role": "user", "parts": [{"text": meta_prompt}]}],
+                response_mime="application/json",
+                max_tokens=1024,
+            )
+            meta_text = meta_text.strip()
+            if meta_text.startswith("```"):
+                meta_text = re.sub(r'^```\w*\n?', '', meta_text)
+                meta_text = meta_text.rstrip('`').strip()
+            start = meta_text.find("{")
+            end = meta_text.rfind("}") + 1
+            if start >= 0 and end > start:
+                meta_text = meta_text[start:end]
+            metadata = json.loads(meta_text)
+            break
+        except Exception as e:
+            print(f"    Metadata attempt {attempt + 1}/3 failed: {e}")
             if attempt < 2:
                 time.sleep(3)
                 continue
-            raise
+            # Fallback metadata
+            metadata = {
+                "title": prompt.split('\n')[0][:80],
+                "excerpt": "Learn trading strategies and automation with PineForge.",
+                "image_prompt_hero": "A professional dark-themed trading dashboard with emerald green accents. Fintech style.",
+                "image_prompt_inline1": "A trading chart with indicators on dark background. Green accents.",
+                "image_prompt_inline2": "A data visualization about trading performance. Dark theme.",
+            }
+
+    # Call 2: Get full blog content as plain text (no JSON wrapping)
+    content_prompt = f"""{SYSTEM_PROMPT}
+
+Write a complete blog post about: {metadata.get('title', prompt)}
+Primary keyword from this prompt: {prompt.split('Primary keyword:')[1].split(chr(10))[0].strip() if 'Primary keyword:' in prompt else 'trading bot'}
+
+Write the full blog post in markdown. Do NOT wrap in JSON. Just output raw markdown content.
+Start directly with the first paragraph (no title — it's handled separately).
+Include 2 image placeholders using this exact syntax:
+![description](/blog/PLACEHOLDER-inline1.png)
+![description](/blog/PLACEHOLDER-inline2.png)"""
+
+    for attempt in range(3):
+        try:
+            content = _gemini_call(
+                [
+                    {"role": "user", "parts": [{"text": SYSTEM_PROMPT}]},
+                    {"role": "model", "parts": [{"text": "Ready to write."}]},
+                    {"role": "user", "parts": [{"text": content_prompt}]},
+                ],
+                max_tokens=8192,
+            )
+            if len(content.split()) > 200:  # Sanity check: at least 200 words
+                break
+            print(f"    Content too short ({len(content.split())} words), retrying...")
+        except Exception as e:
+            print(f"    Content attempt {attempt + 1}/3 failed: {e}")
+        if attempt < 2:
+            time.sleep(3)
+
+    metadata["content"] = content
+    return metadata
 
 
 def gemini_generate_image(prompt, output_path):
