@@ -140,28 +140,72 @@ OUTPUT FORMAT: Return ONLY valid JSON with these fields:
 """
 
 
+def _fix_json(text):
+    """Attempt to fix common JSON issues from Gemini output."""
+    # Strip markdown code fences if present
+    text = text.strip()
+    if text.startswith("```json"):
+        text = text[7:]
+    if text.startswith("```"):
+        text = text[3:]
+    if text.endswith("```"):
+        text = text[:-3]
+    text = text.strip()
+
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        pass
+
+    # Try extracting JSON object from the text
+    start = text.find("{")
+    end = text.rfind("}") + 1
+    if start >= 0 and end > start:
+        try:
+            return json.loads(text[start:end])
+        except json.JSONDecodeError:
+            pass
+
+    # Last resort: fix unescaped newlines in string values
+    # Replace actual newlines inside strings with \\n
+    fixed = re.sub(r'(?<=: ")(.*?)(?="[,\n}])', lambda m: m.group(0).replace('\n', '\\n'), text, flags=re.DOTALL)
+    try:
+        return json.loads(fixed)
+    except json.JSONDecodeError:
+        raise ValueError(f"Could not parse Gemini response as JSON. First 500 chars: {text[:500]}")
+
+
 def gemini_generate_text(prompt):
-    """Call Gemini API for text generation."""
+    """Call Gemini API for text generation with retry."""
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_API_KEY}"
-    body = json.dumps({
-        "contents": [
-            {"role": "user", "parts": [{"text": SYSTEM_PROMPT}]},
-            {"role": "model", "parts": [{"text": "Understood. I will write SEO-optimized blog posts following PineForge's brand voice, structure, and guidelines. Send me the topic."}]},
-            {"role": "user", "parts": [{"text": prompt}]},
-        ],
-        "generationConfig": {
-            "temperature": 0.8,
-            "maxOutputTokens": 8192,
-            "responseMimeType": "application/json",
-        },
-    }).encode()
 
-    req = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json"})
-    with urllib.request.urlopen(req, timeout=120) as resp:
-        data = json.loads(resp.read())
+    for attempt in range(3):
+        body = json.dumps({
+            "contents": [
+                {"role": "user", "parts": [{"text": SYSTEM_PROMPT}]},
+                {"role": "model", "parts": [{"text": "Understood. I will write SEO-optimized blog posts following PineForge's brand voice, structure, and guidelines. Send me the topic."}]},
+                {"role": "user", "parts": [{"text": prompt}]},
+            ],
+            "generationConfig": {
+                "temperature": 0.7 + attempt * 0.1,
+                "maxOutputTokens": 8192,
+                "responseMimeType": "application/json",
+            },
+        }).encode()
 
-    text = data["candidates"][0]["content"]["parts"][0]["text"]
-    return json.loads(text)
+        req = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json"})
+        try:
+            with urllib.request.urlopen(req, timeout=120) as resp:
+                data = json.loads(resp.read())
+
+            text = data["candidates"][0]["content"]["parts"][0]["text"]
+            return _fix_json(text)
+        except (json.JSONDecodeError, ValueError, KeyError) as e:
+            print(f"    Attempt {attempt + 1}/3 failed: {e}")
+            if attempt < 2:
+                time.sleep(3)
+                continue
+            raise
 
 
 def gemini_generate_image(prompt, output_path):
