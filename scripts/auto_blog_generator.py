@@ -141,7 +141,7 @@ OUTPUT FORMAT: Return ONLY valid JSON with these fields:
 
 
 def _gemini_call(messages, response_mime=None, max_tokens=8192):
-    """Low-level Gemini API call. v2 — split metadata/content."""
+    """Low-level Gemini API call with retry on 429/5xx."""
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_API_KEY}"
     gen_config = {"temperature": 0.8, "maxOutputTokens": max_tokens}
     if response_mime:
@@ -152,10 +152,25 @@ def _gemini_call(messages, response_mime=None, max_tokens=8192):
         "generationConfig": gen_config,
     }).encode()
 
-    req = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json"})
-    with urllib.request.urlopen(req, timeout=180) as resp:
-        data = json.loads(resp.read())
-    return data["candidates"][0]["content"]["parts"][0]["text"]
+    for attempt in range(5):
+        req = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json"})
+        try:
+            with urllib.request.urlopen(req, timeout=180) as resp:
+                data = json.loads(resp.read())
+            return data["candidates"][0]["content"]["parts"][0]["text"]
+        except urllib.error.HTTPError as e:
+            if e.code == 429 or e.code >= 500:
+                wait = (attempt + 1) * 15  # 15s, 30s, 45s, 60s, 75s
+                print(f"    API {e.code}, waiting {wait}s (attempt {attempt + 1}/5)...")
+                time.sleep(wait)
+                continue
+            raise
+        except Exception as e:
+            if attempt < 4:
+                print(f"    Error: {e}, retrying in 10s...")
+                time.sleep(10)
+                continue
+            raise
 
 
 def gemini_generate_text(prompt):
