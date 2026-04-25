@@ -27,7 +27,11 @@ from datetime import datetime
 
 # ── Config ───────────────────────────────────────────────────────
 
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "AIzaSyD3BumiKCBCmcs837bdX-OtGrD_Y3rYeLA")
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
+if not GEMINI_API_KEY:
+    print("ERROR: GEMINI_API_KEY environment variable is required.")
+    print("Set it via: export GEMINI_API_KEY=your_key_here")
+    sys.exit(1)
 GEMINI_MODEL = "gemini-2.5-flash"
 IMAGE_MODEL = "gemini-2.5-flash-image"
 BLOG_DATA_FILE = os.path.join(os.path.dirname(__file__), "..", "src", "data", "blogPosts.js")
