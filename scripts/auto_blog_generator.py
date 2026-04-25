@@ -141,7 +141,7 @@ OUTPUT FORMAT: Return ONLY valid JSON with these fields:
 
 
 def _gemini_call(messages, response_mime=None, max_tokens=8192):
-    """Low-level Gemini API call."""
+    """Low-level Gemini API call. v2 — split metadata/content."""
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_API_KEY}"
     gen_config = {"temperature": 0.8, "maxOutputTokens": max_tokens}
     if response_mime:
@@ -159,68 +159,36 @@ def _gemini_call(messages, response_mime=None, max_tokens=8192):
 
 
 def gemini_generate_text(prompt):
-    """Generate blog post using two separate calls to avoid JSON+markdown issues."""
+    """Generate blog post: one call for content, extract metadata from it."""
 
-    # Call 1: Get metadata as JSON (no markdown content)
-    meta_prompt = f"""{prompt}
-
-Return ONLY a JSON object with these 4 short fields (no blog content):
-{{"title": "SEO title", "excerpt": "150-char description", "image_prompt_hero": "prompt for hero image", "image_prompt_inline1": "prompt for inline image 1", "image_prompt_inline2": "prompt for inline image 2"}}"""
-
-    for attempt in range(3):
-        try:
-            meta_text = _gemini_call(
-                [{"role": "user", "parts": [{"text": meta_prompt}]}],
-                response_mime="application/json",
-                max_tokens=1024,
-            )
-            meta_text = meta_text.strip()
-            if meta_text.startswith("```"):
-                meta_text = re.sub(r'^```\w*\n?', '', meta_text)
-                meta_text = meta_text.rstrip('`').strip()
-            start = meta_text.find("{")
-            end = meta_text.rfind("}") + 1
-            if start >= 0 and end > start:
-                meta_text = meta_text[start:end]
-            metadata = json.loads(meta_text)
-            break
-        except Exception as e:
-            print(f"    Metadata attempt {attempt + 1}/3 failed: {e}")
-            if attempt < 2:
-                time.sleep(3)
-                continue
-            # Fallback metadata
-            metadata = {
-                "title": prompt.split('\n')[0][:80],
-                "excerpt": "Learn trading strategies and automation with PineForge.",
-                "image_prompt_hero": "A professional dark-themed trading dashboard with emerald green accents. Fintech style.",
-                "image_prompt_inline1": "A trading chart with indicators on dark background. Green accents.",
-                "image_prompt_inline2": "A data visualization about trading performance. Dark theme.",
-            }
-
-    # Call 2: Get full blog content as plain text (no JSON wrapping)
+    # Single call: get full blog content as plain markdown
     content_prompt = f"""{SYSTEM_PROMPT}
 
-Write a complete blog post about: {metadata.get('title', prompt)}
-Primary keyword from this prompt: {prompt.split('Primary keyword:')[1].split(chr(10))[0].strip() if 'Primary keyword:' in prompt else 'trading bot'}
+{prompt}
 
-Write the full blog post in markdown. Do NOT wrap in JSON. Just output raw markdown content.
-Start directly with the first paragraph (no title — it's handled separately).
-Include 2 image placeholders using this exact syntax:
+Write the full blog post in markdown. Do NOT wrap in JSON or code blocks.
+Start with a compelling first paragraph (no title heading — title is handled separately).
+Include 2 image placeholders:
 ![description](/blog/PLACEHOLDER-inline1.png)
 ![description](/blog/PLACEHOLDER-inline2.png)"""
 
+    content = ""
     for attempt in range(3):
         try:
             content = _gemini_call(
                 [
-                    {"role": "user", "parts": [{"text": SYSTEM_PROMPT}]},
-                    {"role": "model", "parts": [{"text": "Ready to write."}]},
                     {"role": "user", "parts": [{"text": content_prompt}]},
                 ],
                 max_tokens=8192,
             )
-            if len(content.split()) > 200:  # Sanity check: at least 200 words
+            # Strip any JSON/code wrapper Gemini might add
+            content = content.strip()
+            if content.startswith("```"):
+                content = re.sub(r'^```\w*\n?', '', content)
+            if content.endswith("```"):
+                content = content[:-3].strip()
+
+            if len(content.split()) > 200:
                 break
             print(f"    Content too short ({len(content.split())} words), retrying...")
         except Exception as e:
@@ -228,7 +196,32 @@ Include 2 image placeholders using this exact syntax:
         if attempt < 2:
             time.sleep(3)
 
-    metadata["content"] = content
+    # Extract title from first H1/H2 or first line, then generate metadata locally
+    title_match = re.search(r'^#{1,2}\s+(.+)', content, re.MULTILINE)
+    if title_match:
+        title = title_match.group(1).strip()
+        # Remove the title line from content (it's displayed separately by BlogPost.jsx)
+        content = content[:title_match.start()] + content[title_match.end():]
+        content = content.strip()
+    else:
+        # Use first sentence as title
+        first_line = content.split('\n')[0].strip()
+        title = first_line[:100] if len(first_line) > 10 else prompt.split('\n')[0][:80]
+
+    # Build first ~150 chars as excerpt
+    plain_text = re.sub(r'[#*\[\]()!]', '', content)
+    excerpt = plain_text.strip()[:160].rsplit(' ', 1)[0] + "..."
+
+    # Generate image prompts from the topic
+    keyword = prompt.split('Primary keyword:')[1].split('\n')[0].strip() if 'Primary keyword:' in prompt else 'trading'
+    metadata = {
+        "title": title,
+        "excerpt": excerpt,
+        "content": content,
+        "image_prompt_hero": f"A professional dark-themed image representing {keyword}. Emerald green and teal accents on dark background. Modern fintech style, cinematic lighting.",
+        "image_prompt_inline1": f"A clean infographic or chart about {keyword} on dark background. Green accents, professional data visualization.",
+        "image_prompt_inline2": f"A trading dashboard or analytics view related to {keyword}. Dark theme with emerald highlights. Screenshot style.",
+    }
     return metadata
 
 
