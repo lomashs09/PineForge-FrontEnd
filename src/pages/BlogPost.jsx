@@ -2,6 +2,8 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { ArrowLeft, Clock, Calendar, Tag, ArrowRight } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Seo from '../components/Seo';
+import { buildArticleLd, buildBreadcrumbLd } from '../components/seoLd';
 import blogPosts from '../data/blogPosts';
 
 export default function BlogPost() {
@@ -19,6 +21,24 @@ export default function BlogPost() {
 
   return (
     <div className="min-h-screen bg-gray-950 text-white">
+      <Seo
+        title={post.title}
+        description={post.excerpt}
+        path={`/blog/${post.slug}`}
+        image={post.image}
+        type="article"
+        publishedTime={post.date}
+        modifiedTime={post.date}
+        keywords={post.keywords?.join(', ')}
+        structuredData={[
+          buildArticleLd(post),
+          buildBreadcrumbLd([
+            { name: 'Home', url: '/' },
+            { name: 'Blog', url: '/blog' },
+            { name: post.title, url: `/blog/${post.slug}` },
+          ]),
+        ]}
+      />
       <Navbar />
 
       {/* Hero image */}

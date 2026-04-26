@@ -16,6 +16,22 @@ import {
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Seo from '../components/Seo';
+import { buildBreadcrumbLd, SITE_URL, SITE_NAME } from '../components/seoLd';
+
+const PRICING_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: `${SITE_NAME} — Automated Trading Platform`,
+  description: 'Pay-as-you-go pricing for automated trading bots on MetaTrader 5.',
+  brand: { '@type': 'Brand', name: SITE_NAME },
+  offers: [
+    { '@type': 'Offer', name: 'Active Bot', price: '0.022', priceCurrency: 'USD', priceSpecification: { '@type': 'UnitPriceSpecification', price: '0.022', priceCurrency: 'USD', unitText: 'HOUR' }, url: `${SITE_URL}/pricing` },
+    { '@type': 'Offer', name: 'Trading Account Setup', price: '3.00', priceCurrency: 'USD', url: `${SITE_URL}/pricing` },
+    { '@type': 'Offer', name: 'Bot Deployment', price: '0.13', priceCurrency: 'USD', url: `${SITE_URL}/pricing` },
+    { '@type': 'Offer', name: 'Account Hosting', price: '0.002', priceCurrency: 'USD', priceSpecification: { '@type': 'UnitPriceSpecification', price: '0.002', priceCurrency: 'USD', unitText: 'HOUR' }, url: `${SITE_URL}/pricing` },
+  ],
+};
 
 const pricingItems = [
   {
@@ -122,6 +138,18 @@ const faqs = [
 export default function Pricing() {
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100">
+      <Seo
+        title="Pricing — Pay-As-You-Go Trading Bot Platform"
+        description="No subscriptions. Pay only for what you use: $0.022/hr per active bot, $0.002/hr account hosting, $3.00 account setup. Start with as little as $5."
+        path="/pricing"
+        structuredData={[
+          PRICING_LD,
+          buildBreadcrumbLd([
+            { name: 'Home', url: '/' },
+            { name: 'Pricing', url: '/pricing' },
+          ]),
+        ]}
+      />
       <Navbar />
 
       <div className="mx-auto max-w-7xl px-4 pb-24 pt-28 sm:px-6">

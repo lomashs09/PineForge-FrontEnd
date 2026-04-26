@@ -20,7 +20,7 @@ const publicLinks = [
 const authLinks = [
   { to: '/dashboard', label: 'Dashboard' },
   { to: '/bots', label: 'My Bots' },
-  { to: '/strategies', label: 'Strategies' },
+  { to: '/library', label: 'My Library' },
   { to: '/backtest', label: 'Backtest' },
 ];
 

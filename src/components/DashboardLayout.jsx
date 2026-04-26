@@ -20,7 +20,7 @@ import api from '../services/api';
 const sidebarItems = [
   { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { to: '/bots', label: 'My Bots', icon: Bot },
-  { to: '/strategies', label: 'Strategies', icon: FileCode },
+  { to: '/library', label: 'My Library', icon: FileCode },
   { to: '/backtest', label: 'Backtest', icon: FlaskConical },
   { to: '/accounts', label: 'Accounts', icon: Wallet },
   { to: '/billing', label: 'Billing', icon: Receipt },

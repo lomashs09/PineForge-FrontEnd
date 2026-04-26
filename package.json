@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/generate-seo-files.mjs",
     "build": "vite build",
+    "postbuild": "node scripts/prerender.mjs",
+    "build:fast": "node scripts/generate-seo-files.mjs && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -16,7 +19,9 @@
     "postcss": "^8.5.8",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "react-helmet-async": "^2.0.5",
     "react-hot-toast": "^2.6.0",
+    "react-is": "^19.2.5",
     "react-router-dom": "^7.13.2",
     "recharts": "^3.8.1"
   },
@@ -29,6 +34,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
+    "puppeteer": "^24.42.0",
     "tailwindcss": "^3.4.19",
     "vite": "^5.4.21"
   }
