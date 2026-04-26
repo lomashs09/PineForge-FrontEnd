@@ -1,58 +1,109 @@
-name: Auto-Generate Blog Post
+name: Daily Blog Post
+
+# Generates one SEO blog post per day, optimises images, builds with the
+# full prerender pipeline, deploys the prebuilt output to Vercel, and pings
+# IndexNow so Bing/Yandex/Seznam pick the URL up immediately.
 
 on:
   schedule:
-    # Monday, Wednesday, Friday at 8:07 AM UTC
-    - cron: '7 8 * * 1,3,5'
-  workflow_dispatch: # Manual trigger
+    # 08:07 UTC every day (~1:37 PM IST). Random minute reduces the chance
+    # of contention with other globally-scheduled jobs on GitHub's runners.
+    - cron: '7 8 * * *'
+  workflow_dispatch:  # Manual trigger from the Actions tab
 
 permissions:
   contents: write
 
+# Prevent overlapping runs if a previous one is still deploying.
+concurrency:
+  group: daily-blog
+  cancel-in-progress: false
+
 jobs:
-  generate-blog:
+  generate-and-deploy:
+    name: Generate, build, deploy
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
+      # Puppeteer downloads its own Chromium, but the binary needs these
+      # shared libs at the OS level. Vercel's build container doesn't ship
+      # them — that's why we run prerender on the runner instead.
+      - name: Install Chromium system libs
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libnss3 libatk-bridge2.0-0t64 libdrm2 libxkbcommon0 \
+            libxcomposite1 libxdamage1 libxfixes3 libxrandr2 \
+            libgbm1 libpango-1.0-0 libcairo2 libasound2t64
 
       - name: Install Node dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
+
+      - name: Install Python dependencies
+        run: pip install requests
 
       - name: Generate blog post
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python3 scripts/auto_blog_generator.py
 
-      - name: Build site
-        run: npm run build
+      - name: Optimise new images (PNG → WebP)
+        run: node scripts/optimize-images.mjs
 
-      - name: Commit and push
+      - name: Commit source changes
+        id: commit
         run: |
           git config user.name "PineForge Bot"
           git config user.email "bot@getpineforge.com"
           git add -A
-          git diff --cached --quiet && echo "No changes" && exit 0
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::No new content generated this run."
+            exit 0
+          fi
           git commit -m "Auto-generate blog post ($(date +%Y-%m-%d))"
           git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
 
-      - name: Deploy to Vercel
+      # The remaining steps only run when there's actually a new post.
+      - name: Vercel — pull production env
+        if: steps.commit.outputs.changed == 'true'
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        run: npx vercel --prod --yes --token=$VERCEL_TOKEN
+        run: npx vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+
+      - name: Vercel — build (runs prerender on this runner)
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: npx vercel build --prod --token="$VERCEL_TOKEN"
+
+      - name: Vercel — deploy prebuilt to production
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: npx vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+
+      - name: Notify IndexNow (Bing, Yandex, Seznam, Naver)
+        if: steps.commit.outputs.changed == 'true'
+        run: npm run indexnow

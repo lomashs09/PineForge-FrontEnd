@@ -98,7 +98,7 @@ SEO RULES:
 - 2-4 FAQ-style question headings (H2 or H3)
 - Include Pine Script code examples when relevant (use ```pine blocks)
 - Include markdown tables when comparing data
-- Use inline images with ![alt text](/blog/IMAGE_SLUG.png) syntax
+- Use inline images with ![alt text](/blog/IMAGE_SLUG.webp) syntax
 
 INTERNAL LINKS (use naturally within content):
 - [PineForge](https://getpineforge.com)
@@ -124,7 +124,7 @@ SOCIAL PROOF (use 1-2 when relevant):
 STRUCTURE:
 - Introduction: 150-200 words. Hook with pain point, promise solution.
 - Body: 4-6 H2 sections, each with 2-3 H3s. Short paragraphs (2-4 sentences).
-- Include 2 image placeholders: ![description](/blog/SLUG-inline1.png) and ![description](/blog/SLUG-inline2.png)
+- Include 2 image placeholders: ![description](/blog/SLUG-inline1.webp) and ![description](/blog/SLUG-inline2.webp)
 - Conclusion: 100-150 words with CTA to signup/backtest.
 - Target: ~2000 words total.
 
@@ -184,8 +184,8 @@ def gemini_generate_text(prompt):
 Write the full blog post in markdown. Do NOT wrap in JSON or code blocks.
 Start with a compelling first paragraph (no title heading — title is handled separately).
 Include 2 image placeholders:
-![description](/blog/PLACEHOLDER-inline1.png)
-![description](/blog/PLACEHOLDER-inline2.png)"""
+![description](/blog/PLACEHOLDER-inline1.webp)
+![description](/blog/PLACEHOLDER-inline2.webp)"""
 
     content = ""
     for attempt in range(3):
@@ -314,7 +314,7 @@ def add_post_to_file(post_data):
         f'    category: "{post_data["category"]}",\n'
         f'    date: "{post_data["date"]}",\n'
         f'    readTime: "{post_data["readTime"]}",\n'
-        f'    image: "/blog/{post_data["slug"]}-hero.png",\n'
+        f'    image: "/blog/{post_data["slug"]}-hero.webp",\n'
         f'    keywords: {keywords_json},\n'
         '    content: `\n'
         f'{safe_content}\n'
