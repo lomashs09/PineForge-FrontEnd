@@ -12,3 +12,4 @@ Disallow: /check-email
 Disallow: /api/
 
 Sitemap: https://getpineforge.com/sitemap.xml
+Sitemap: https://getpineforge.com/image-sitemap.xml

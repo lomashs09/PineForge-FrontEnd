@@ -18,7 +18,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Seo from '../components/Seo';
 import PricingCalculator from '../components/PricingCalculator';
-import { buildBreadcrumbLd, SITE_URL, SITE_NAME } from '../components/seoLd';
+import { buildBreadcrumbLd, buildFaqLd, SITE_URL, SITE_NAME } from '../components/seoLd';
 
 const PRICING_LD = {
   '@context': 'https://schema.org',
@@ -145,6 +145,7 @@ export default function Pricing() {
         path="/pricing"
         structuredData={[
           PRICING_LD,
+          buildFaqLd(faqs),
           buildBreadcrumbLd([
             { name: 'Home', url: '/' },
             { name: 'Pricing', url: '/pricing' },

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>PineForge Blog</title>
+    <link>https://getpineforge.com/blog</link>
+    <atom:link href="https://getpineforge.com/feed.xml" rel="self" type="application/rss+xml" />
+    <description>Trading strategies, Pine Script tutorials, and algorithmic trading insights from PineForge.</description>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 26 Apr 2026 20:02:48 GMT</lastBuildDate>
+    <item>
+      <title>Trading Psychology: Master Your Mind for Market Success</title>
+      <link>https://getpineforge.com/blog/trading-psychology-master-your-mind-for-market-success</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/trading-psychology-master-your-mind-for-market-success</guid>
+      <pubDate>Sat, 25 Apr 2026 00:00:00 GMT</pubDate>
+      <description>Uncover why your mind is your worst enemy in trading. Learn to conquer trading psychology with discipline, strategy, and automation.</description>
+      <enclosure url="https://getpineforge.com/blog/trading-psychology-master-your-mind-for-market-success-hero.webp" type="image/webp" />
+    </item>
+    <item>
+      <title>Algorithmic Trading in 2026: The Complete Guide for Retail Traders</title>
+      <link>https://getpineforge.com/blog/what-is-algorithmic-trading</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/what-is-algorithmic-trading</guid>
+      <pubDate>Fri, 24 Apr 2026 00:00:00 GMT</pubDate>
+      <description>Over 70% of market volume is now driven by algorithms. Here&apos;s how retail traders are using algorithmic trading to compete with institutions — no PhD required.</description>
+      <enclosure url="https://getpineforge.com/blog/algo-trading-hero.webp" type="image/webp" />
+    </item>
+    <item>
+      <title>Backtesting Trading Strategies: The Complete 2026 Guide</title>
+      <link>https://getpineforge.com/blog/why-backtest-before-you-trade</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/why-backtest-before-you-trade</guid>
+      <pubDate>Wed, 22 Apr 2026 00:00:00 GMT</pubDate>
+      <description>Would you invest $10,000 in a strategy you&apos;ve never tested? Backtesting validates your ideas on historical data before a single dollar is at risk.</description>
+      <enclosure url="https://getpineforge.com/blog/backtesting-hero.webp" type="image/webp" />
+    </item>
+    <item>
+      <title>Pine Script Tutorial: Write Your First Trading Strategy in 10 Minutes</title>
+      <link>https://getpineforge.com/blog/pine-script-beginners-guide</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/pine-script-beginners-guide</guid>
+      <pubDate>Mon, 20 Apr 2026 00:00:00 GMT</pubDate>
+      <description>Pine Script is the world&apos;s most popular language for trading strategies. This hands-on tutorial takes you from zero to a working automated strategy.</description>
+      <enclosure url="https://getpineforge.com/blog/pine-script-hero.webp" type="image/webp" />
+    </item>
+    <item>
+      <title>Trading Bots: How They Work, Why They Win, and How to Deploy One</title>
+      <link>https://getpineforge.com/blog/trading-bots-explained</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/trading-bots-explained</guid>
+      <pubDate>Sat, 18 Apr 2026 00:00:00 GMT</pubDate>
+      <description>A trading bot executes your strategy 24/7 without emotion. Learn how bots work under the hood, their advantages over manual trading, and how to set one up in minutes.</description>
+      <enclosure url="https://getpineforge.com/blog/trading-bots-hero.webp" type="image/webp" />
+    </item>
+    <item>
+      <title>Risk Management for Traders: The Rules That Keep You in the Game</title>
+      <link>https://getpineforge.com/blog/risk-management-strategies</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/risk-management-strategies</guid>
+      <pubDate>Thu, 16 Apr 2026 00:00:00 GMT</pubDate>
+      <description>Most traders obsess over entries. Professionals obsess over risk. Learn the risk management strategies that separate consistent winners from blown accounts.</description>
+      <enclosure url="https://getpineforge.com/blog/risk-management-hero.webp" type="image/webp" />
+    </item>
+    <item>
+      <title>Gold Trading Strategies for XAUUSD: 4 Proven Approaches for 2026</title>
+      <link>https://getpineforge.com/blog/gold-trading-strategies</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/gold-trading-strategies</guid>
+      <pubDate>Tue, 14 Apr 2026 00:00:00 GMT</pubDate>
+      <description>Gold is one of the most traded instruments on Earth. Here are 4 backtested XAUUSD strategies you can deploy as automated trading bots today.</description>
+      <enclosure url="https://getpineforge.com/blog/gold-strategies-hero.webp" type="image/webp" />
+    </item>
+    <item>
+      <title>Forex vs Crypto for Trading Bots: Which Market Should You Automate?</title>
+      <link>https://getpineforge.com/blog/forex-vs-crypto-trading</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/forex-vs-crypto-trading</guid>
+      <pubDate>Sun, 12 Apr 2026 00:00:00 GMT</pubDate>
+      <description>Forex offers tight spreads and deep liquidity. Crypto offers 24/7 access and high volatility. Compare both markets to find the best fit for your trading bot.</description>
+      <enclosure url="https://getpineforge.com/blog/forex-crypto-hero.webp" type="image/webp" />
+    </item>
+    <item>
+      <title>How to Build Your First Trading Bot: A Step-by-Step Guide</title>
+      <link>https://getpineforge.com/blog/how-to-build-your-first-bot</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/how-to-build-your-first-bot</guid>
+      <pubDate>Fri, 10 Apr 2026 00:00:00 GMT</pubDate>
+      <description>From zero to a live automated trading bot in under 10 minutes. No coding experience? No problem. This walkthrough covers everything.</description>
+      <enclosure url="https://getpineforge.com/blog/first-bot-hero.webp" type="image/webp" />
+    </item>
+    <item>
+      <title>Trading Indicators Explained: RSI, MACD, EMA, Bollinger Bands &amp; ATR</title>
+      <link>https://getpineforge.com/blog/understanding-trading-indicators</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/understanding-trading-indicators</guid>
+      <pubDate>Wed, 08 Apr 2026 00:00:00 GMT</pubDate>
+      <description>A clear, practical guide to the most important trading indicators. Learn what they measure, when to use them, and how to code them in Pine Script.</description>
+      <enclosure url="https://getpineforge.com/blog/indicators-hero.webp" type="image/webp" />
+    </item>
+    <item>
+      <title>Automated Trading vs Manual Trading: The Data-Driven Verdict</title>
+      <link>https://getpineforge.com/blog/automated-trading-vs-manual</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/automated-trading-vs-manual</guid>
+      <pubDate>Mon, 06 Apr 2026 00:00:00 GMT</pubDate>
+      <description>Speed, discipline, consistency, coverage — automated trading wins on almost every metric. Here&apos;s the head-to-head comparison with data to back it up.</description>
+      <enclosure url="https://getpineforge.com/blog/auto-vs-manual-hero.webp" type="image/webp" />
+    </item>
+  </channel>
+</rss>

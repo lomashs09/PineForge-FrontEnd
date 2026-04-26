@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://getpineforge.com/blog/what-is-algorithmic-trading</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/algo-trading-hero.webp</image:loc>
+      <image:title>Algorithmic Trading in 2026: The Complete Guide for Retail Traders</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://getpineforge.com/blog/why-backtest-before-you-trade</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/backtesting-hero.webp</image:loc>
+      <image:title>Backtesting Trading Strategies: The Complete 2026 Guide</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://getpineforge.com/blog/pine-script-beginners-guide</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/pine-script-hero.webp</image:loc>
+      <image:title>Pine Script Tutorial: Write Your First Trading Strategy in 10 Minutes</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://getpineforge.com/blog/trading-bots-explained</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/trading-bots-hero.webp</image:loc>
+      <image:title>Trading Bots: How They Work, Why They Win, and How to Deploy One</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://getpineforge.com/blog/risk-management-strategies</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/risk-management-hero.webp</image:loc>
+      <image:title>Risk Management for Traders: The Rules That Keep You in the Game</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://getpineforge.com/blog/gold-trading-strategies</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/gold-strategies-hero.webp</image:loc>
+      <image:title>Gold Trading Strategies for XAUUSD: 4 Proven Approaches for 2026</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://getpineforge.com/blog/forex-vs-crypto-trading</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/forex-crypto-hero.webp</image:loc>
+      <image:title>Forex vs Crypto for Trading Bots: Which Market Should You Automate?</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://getpineforge.com/blog/how-to-build-your-first-bot</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/first-bot-hero.webp</image:loc>
+      <image:title>How to Build Your First Trading Bot: A Step-by-Step Guide</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://getpineforge.com/blog/understanding-trading-indicators</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/indicators-hero.webp</image:loc>
+      <image:title>Trading Indicators Explained: RSI, MACD, EMA, Bollinger Bands &amp; ATR</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://getpineforge.com/blog/automated-trading-vs-manual</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/auto-vs-manual-hero.webp</image:loc>
+      <image:title>Automated Trading vs Manual Trading: The Data-Driven Verdict</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://getpineforge.com/blog/trading-psychology-master-your-mind-for-market-success</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/trading-psychology-master-your-mind-for-market-success-hero.webp</image:loc>
+      <image:title>Trading Psychology: Master Your Mind for Market Success</image:title>
+    </image:image>
+  </url>
+</urlset>
