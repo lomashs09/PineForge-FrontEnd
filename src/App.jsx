@@ -22,6 +22,9 @@ import RiskRewardCalculator from './pages/tools/RiskRewardCalculator';
 import DrawdownRecoveryCalculator from './pages/tools/DrawdownRecoveryCalculator';
 import Changelog from './pages/Changelog';
 import Press from './pages/Press';
+import GuidesHub from './pages/GuidesHub';
+import PillarPage from './pages/PillarPage';
+import Onboarding from './pages/Onboarding';
 import Pricing from './pages/Pricing';
 import About from './pages/About';
 import Docs from './pages/Docs';
@@ -92,6 +95,9 @@ function AppRoutes() {
         <Route path="/tools/drawdown-recovery-calculator" element={<DrawdownRecoveryCalculator />} />
         <Route path="/changelog" element={<Changelog />} />
         <Route path="/press" element={<Press />} />
+        <Route path="/guides" element={<GuidesHub />} />
+        <Route path="/guides/:slug" element={<PillarPage />} />
+        <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/backtest" element={<ProtectedRoute><Backtest /></ProtectedRoute>} />
         <Route path="/accounts" element={<ProtectedRoute><Accounts /></ProtectedRoute>} />
         <Route path="/billing" element={<ProtectedRoute><Billing /></ProtectedRoute>} />

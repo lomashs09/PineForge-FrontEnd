@@ -41,6 +41,7 @@ const { default: symbols } = await import('../src/data/symbols.js');
 const { default: glossary } = await import('../src/data/glossary.js');
 const { default: comparisons } = await import('../src/data/comparisons.js');
 const { default: tools } = await import('../src/data/tools.js');
+const { default: pillars } = await import('../src/data/pillars.js');
 
 const strategyHubRoutes = strategies.map((s) => `/strategies/${s.slug}`);
 const comboRoutes = [];
@@ -55,6 +56,7 @@ const symbolRoutes = symbols.map((s) => `/symbols/${s.slug}`);
 const glossaryRoutes = glossary.map((g) => `/glossary/${g.slug}`);
 const compareRoutes = comparisons.map((c) => `/compare/${c.slug}`);
 const toolRoutes = tools.map((t) => `/tools/${t.slug}`);
+const pillarRoutes = pillars.map((p) => `/guides/${p.slug}`);
 
 const routes = [
   '/',
@@ -68,6 +70,8 @@ const routes = [
   '/glossary',
   '/compare',
   '/tools',
+  '/guides',
+  '/onboarding',
   '/changelog',
   '/press',
   '/login',
@@ -83,6 +87,7 @@ const routes = [
   ...glossaryRoutes,
   ...compareRoutes,
   ...toolRoutes,
+  ...pillarRoutes,
 ];
 
 const MIME = {

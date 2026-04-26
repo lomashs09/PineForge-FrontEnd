@@ -27,6 +27,7 @@ const { default: symbols } = await import('../src/data/symbols.js');
 const { default: glossary } = await import('../src/data/glossary.js');
 const { default: comparisons } = await import('../src/data/comparisons.js');
 const { default: tools } = await import('../src/data/tools.js');
+const { default: pillars } = await import('../src/data/pillars.js');
 
 const strategyHubPaths = strategies.map((s) => `/strategies/${s.slug}`);
 const comboPaths = [];
@@ -41,6 +42,7 @@ const symbolPaths = symbols.map((s) => `/symbols/${s.slug}`);
 const glossaryPaths = glossary.map((g) => `/glossary/${g.slug}`);
 const comparePaths = comparisons.map((c) => `/compare/${c.slug}`);
 const toolPaths = tools.map((t) => `/tools/${t.slug}`);
+const pillarPaths = pillars.map((p) => `/guides/${p.slug}`);
 
 const today = new Date().toISOString().slice(0, 10);
 
@@ -56,6 +58,8 @@ const staticPages = [
   { path: '/glossary',      priority: '0.85', changefreq: 'monthly' },
   { path: '/compare',       priority: '0.85', changefreq: 'monthly' },
   { path: '/tools',         priority: '0.9', changefreq: 'monthly' },
+  { path: '/guides',        priority: '0.95', changefreq: 'weekly' },
+  { path: '/onboarding',    priority: '0.7', changefreq: 'monthly' },
   { path: '/changelog',     priority: '0.6', changefreq: 'weekly' },
   { path: '/press',         priority: '0.4', changefreq: 'monthly' },
   { path: '/login',         priority: '0.5', changefreq: 'yearly' },
@@ -96,6 +100,9 @@ const urls = [
   })),
   ...toolPaths.map((p) => ({
     path: p, lastmod: today, changefreq: 'monthly', priority: '0.85',
+  })),
+  ...pillarPaths.map((p) => ({
+    path: p, lastmod: today, changefreq: 'monthly', priority: '0.9',
   })),
 ];
 

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Flame, Mail } from 'lucide-react';
+import NewsletterSignup from './NewsletterSignup';
 
 // lucide-react dropped brand logos in v1.7+ — inline the GitHub mark.
 function GithubIcon(props) {
@@ -52,6 +53,11 @@ export default function Footer() {
   return (
     <footer className="border-t border-gray-800 bg-gray-950">
       <div className="mx-auto max-w-7xl px-4 pt-16 pb-10 sm:px-6 lg:px-8">
+        {/* Newsletter capture above link grid */}
+        <div className="mb-12 border-b border-gray-800 pb-12">
+          <NewsletterSignup />
+        </div>
+
         <div className="grid gap-10 lg:grid-cols-5">
           {/* Brand */}
           <div className="lg:col-span-1">
