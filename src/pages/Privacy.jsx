@@ -89,8 +89,14 @@ export default function Privacy() {
           </ul>
           <p>To exercise any of these rights, contact us at <a href="mailto:lomash@getpineforge.com" className="text-emerald-400 hover:text-emerald-300">lomash@getpineforge.com</a>.</p>
 
-          <h2 className="text-xl font-semibold text-white mt-8">7. Cookies</h2>
-          <p>We use essential cookies and local storage to maintain your login session and user preferences. We do not use third-party tracking cookies or analytics services.</p>
+          <h2 className="text-xl font-semibold text-white mt-8">7. Cookies, Analytics & Advertising</h2>
+          <p>We use essential cookies and local storage to maintain your login session and user preferences. With your consent, we also use:</p>
+          <ul className="list-disc pl-5 space-y-1">
+            <li><strong>Google Tag (gtag.js):</strong> We load Google's tag manager (<code>googletagmanager.com</code>) for measurement and ads conversion tracking. By default, all advertising and analytics signals are <strong>denied</strong> until you accept on the cookie banner — this is implemented via Google Consent Mode v2.</li>
+            <li><strong>Google Ads (AW-18121065419):</strong> When you accept, we record conversion events (e.g. signup, account funded) so we can measure the effectiveness of our advertising campaigns.</li>
+            <li><strong>Google Analytics (GA4):</strong> When you accept and once enabled, we use aggregate, anonymised analytics to understand how visitors use the site (page views, sessions, country, device). IP addresses are anonymised.</li>
+          </ul>
+          <p>You can withdraw consent at any time by clearing your browser's local storage or using the "Reject" button on the cookie banner. We do <strong>not</strong> sell or share your personal data for cross-context behavioural advertising as defined by the CCPA/CPRA.</p>
 
           <h2 className="text-xl font-semibold text-white mt-8">8. Children's Privacy</h2>
           <p>The Service is not intended for individuals under 18 years of age. We do not knowingly collect personal information from minors.</p>

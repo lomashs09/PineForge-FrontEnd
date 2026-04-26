@@ -20,10 +20,13 @@ if (blogEntries.length === 0) {
   process.exit(1);
 }
 
-// Programmatic strategy pages — load via dynamic import so we benefit from
-// `appliesTo` filtering in JS rather than parsing JSON-by-regex.
+// Programmatic pages — load via dynamic import so we benefit from
+// JS filtering rather than parsing JSON-by-regex.
 const { default: strategies } = await import('../src/data/strategies.js');
 const { default: symbols } = await import('../src/data/symbols.js');
+const { default: glossary } = await import('../src/data/glossary.js');
+const { default: comparisons } = await import('../src/data/comparisons.js');
+const { default: tools } = await import('../src/data/tools.js');
 
 const strategyHubPaths = strategies.map((s) => `/strategies/${s.slug}`);
 const comboPaths = [];
@@ -34,6 +37,10 @@ for (const strat of strategies) {
     }
   }
 }
+const symbolPaths = symbols.map((s) => `/symbols/${s.slug}`);
+const glossaryPaths = glossary.map((g) => `/glossary/${g.slug}`);
+const comparePaths = comparisons.map((c) => `/compare/${c.slug}`);
+const toolPaths = tools.map((t) => `/tools/${t.slug}`);
 
 const today = new Date().toISOString().slice(0, 10);
 
@@ -45,6 +52,12 @@ const staticPages = [
   { path: '/support',       priority: '0.6', changefreq: 'monthly' },
   { path: '/blog',          priority: '0.9', changefreq: 'weekly' },
   { path: '/strategies',    priority: '0.95', changefreq: 'weekly' },
+  { path: '/symbols',       priority: '0.9', changefreq: 'weekly' },
+  { path: '/glossary',      priority: '0.85', changefreq: 'monthly' },
+  { path: '/compare',       priority: '0.85', changefreq: 'monthly' },
+  { path: '/tools',         priority: '0.9', changefreq: 'monthly' },
+  { path: '/changelog',     priority: '0.6', changefreq: 'weekly' },
+  { path: '/press',         priority: '0.4', changefreq: 'monthly' },
   { path: '/login',         priority: '0.5', changefreq: 'yearly' },
   { path: '/signup',        priority: '0.7', changefreq: 'yearly' },
   { path: '/terms',         priority: '0.3', changefreq: 'yearly' },
@@ -71,6 +84,18 @@ const urls = [
     lastmod: today,
     changefreq: 'monthly',
     priority: '0.75',
+  })),
+  ...symbolPaths.map((p) => ({
+    path: p, lastmod: today, changefreq: 'monthly', priority: '0.8',
+  })),
+  ...glossaryPaths.map((p) => ({
+    path: p, lastmod: today, changefreq: 'monthly', priority: '0.7',
+  })),
+  ...comparePaths.map((p) => ({
+    path: p, lastmod: today, changefreq: 'monthly', priority: '0.8',
+  })),
+  ...toolPaths.map((p) => ({
+    path: p, lastmod: today, changefreq: 'monthly', priority: '0.85',
   })),
 ];
 

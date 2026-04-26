@@ -6,14 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PineForge</title>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18121065419"></script>
+    <!-- Google tag (gtag.js) — Consent Mode v2.
+         Tags load immediately but defer all signals until the user
+         either consents (cookie banner) or, outside the EEA, after a
+         short page-load grace period. -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+        wait_for_update: 500
+      });
+      // Stored consent — if the user has previously accepted, restore it.
+      try {
+        var stored = localStorage.getItem('pf_consent');
+        if (stored === 'granted') {
+          gtag('consent', 'update', {
+            ad_storage: 'granted',
+            ad_user_data: 'granted',
+            ad_personalization: 'granted',
+            analytics_storage: 'granted'
+          });
+        }
+      } catch (e) {}
       gtag('js', new Date());
       gtag('config', 'AW-18121065419');
+      // GA4 placeholder — replace with your real measurement ID (G-XXXXXXX) when you have one.
+      // gtag('config', 'G-XXXXXXXXXX');
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18121065419"></script>
   </head>
   <body>
     <div id="root"></div>

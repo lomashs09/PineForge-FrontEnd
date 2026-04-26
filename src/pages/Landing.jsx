@@ -53,11 +53,6 @@ const SOFTWARE_APP_LD = {
     priceCurrency: 'USD',
     description: 'Pay-as-you-go: $0.022/hr active bot, $3.00 account setup.',
   },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    reviewCount: '127',
-  },
 };
 
 // Simulated performance data for showcase
@@ -606,9 +601,9 @@ export default function Landing() {
           {/* Top row: 3 backtest results */}
           <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { img: "/showcase/backtest-gold-74-winrate.png", label: "XAUUSD Gold Strategy", stat: "+87.4% Return", sub: "74% Win Rate | Profit Factor 2.31" },
-              { img: "/showcase/backtest-btc-124-return.png", label: "BTCUSD Swing Strategy", stat: "+124.6% Return", sub: "62.8% Win Rate | Sharpe 2.14" },
-              { img: "/showcase/backtest-eurusd-200-return.png", label: "EURUSD Trend Strategy", stat: "+208.3% Return", sub: "58.4% Win Rate | 412 Trades" },
+              { img: "/showcase/backtest-gold-74-winrate.webp", label: "XAUUSD Gold Strategy", stat: "+87.4% Return", sub: "74% Win Rate | Profit Factor 2.31" },
+              { img: "/showcase/backtest-btc-124-return.webp", label: "BTCUSD Swing Strategy", stat: "+124.6% Return", sub: "62.8% Win Rate | Sharpe 2.14" },
+              { img: "/showcase/backtest-eurusd-200-return.webp", label: "EURUSD Trend Strategy", stat: "+208.3% Return", sub: "58.4% Win Rate | 412 Trades" },
             ].map((item) => (
               <div key={item.label} className="group overflow-hidden rounded-2xl border border-gray-800 bg-gray-900/50 transition hover:border-emerald-800/40">
                 <img src={item.img} alt={item.label} className="w-full aspect-square object-cover transition duration-300 group-hover:scale-105" loading="lazy" />
@@ -624,7 +619,7 @@ export default function Landing() {
           {/* Middle row: Milestones + Live bots */}
           <div className="mt-8 grid gap-6 sm:grid-cols-2">
             <div className="group overflow-hidden rounded-2xl border border-gray-800 bg-gray-900/50 transition hover:border-emerald-800/40">
-              <img src="/showcase/200-percent-return.png" alt="200% Return Milestone" className="w-full aspect-video object-cover transition duration-300 group-hover:scale-105" loading="lazy" />
+              <img src="/showcase/200-percent-return.webp" alt="200% Return Milestone" className="w-full aspect-video object-cover transition duration-300 group-hover:scale-105" loading="lazy" />
               <div className="p-5">
                 <p className="text-xs font-medium text-emerald-400">Strategy Milestone</p>
                 <p className="mt-1 text-xl font-bold text-white">+200% Return in 12 Months</p>
@@ -632,7 +627,7 @@ export default function Landing() {
               </div>
             </div>
             <div className="group overflow-hidden rounded-2xl border border-gray-800 bg-gray-900/50 transition hover:border-emerald-800/40">
-              <img src="/showcase/bot-multiple-profits.png" alt="Multiple Bots Running" className="w-full aspect-video object-cover transition duration-300 group-hover:scale-105" loading="lazy" />
+              <img src="/showcase/bot-multiple-profits.webp" alt="Multiple Bots Running" className="w-full aspect-video object-cover transition duration-300 group-hover:scale-105" loading="lazy" />
               <div className="p-5">
                 <p className="text-xs font-medium text-emerald-400">Live Bot Performance</p>
                 <p className="mt-1 text-xl font-bold text-white">4 Bots, All Profitable</p>
@@ -644,7 +639,7 @@ export default function Landing() {
           {/* Bottom row: Stats + Charts */}
           <div className="mt-8 grid gap-6 sm:grid-cols-3">
             <div className="group overflow-hidden rounded-2xl border border-gray-800 bg-gray-900/50 transition hover:border-emerald-800/40">
-              <img src="/showcase/winrate-stats-dashboard.png" alt="Win Rate Stats" className="w-full aspect-square object-cover transition duration-300 group-hover:scale-105" loading="lazy" />
+              <img src="/showcase/winrate-stats-dashboard.webp" alt="Win Rate Stats" className="w-full aspect-square object-cover transition duration-300 group-hover:scale-105" loading="lazy" />
               <div className="p-5">
                 <p className="text-xs font-medium text-emerald-400">Performance Analytics</p>
                 <p className="mt-1 text-lg font-bold text-white">73% Win Rate</p>
@@ -652,7 +647,7 @@ export default function Landing() {
               </div>
             </div>
             <div className="group overflow-hidden rounded-2xl border border-gray-800 bg-gray-900/50 transition hover:border-emerald-800/40">
-              <img src="/showcase/strategy-comparison-chart.png" alt="Strategy Comparison" className="w-full aspect-square object-cover transition duration-300 group-hover:scale-105" loading="lazy" />
+              <img src="/showcase/strategy-comparison-chart.webp" alt="Strategy Comparison" className="w-full aspect-square object-cover transition duration-300 group-hover:scale-105" loading="lazy" />
               <div className="p-5">
                 <p className="text-xs font-medium text-emerald-400">Strategy Library</p>
                 <p className="mt-1 text-lg font-bold text-white">28+ Built-in Strategies</p>
@@ -660,7 +655,7 @@ export default function Landing() {
               </div>
             </div>
             <div className="group overflow-hidden rounded-2xl border border-gray-800 bg-gray-900/50 transition hover:border-emerald-800/40">
-              <img src="/showcase/monthly-returns-heatmap.png" alt="Monthly Returns" className="w-full aspect-square object-cover transition duration-300 group-hover:scale-105" loading="lazy" />
+              <img src="/showcase/monthly-returns-heatmap.webp" alt="Monthly Returns" className="w-full aspect-square object-cover transition duration-300 group-hover:scale-105" loading="lazy" />
               <div className="p-5">
                 <p className="text-xs font-medium text-emerald-400">Consistent Returns</p>
                 <p className="mt-1 text-lg font-bold text-white">10 of 12 Months Green</p>
@@ -690,7 +685,7 @@ export default function Landing() {
                 role: "Forex Trader, Mumbai",
                 quote: "I was spending 8 hours a day watching charts. Now my bot handles XAUUSD while I focus on strategy development. My win rate went from 42% to 61% after backtesting properly.",
                 avatar: "RM",
-                photo: "/showcase/testimonial-trader-desk.png",
+                photo: "/showcase/testimonial-trader-desk.webp",
                 color: "bg-violet-600",
               },
               {
@@ -698,7 +693,7 @@ export default function Landing() {
                 role: "Part-time Trader, London",
                 quote: "As someone with a full-time job, I couldn't trade the Asian session. PineForge runs my EMA crossover strategy 24/5 and I just check the results in the morning. Game changer.",
                 avatar: "SK",
-                photo: "/showcase/testimonial-woman-trader.png",
+                photo: "/showcase/testimonial-woman-trader.webp",
                 color: "bg-blue-600",
               },
               {
@@ -706,7 +701,7 @@ export default function Landing() {
                 role: "Crypto Trader, Singapore",
                 quote: "The backtesting engine is incredibly fast. I tested 15 strategy variations on BTCUSD in an afternoon. Found one with a 2.3 profit factor and deployed it the same day.",
                 avatar: "MT",
-                photo: "/showcase/testimonial-mobile-trader.png",
+                photo: "/showcase/testimonial-mobile-trader.webp",
                 color: "bg-emerald-600",
               },
               {

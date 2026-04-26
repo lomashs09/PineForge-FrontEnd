@@ -12,7 +12,7 @@ import {
 const publicLinks = [
   { to: '/', label: 'Home' },
   { to: '/strategies', label: 'Strategies' },
-  { to: '/backtest', label: 'Backtest' },
+  { to: '/tools', label: 'Tools' },
   { to: '/pricing', label: 'Pricing' },
   { to: '/blog', label: 'Blog' },
 ];

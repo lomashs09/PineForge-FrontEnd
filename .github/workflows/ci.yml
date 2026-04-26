@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-build:
+    name: Lint + Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Lint
+        run: npm run lint
+        continue-on-error: true
+
+      - name: Generate sitemap + robots
+        run: node scripts/generate-seo-files.mjs
+
+      - name: Build (Vite — skips puppeteer prerender on CI)
+        run: npx vite build
+
+      - name: Verify build output
+        run: |
+          test -f dist/index.html || (echo "Missing dist/index.html" && exit 1)
+          test -f public/sitemap.xml || (echo "Missing sitemap.xml" && exit 1)
+          test -f public/robots.txt || (echo "Missing robots.txt" && exit 1)
+          echo "Build verified."
