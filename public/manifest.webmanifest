@@ -1,0 +1,20 @@
+{
+  "name": "PineForge — Automated Trading Bots",
+  "short_name": "PineForge",
+  "description": "Build, backtest, and deploy automated trading bots with Pine Script.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#030712",
+  "theme_color": "#10b981",
+  "orientation": "any",
+  "icons": [
+    { "src": "/favicon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any maskable" }
+  ],
+  "categories": ["finance", "productivity", "business"],
+  "shortcuts": [
+    { "name": "Strategies", "url": "/strategies", "description": "Browse the strategy library" },
+    { "name": "Tools", "url": "/tools", "description": "Free trading calculators" },
+    { "name": "Blog", "url": "/blog", "description": "Trading guides and tutorials" }
+  ]
+}

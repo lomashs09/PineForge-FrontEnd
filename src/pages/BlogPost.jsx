@@ -48,6 +48,9 @@ export default function BlogPost() {
             src={post.image}
             alt={post.title}
             className="h-full w-full object-cover"
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/60 to-transparent" />
         </div>

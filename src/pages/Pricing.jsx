@@ -17,6 +17,7 @@ import {
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Seo from '../components/Seo';
+import PricingCalculator from '../components/PricingCalculator';
 import { buildBreadcrumbLd, SITE_URL, SITE_NAME } from '../components/seoLd';
 
 const PRICING_LD = {
@@ -189,6 +190,11 @@ export default function Pricing() {
               Start Free
             </Link>
           </div>
+        </div>
+
+        {/* Cost calculator */}
+        <div className="mt-12">
+          <PricingCalculator />
         </div>
 
         {/* Usage pricing cards */}

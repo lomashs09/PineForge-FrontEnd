@@ -19,22 +19,9 @@ import {
   Target,
   Percent,
 } from 'lucide-react';
-import {
-  AreaChart,
-  Area,
-  LineChart,
-  Line,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Cell,
-} from 'recharts';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { AreaSparkline, BarSeries } from '../components/MiniCharts';
 import Seo from '../components/Seo';
 import { SITE_URL, SITE_NAME } from '../components/seoLd';
 
@@ -335,21 +322,15 @@ export default function Landing() {
                   <p className="text-sm text-emerald-400/70">+74.5% return</p>
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={240}>
-                <AreaChart data={goldEquity}>
-                  <defs>
-                    <linearGradient id="eqGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#10b981" stopOpacity={0.3} />
-                      <stop offset="100%" stopColor="#10b981" stopOpacity={0} />
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" />
-                  <XAxis dataKey="m" tick={{ fill: '#6b7280', fontSize: 11 }} tickLine={false} axisLine={false} />
-                  <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} tickLine={false} axisLine={false} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
-                  <Tooltip contentStyle={{ backgroundColor: '#111827', border: '1px solid #374151', borderRadius: '0.5rem', fontSize: 13, color: '#e5e7eb' }} formatter={(v) => [`$${v.toLocaleString()}`, 'Equity']} />
-                  <Area type="monotone" dataKey="eq" stroke="#10b981" strokeWidth={2.5} fill="url(#eqGrad)" />
-                </AreaChart>
-              </ResponsiveContainer>
+              <AreaSparkline
+                data={goldEquity}
+                valueKey="eq"
+                labelKey="m"
+                height={240}
+                stroke="#10b981"
+                fillId="eqGrad"
+                yFormat={(v) => `$${(v / 1000).toFixed(0)}k`}
+              />
             </div>
 
             {/* Monthly returns */}
@@ -364,19 +345,7 @@ export default function Landing() {
                   <p className="text-sm text-emerald-400/70">75% profitable months</p>
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={240}>
-                <BarChart data={monthlyReturns}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" />
-                  <XAxis dataKey="m" tick={{ fill: '#6b7280', fontSize: 11 }} tickLine={false} axisLine={false} />
-                  <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}%`} />
-                  <Tooltip contentStyle={{ backgroundColor: '#111827', border: '1px solid #374151', borderRadius: '0.5rem', fontSize: 13, color: '#e5e7eb' }} formatter={(v) => [`${v > 0 ? '+' : ''}${v}%`, 'Return']} />
-                  <Bar dataKey="ret" radius={[4, 4, 0, 0]}>
-                    {monthlyReturns.map((entry, i) => (
-                      <Cell key={i} fill={entry.ret >= 0 ? '#10b981' : '#ef4444'} opacity={0.85} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
+              <BarSeries data={monthlyReturns} valueKey="ret" labelKey="m" height={240} />
             </div>
           </div>
 
@@ -392,21 +361,16 @@ export default function Landing() {
                 <span className="text-sm font-medium text-emerald-400">Max DD: -5.8%</span>
               </div>
             </div>
-            <ResponsiveContainer width="100%" height={180}>
-              <AreaChart data={drawdownData}>
-                <defs>
-                  <linearGradient id="ddGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#ef4444" stopOpacity={0.15} />
-                    <stop offset="100%" stopColor="#ef4444" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" />
-                <XAxis dataKey="m" tick={{ fill: '#6b7280', fontSize: 11 }} tickLine={false} axisLine={false} />
-                <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}%`} domain={[-8, 0]} />
-                <Tooltip contentStyle={{ backgroundColor: '#111827', border: '1px solid #374151', borderRadius: '0.5rem', fontSize: 13, color: '#e5e7eb' }} formatter={(v) => [`${v}%`, 'Drawdown']} />
-                <Area type="monotone" dataKey="dd" stroke="#ef4444" strokeWidth={2} fill="url(#ddGrad)" />
-              </AreaChart>
-            </ResponsiveContainer>
+            <AreaSparkline
+              data={drawdownData}
+              valueKey="dd"
+              labelKey="m"
+              height={180}
+              stroke="#ef4444"
+              fillId="ddGrad"
+              yFormat={(v) => `${v.toFixed(1)}%`}
+              valueDomain={[-8, 0]}
+            />
           </div>
 
           {/* Strategy comparison table */}
