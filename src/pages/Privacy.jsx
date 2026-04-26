@@ -1,9 +1,20 @@
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Seo from '../components/Seo';
+import { buildBreadcrumbLd } from '../components/seoLd';
 
 export default function Privacy() {
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100">
+      <Seo
+        title="Privacy Policy"
+        description="How PineForge collects, uses, and protects your data, including MT5 broker credentials and payment information."
+        path="/privacy"
+        structuredData={buildBreadcrumbLd([
+          { name: 'Home', url: '/' },
+          { name: 'Privacy', url: '/privacy' },
+        ])}
+      />
       <Navbar />
       <div className="mx-auto max-w-3xl px-4 pb-24 pt-28 sm:px-6">
         <h1 className="text-3xl font-bold text-white mb-8">Privacy Policy</h1>

@@ -14,6 +14,8 @@ import {
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Seo from '../components/Seo';
+import { buildBreadcrumbLd, buildFaqLd } from '../components/seoLd';
 
 const sections = [
   {
@@ -157,8 +159,21 @@ const sections = [
 ];
 
 export default function Docs() {
+  const allFaqs = sections.flatMap((s) => s.content);
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100">
+      <Seo
+        title="Documentation — PineForge Trading Bot Platform"
+        description="Getting started guides, Pine Script reference, broker setup, bot management, backtesting, risk management, and security. Everything you need to deploy your first bot."
+        path="/docs"
+        structuredData={[
+          buildFaqLd(allFaqs),
+          buildBreadcrumbLd([
+            { name: 'Home', url: '/' },
+            { name: 'Docs', url: '/docs' },
+          ]),
+        ]}
+      />
       <Navbar />
 
       <div className="mx-auto max-w-5xl px-4 pb-24 pt-28 sm:px-6">

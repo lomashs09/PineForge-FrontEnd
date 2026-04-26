@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Clock, ArrowRight, Search } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Seo from '../components/Seo';
+import { buildBreadcrumbLd } from '../components/seoLd';
 import blogPosts from '../data/blogPosts';
 
 const CATEGORIES = ['All', ...new Set(blogPosts.map((p) => p.category))];
@@ -22,6 +24,15 @@ export default function Blog() {
 
   return (
     <div className="min-h-screen bg-gray-950 text-white">
+      <Seo
+        title="Trading Bot Blog — Strategies, Tutorials & Pine Script Guides"
+        description="Trading strategies, backtesting tutorials, Pine Script guides, and risk management insights for automated trading. Updated weekly."
+        path="/blog"
+        structuredData={buildBreadcrumbLd([
+          { name: 'Home', url: '/' },
+          { name: 'Blog', url: '/blog' },
+        ])}
+      />
       <Navbar />
 
       {/* Hero */}

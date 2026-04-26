@@ -2,6 +2,9 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Landing from './pages/Landing';
+import NotFound from './pages/NotFound';
+import StrategyHub from './pages/StrategyHub';
+import StrategyDetail from './pages/StrategyDetail';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import CheckEmail from './pages/CheckEmail';
@@ -50,7 +53,9 @@ function AppRoutes() {
       <Route path="/payment-success" element={<ProtectedRoute><PaymentSuccess /></ProtectedRoute>} />
       <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
       <Route path="/bots" element={<ProtectedRoute><Bots /></ProtectedRoute>} />
-      <Route path="/strategies" element={<ProtectedRoute><Strategies /></ProtectedRoute>} />
+      <Route path="/library" element={<ProtectedRoute><Strategies /></ProtectedRoute>} />
+      <Route path="/strategies" element={<StrategyHub />} />
+      <Route path="/strategies/:slug" element={<StrategyDetail />} />
       <Route path="/backtest" element={<ProtectedRoute><Backtest /></ProtectedRoute>} />
       <Route path="/accounts" element={<ProtectedRoute><Accounts /></ProtectedRoute>} />
       <Route path="/billing" element={<ProtectedRoute><Billing /></ProtectedRoute>} />
@@ -59,7 +64,7 @@ function AppRoutes() {
       <Route path="/terms" element={<Terms />} />
       <Route path="/privacy" element={<Privacy />} />
       <Route path="/cancellation" element={<Cancellation />} />
-      <Route path="*" element={<Navigate to="/" />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

@@ -11,6 +11,8 @@ import {
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Seo from '../components/Seo';
+import { buildBreadcrumbLd, buildFaqLd } from '../components/seoLd';
 
 const channels = [
   {
@@ -72,6 +74,18 @@ const faqs = [
 export default function Support() {
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100">
+      <Seo
+        title="Support — Get Help with PineForge"
+        description="Email support, documentation, and FAQs for PineForge trading automation. We typically reply within 24 hours."
+        path="/support"
+        structuredData={[
+          buildFaqLd(faqs),
+          buildBreadcrumbLd([
+            { name: 'Home', url: '/' },
+            { name: 'Support', url: '/support' },
+          ]),
+        ]}
+      />
       <Navbar />
 
       <div className="mx-auto max-w-5xl px-4 pb-24 pt-28 sm:px-6">

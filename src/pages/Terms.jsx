@@ -1,9 +1,20 @@
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Seo from '../components/Seo';
+import { buildBreadcrumbLd } from '../components/seoLd';
 
 export default function Terms() {
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100">
+      <Seo
+        title="Terms of Service"
+        description="PineForge terms of service, including service description, risk disclaimer, and acceptance of terms."
+        path="/terms"
+        structuredData={buildBreadcrumbLd([
+          { name: 'Home', url: '/' },
+          { name: 'Terms', url: '/terms' },
+        ])}
+      />
       <Navbar />
       <div className="mx-auto max-w-3xl px-4 pb-24 pt-28 sm:px-6">
         <h1 className="text-3xl font-bold text-white mb-8">Terms of Service</h1>

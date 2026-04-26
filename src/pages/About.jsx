@@ -11,6 +11,8 @@ import {
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Seo from '../components/Seo';
+import { buildBreadcrumbLd } from '../components/seoLd';
 
 const values = [
   {
@@ -49,6 +51,15 @@ const stats = [
 export default function About() {
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100">
+      <Seo
+        title="About PineForge — Strategy First, Built for Real Traders"
+        description="PineForge is a trading automation platform built on four principles: Strategy First, Security by Design, Real Execution, Pine Script Native. 28+ strategies, 10+ symbols, 24/7."
+        path="/about"
+        structuredData={buildBreadcrumbLd([
+          { name: 'Home', url: '/' },
+          { name: 'About', url: '/about' },
+        ])}
+      />
       <Navbar />
 
       <div className="mx-auto max-w-5xl px-4 pb-24 pt-28 sm:px-6">

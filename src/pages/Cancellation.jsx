@@ -1,9 +1,20 @@
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Seo from '../components/Seo';
+import { buildBreadcrumbLd } from '../components/seoLd';
 
 export default function Cancellation() {
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100">
+      <Seo
+        title="Cancellation & Refund Policy"
+        description="PineForge usage-based billing refund policy and account top-up terms."
+        path="/cancellation"
+        structuredData={buildBreadcrumbLd([
+          { name: 'Home', url: '/' },
+          { name: 'Cancellation', url: '/cancellation' },
+        ])}
+      />
       <Navbar />
       <div className="mx-auto max-w-3xl px-4 pb-24 pt-28 sm:px-6">
         <h1 className="text-3xl font-bold text-white mb-8">Cancellation & Refund Policy</h1>

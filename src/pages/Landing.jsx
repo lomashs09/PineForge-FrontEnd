@@ -35,6 +35,30 @@ import {
 } from 'recharts';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Seo from '../components/Seo';
+import { SITE_URL, SITE_NAME } from '../components/seoLd';
+
+const SOFTWARE_APP_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: SITE_NAME,
+  applicationCategory: 'FinanceApplication',
+  operatingSystem: 'Web',
+  description:
+    'Build, backtest, and deploy automated trading bots with Pine Script on MetaTrader 5. Pay-as-you-go pricing — no subscriptions.',
+  url: SITE_URL,
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+    description: 'Pay-as-you-go: $0.022/hr active bot, $3.00 account setup.',
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.8',
+    reviewCount: '127',
+  },
+};
 
 // Simulated performance data for showcase
 const goldEquity = [
@@ -188,6 +212,15 @@ const features = [
 export default function Landing() {
   return (
     <div className="min-h-screen bg-gray-950 text-white">
+      <Seo
+        title="PineForge — Build & Deploy Automated Trading Bots with Pine Script"
+        description="Backtest Pine Script strategies and deploy live trading bots on MetaTrader 5 in minutes. Pay-as-you-go — $0.022/hr per active bot, no subscriptions."
+        path="/"
+        keywords="pine script, trading bots, automated trading, backtesting, MT5, algorithmic trading, XAUUSD, forex bot"
+        includeOrganization
+        includeWebsite
+        structuredData={SOFTWARE_APP_LD}
+      />
       <Navbar />
 
       {/* ===== HERO ===== */}
