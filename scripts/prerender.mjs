@@ -35,9 +35,13 @@ const slugRegex = /slug:\s*"([^"]+)"/g;
 let m;
 while ((m = slugRegex.exec(blogSource)) !== null) blogSlugs.push(m[1]);
 
-// Programmatic strategy routes — load via dynamic import.
+// Programmatic routes — load via dynamic import.
 const { default: strategies } = await import('../src/data/strategies.js');
 const { default: symbols } = await import('../src/data/symbols.js');
+const { default: glossary } = await import('../src/data/glossary.js');
+const { default: comparisons } = await import('../src/data/comparisons.js');
+const { default: tools } = await import('../src/data/tools.js');
+
 const strategyHubRoutes = strategies.map((s) => `/strategies/${s.slug}`);
 const comboRoutes = [];
 for (const strat of strategies) {
@@ -47,6 +51,10 @@ for (const strat of strategies) {
     }
   }
 }
+const symbolRoutes = symbols.map((s) => `/symbols/${s.slug}`);
+const glossaryRoutes = glossary.map((g) => `/glossary/${g.slug}`);
+const compareRoutes = comparisons.map((c) => `/compare/${c.slug}`);
+const toolRoutes = tools.map((t) => `/tools/${t.slug}`);
 
 const routes = [
   '/',
@@ -56,6 +64,12 @@ const routes = [
   '/support',
   '/blog',
   '/strategies',
+  '/symbols',
+  '/glossary',
+  '/compare',
+  '/tools',
+  '/changelog',
+  '/press',
   '/login',
   '/signup',
   '/terms',
@@ -65,6 +79,10 @@ const routes = [
   ...blogSlugs.map((s) => `/blog/${s}`),
   ...strategyHubRoutes,
   ...comboRoutes,
+  ...symbolRoutes,
+  ...glossaryRoutes,
+  ...compareRoutes,
+  ...toolRoutes,
 ];
 
 const MIME = {

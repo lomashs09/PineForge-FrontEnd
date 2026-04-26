@@ -10,7 +10,7 @@ const blogPosts = [
     category: "Education",
     date: "2026-04-24",
     readTime: "8 min read",
-    image: "/blog/algo-trading-hero.png",
+    image: "/blog/algo-trading-hero.webp",
     keywords: ["algorithmic trading", "algo trading", "automated trading", "trading bot"],
     content: `
 You're staring at charts for six hours. You spot the perfect setup. Your finger hovers over the buy button — and you hesitate. The price moves. The opportunity vanishes.
@@ -19,7 +19,7 @@ This is the reality of manual trading. And it's exactly why **algorithmic tradin
 
 The good news? Algorithmic trading isn't reserved for hedge funds anymore. Platforms like [PineForge](https://getpineforge.com) are putting the same power in the hands of retail traders. Here's everything you need to know.
 
-![Algorithmic trading speed](/blog/algo-trading-speed.png)
+![Algorithmic trading speed](/blog/algo-trading-speed.webp)
 
 ## What Is Algorithmic Trading and How Does It Work?
 
@@ -53,7 +53,7 @@ The number one killer of trading accounts? Emotion. Fear makes you exit too earl
 
 Forex markets run 24 hours a day, 5 days a week. Crypto never closes. No human can monitor XAUUSD, EURUSD, and BTCUSD simultaneously around the clock. But a [trading bot](/blog/trading-bots-explained) can — and it does.
 
-![Algorithmic trading workflow](/blog/algo-trading-workflow.png)
+![Algorithmic trading workflow](/blog/algo-trading-workflow.webp)
 
 ## How Do Retail Traders Get Started with Algorithmic Trading?
 
@@ -118,7 +118,7 @@ You bring the strategy. The bot brings the discipline. [Sign up for PineForge](h
     category: "Education",
     date: "2026-04-22",
     readTime: "7 min read",
-    image: "/blog/backtesting-hero.png",
+    image: "/blog/backtesting-hero.webp",
     keywords: ["backtesting", "backtest strategy", "backtest forex strategy", "backtest gold strategy"],
     content: `
 Every profitable trader has one thing in common: they test before they trade.
@@ -129,7 +129,7 @@ Yet most retail traders skip this step entirely. They see a YouTube video about 
 
 Here's how to do it right.
 
-![Backtesting metrics dashboard](/blog/backtesting-metrics.png)
+![Backtesting metrics dashboard](/blog/backtesting-metrics.webp)
 
 ## What Does a Backtest Actually Tell You?
 
@@ -167,7 +167,7 @@ The process is straightforward:
 
 Our engine uses **next-bar-open execution** to simulate realistic fills and includes 200 warmup bars for indicator stability. No look-ahead bias. No inflated results.
 
-![Common backtesting mistakes to avoid](/blog/backtesting-mistakes.png)
+![Common backtesting mistakes to avoid](/blog/backtesting-mistakes.webp)
 
 ## What Are the Biggest Backtesting Mistakes?
 
@@ -228,7 +228,7 @@ No re-coding. No translation. The strategy runs identically live as it does in b
     category: "Tutorial",
     date: "2026-04-20",
     readTime: "9 min read",
-    image: "/blog/pine-script-hero.png",
+    image: "/blog/pine-script-hero.webp",
     keywords: ["Pine Script", "Pine Script tutorial", "Pine Script for beginners", "Pine Script strategy"],
     content: `
 Thirty million traders use Pine Script. It's the language behind every strategy on TradingView — and now, with PineForge, it's the language that powers live automated trading bots.
@@ -247,7 +247,7 @@ That focus makes it powerful and simple at the same time.
 - **Massive community** — 30M+ users means every question has been answered
 - **PineForge compatible** — write once, [backtest](/backtest) and deploy as a live bot without changing a line
 
-![Pine Script code example](/blog/pine-script-code.png)
+![Pine Script code example](/blog/pine-script-code.webp)
 
 ## Your First Strategy: EMA Crossover
 
@@ -320,7 +320,7 @@ if ta.crossunder(fast, slow)
 
 The stop-loss is now **dynamic** — it uses 2x the ATR (Average True Range), so it automatically widens in volatile markets and tightens in calm ones. Learn more in our [risk management guide](/blog/risk-management-strategies).
 
-![Pine Script indicators on chart](/blog/pine-script-indicators.png)
+![Pine Script indicators on chart](/blog/pine-script-indicators.webp)
 
 ## What About More Advanced Strategies?
 
@@ -385,7 +385,7 @@ Your script runs exactly the same live as it does in backtesting. No translation
     category: "Education",
     date: "2026-04-18",
     readTime: "7 min read",
-    image: "/blog/trading-bots-hero.png",
+    image: "/blog/trading-bots-hero.webp",
     keywords: ["trading bot", "trading bots", "automated trading", "deploy trading bot", "trading bot for beginners"],
     content: `
 A **trading bot** is software that executes trades automatically based on your predefined strategy. Think of it as hiring a trader who never sleeps, never panics, and follows your exact rules every single time.
@@ -404,7 +404,7 @@ Every trading bot follows the same cycle:
 6. **Manage** positions with stop-losses and risk controls
 7. **Report** every trade, signal, and P&L in real-time
 
-![Trading bot lifecycle](/blog/trading-bots-lifecycle.png)
+![Trading bot lifecycle](/blog/trading-bots-lifecycle.webp)
 
 On PineForge, your bot runs your [Pine Script strategy](/blog/pine-script-beginners-guide) against live market data. When the strategy generates a signal, the bot places the order through MetaAPI to your MT5 account. Every action is logged and visible in your [dashboard](/dashboard).
 
@@ -434,7 +434,7 @@ When your strategy detects a crossover, the bot reacts in milliseconds. No hesit
 
 Forex runs 24/5. Crypto runs 24/7. Gold's best moves often happen during the Asian session when you're sleeping. A bot captures every opportunity your strategy identifies — regardless of what time zone you're in.
 
-![Bot trading 24/7 while you sleep](/blog/trading-bots-24-7.png)
+![Bot trading 24/7 while you sleep](/blog/trading-bots-24-7.webp)
 
 ### Multi-Market Coverage
 
@@ -485,7 +485,7 @@ PineForge uses [usage-based pricing](/pricing) — no subscriptions, no minimums
     category: "Strategy",
     date: "2026-04-16",
     readTime: "7 min read",
-    image: "/blog/risk-management-hero.png",
+    image: "/blog/risk-management-hero.webp",
     keywords: ["risk management trading", "stop loss strategy", "position sizing", "risk reward ratio", "maximum drawdown"],
     content: `
 Here's a truth most trading educators won't tell you: **your entry strategy barely matters if your risk management is poor.**
@@ -504,7 +504,7 @@ This sounds conservative. It is. That's the point.
 
 With 1% risk per trade, you can lose **50 trades in a row** and still have 60% of your account left. That's survivability. That's staying in the game long enough for your edge to play out.
 
-![Position sizing illustration](/blog/risk-management-position-sizing.png)
+![Position sizing illustration](/blog/risk-management-position-sizing.webp)
 
 ### How to Calculate Position Size
 
@@ -552,7 +552,7 @@ You just lost $200. The urge to win it back immediately is overwhelming. So you 
 
 Without a daily cap, one bad morning can erase weeks of gains. Professional traders set a daily loss limit (typically 2-5% of account) and walk away when it's hit.
 
-![Drawdown recovery chart](/blog/risk-management-drawdown.png)
+![Drawdown recovery chart](/blog/risk-management-drawdown.webp)
 
 ### Over-Leveraging
 
@@ -592,7 +592,7 @@ Control your risk per trade. Set your stop-loss before entry. Use a minimum 2:1 
     category: "Strategy",
     date: "2026-04-14",
     readTime: "8 min read",
-    image: "/blog/gold-strategies-hero.png",
+    image: "/blog/gold-strategies-hero.webp",
     keywords: ["gold trading bot", "XAUUSD bot", "gold scalping strategy", "XAUUSD strategy"],
     content: `
 Gold (XAUUSD) is the instrument that built trading careers. High volatility, strong trends, and 24-hour availability make it one of the best markets for [algorithmic trading](/blog/what-is-algorithmic-trading).
@@ -612,7 +612,7 @@ The simplest and most reliable gold strategy. XAUUSD tends to form strong, susta
 
 **Best timeframe:** 1H or 4H
 
-![EMA crossover on gold chart](/blog/gold-strategies-ema.png)
+![EMA crossover on gold chart](/blog/gold-strategies-ema.webp)
 
 \`\`\`pine
 //@version=5
@@ -646,7 +646,7 @@ Gold often overshoots and reverts to its mean, especially during the Asian sessi
 
 **Best timeframe:** 15M to 1H
 
-![Bollinger Bands on gold chart](/blog/gold-strategies-bollinger.png)
+![Bollinger Bands on gold chart](/blog/gold-strategies-bollinger.webp)
 
 \`\`\`pine
 //@version=5
@@ -725,7 +725,7 @@ PineForge's magic number system ensures each bot only manages its own trades. Ru
     category: "Education",
     date: "2026-04-12",
     readTime: "6 min read",
-    image: "/blog/forex-crypto-hero.png",
+    image: "/blog/forex-crypto-hero.webp",
     keywords: ["automated forex trading", "automated crypto trading", "forex bot", "crypto trading bot", "Bitcoin trading bot"],
     content: `
 You've built a strategy. You've [backtested](/blog/why-backtest-before-you-trade) it. Now comes the question: which market should your [trading bot](/blog/trading-bots-explained) trade?
@@ -740,7 +740,7 @@ Both forex and crypto offer real opportunities for **automated trading**. But th
 
 **For bots:** Crypto's continuous availability means your bot literally never stops. Forex's weekly close creates gap risk on Monday opens — your bot needs to handle that.
 
-![Forex vs Crypto comparison](/blog/forex-crypto-comparison.png)
+![Forex vs Crypto comparison](/blog/forex-crypto-comparison.webp)
 
 ## Volatility: How Much Does Price Move?
 
@@ -772,7 +772,7 @@ Both forex and crypto offer real opportunities for **automated trading**. But th
 - **BTCUSD** — Highest liquidity, 24/7. The safest crypto for bot trading.
 - **ETHUSD** — Good volatility, strong trends. Slightly less liquid than BTC.
 
-![Available trading symbols](/blog/forex-crypto-symbols.png)
+![Available trading symbols](/blog/forex-crypto-symbols.webp)
 
 ## How to Decide: A Practical Framework
 
@@ -819,7 +819,7 @@ Write your [Pine Script strategy](/blog/pine-script-beginners-guide) once. [Back
     category: "Tutorial",
     date: "2026-04-10",
     readTime: "8 min read",
-    image: "/blog/first-bot-hero.png",
+    image: "/blog/first-bot-hero.webp",
     keywords: ["deploy trading bot", "trading bot for beginners", "MT5 bot", "connect MT5 bot", "no-code trading bot"],
     content: `
 You've read about [algorithmic trading](/blog/what-is-algorithmic-trading). You've seen the [backtest results](/blog/why-backtest-before-you-trade). Now you want to **deploy your own trading bot**.
@@ -836,7 +836,7 @@ Here's exactly how to do it.
 
 That's it. Let's build.
 
-![Step-by-step bot setup](/blog/first-bot-steps.png)
+![Step-by-step bot setup](/blog/first-bot-steps.webp)
 
 ## Step 1: Sign Up for PineForge
 
@@ -901,7 +901,7 @@ Go to [Bots](/bots) and click **Create Bot**:
 
 Your bot is now live.
 
-![Bot dashboard showing live performance](/blog/first-bot-dashboard.png)
+![Bot dashboard showing live performance](/blog/first-bot-dashboard.webp)
 
 ## Step 6: Monitor Your Bot
 
@@ -949,7 +949,7 @@ Stop the bot, stop paying. It's that simple.
     category: "Education",
     date: "2026-04-08",
     readTime: "9 min read",
-    image: "/blog/indicators-hero.png",
+    image: "/blog/indicators-hero.webp",
     keywords: ["trading indicators", "RSI strategy", "EMA crossover", "MACD strategy", "Bollinger Bands strategy"],
     content: `
 Trading indicators are mathematical calculations applied to price data. They help you identify trends, momentum, volatility, and potential reversal points.
@@ -996,7 +996,7 @@ buy_signal = ta.crossover(macdLine, signalLine)
 sell_signal = ta.crossunder(macdLine, signalLine)
 \`\`\`
 
-![RSI and MACD indicators](/blog/indicators-rsi-macd.png)
+![RSI and MACD indicators](/blog/indicators-rsi-macd.webp)
 
 ## Momentum Indicators
 
@@ -1053,7 +1053,7 @@ dynamic_stop = close - 2 * atr  // widens in volatile markets
 
 In a calm market, ATR is small → tight stop. In a volatile market, ATR is large → wider stop. This prevents getting stopped out by normal noise while still protecting against real reversals.
 
-![Bollinger Bands and ATR](/blog/indicators-bollinger-atr.png)
+![Bollinger Bands and ATR](/blog/indicators-bollinger-atr.webp)
 
 ## How Should You Combine Trading Indicators?
 
@@ -1092,7 +1092,7 @@ The workflow:
     category: "Education",
     date: "2026-04-06",
     readTime: "6 min read",
-    image: "/blog/auto-vs-manual-hero.png",
+    image: "/blog/auto-vs-manual-hero.webp",
     keywords: ["automated trading", "automated trading platform", "trading bot", "algo trading"],
     content: `
 The debate between **automated trading** and manual trading isn't theoretical. It has real financial consequences — and the data overwhelmingly favors one side.
@@ -1107,7 +1107,7 @@ Let's compare them head-to-head across every metric that actually matters for lo
 
 **Winner:** Automated.
 
-![Emotions in trading: human vs bot](/blog/auto-vs-manual-emotions.png)
+![Emotions in trading: human vs bot](/blog/auto-vs-manual-emotions.webp)
 
 ## Emotional Discipline
 
@@ -1151,7 +1151,7 @@ One PineForge user runs 4 bots across XAUUSD, EURUSD, BTCUSD, and GBPUSD. Combin
 
 **Winner:** Automated.
 
-![Automated vs Manual trading scorecard](/blog/auto-vs-manual-results.png)
+![Automated vs Manual trading scorecard](/blog/auto-vs-manual-results.webp)
 
 ## The Scorecard
 
@@ -1194,7 +1194,7 @@ No servers. No complex APIs. Just strategies, data, and execution.
     category: "Education",
     date: "2026-04-25",
     readTime: "5 min read",
-    image: "/blog/trading-psychology-master-your-mind-for-market-success-hero.png",
+    image: "/blog/trading-psychology-master-your-mind-for-market-success-hero.webp",
     keywords: ["trading psychology", "trading", "psychology"],
     content: `
 # Trading Psychology: Master Your Mind for Market Success
@@ -1215,7 +1215,7 @@ Fear pushes you to exit winning trades too early, locking in small profits while
 
 Confirmation bias makes you seek out and interpret information that confirms your existing beliefs, ignoring contradictory evidence. If you're long on a currency pair, you'll focus on bullish news and dismiss bearish signals. This distorts your market view. Overconfidence, often fueled by a string of small wins, leads to larger position sizing and a disregard for [risk management](/blog/risk-management-strategies). You begin to believe you're invincible, only to face a harsh market correction. Your ego becomes a liability.
 
-![Trader looking stressed at multiple screens](/blog/trading-psychology-why-your-mind-is-your-worst-enemy-inline1.png)
+![Trader looking stressed at multiple screens](/blog/trading-psychology-why-your-mind-is-your-worst-enemy-inline1.webp)
 
 ## Mastering Your Trading Psychology: Strategies for Control
 
@@ -1278,7 +1278,7 @@ This code dictates precise actions. There's no room for human doubt or emotional
 
 Before deploying any strategy, you must validate its efficacy. [Backtest](/backtest) your ideas extensively. PineForge allows you to test strategies against historical data, providing objective performance metrics. This process validates your logic, not your emotions. You see how your strategy would have performed over years, under various market conditions, without your psychological interference. This data-driven approach builds confidence in your system, not in your gut feeling. For instance, our XAUUSD EMA strategy shows a 74.2% win rate, a 2.31 profit factor, and an +87.4% return – results driven by strict adherence to rules, not human discretion.
 
-![Robot hand holding a trading chart, symbolizing automated trading](/blog/trading-psychology-why-your-mind-is-your-worst-enemy-inline2.png)
+![Robot hand holding a trading chart, symbolizing automated trading](/blog/trading-psychology-why-your-mind-is-your-worst-enemy-inline2.webp)
 
 ## How Does PineForge Address Trading Psychology Challenges?
 
