@@ -154,6 +154,7 @@ function CreateBotModal({ onClose, onCreated }) {
     if (!form.broker_account_id) { toast.error('Please select a broker account. Connect one first in the Accounts page.'); return; }
     if (!form.script_id) { toast.error('Please select a strategy script'); return; }
     if (!form.lot_size || parseFloat(form.lot_size) <= 0) { toast.error('Lot size must be greater than 0'); return; }
+    if (parseFloat(form.lot_size) > 1) { toast.error('Lot size cannot exceed 1'); return; }
     setSubmitting(true);
     try {
       await api.post('/bots', {
@@ -283,11 +284,13 @@ function CreateBotModal({ onClose, onCreated }) {
                 type="number"
                 step="0.01"
                 min="0.01"
+                max="1"
                 required
                 value={form.lot_size}
                 onChange={set('lot_size')}
                 className={inputCls}
               />
+              <p className="mt-1 text-xs text-gray-500">Max 1.0 lot per trade.</p>
             </div>
 
             {/* Live toggle */}
