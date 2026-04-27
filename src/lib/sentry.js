@@ -1,6 +1,7 @@
-// Frontend Sentry initialiser — only fires when VITE_SENTRY_DSN is set.
-// Drop your DSN into .env (or Vercel env vars) as VITE_SENTRY_DSN and
-// the SPA starts capturing errors and performance traces immediately.
+// Frontend Sentry initialiser. The default DSN below targets the PineForge
+// React project on Sentry. Override via VITE_SENTRY_DSN (e.g. for staging
+// or a fork). DSNs are designed to be public (they're embedded in the
+// shipped bundle anyway), so committing one here is safe.
 //
 // Why: backend Sentry catches API and worker crashes, but a React render
 // crash, an unhandled promise rejection in the SPA, or a failed fetch
@@ -8,17 +9,21 @@
 
 import * as Sentry from '@sentry/react';
 
+const DEFAULT_DSN =
+  'https://ccdd556b5df275b529c476ea62f466fd@o4511287795318784.ingest.de.sentry.io/4511291080507472';
+
 let initialised = false;
 
 export function initSentry() {
   if (initialised) return;
-  const dsn = import.meta.env.VITE_SENTRY_DSN;
-  if (!dsn) return; // No-op in dev / when DSN not configured.
+  const dsn = import.meta.env.VITE_SENTRY_DSN || DEFAULT_DSN;
+  if (!dsn) return; // No-op when explicitly cleared.
 
   Sentry.init({
     dsn,
     environment: import.meta.env.MODE,
     release: import.meta.env.VITE_APP_VERSION,
+    sendDefaultPii: true,
     integrations: [
       Sentry.browserTracingIntegration(),
       Sentry.replayIntegration({
