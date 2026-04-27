@@ -49,6 +49,7 @@ const Backtest = lazy(() => import('./pages/Backtest'));
 const Accounts = lazy(() => import('./pages/Accounts'));
 const Billing = lazy(() => import('./pages/Billing'));
 const PaymentSuccess = lazy(() => import('./pages/PaymentSuccess'));
+const Admin = lazy(() => import('./pages/Admin'));
 
 function PageSpinner() {
   return (
@@ -101,6 +102,7 @@ function AppRoutes() {
         <Route path="/backtest" element={<ProtectedRoute><Backtest /></ProtectedRoute>} />
         <Route path="/accounts" element={<ProtectedRoute><Accounts /></ProtectedRoute>} />
         <Route path="/billing" element={<ProtectedRoute><Billing /></ProtectedRoute>} />
+        <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/terms" element={<Terms />} />

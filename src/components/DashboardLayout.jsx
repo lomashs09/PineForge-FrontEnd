@@ -13,6 +13,7 @@ import {
   X,
   AlertTriangle,
   Sparkles,
+  Shield,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
@@ -24,6 +25,11 @@ const sidebarItems = [
   { to: '/backtest', label: 'Backtest', icon: FlaskConical },
   { to: '/accounts', label: 'Accounts', icon: Wallet },
   { to: '/billing', label: 'Billing', icon: Receipt },
+];
+
+// Visible only to platform admins (user.is_admin === true).
+const adminItems = [
+  { to: '/admin', label: 'Admin', icon: Shield },
 ];
 
 export default function DashboardLayout({ children }) {
@@ -81,6 +87,37 @@ export default function DashboardLayout({ children }) {
             </Link>
           );
         })}
+
+        {user?.is_admin && (
+          <>
+            <div className="my-3 border-t border-gray-800" />
+            <p className="px-3 pb-1 text-[10px] font-semibold uppercase tracking-wider text-gray-600">
+              Platform
+            </p>
+            {adminItems.map((item) => {
+              const Icon = item.icon;
+              const active = isActive(item.to);
+              return (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  onClick={() => setSidebarOpen(false)}
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+                    active
+                      ? 'bg-amber-600/15 text-amber-400'
+                      : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+                  }`}
+                >
+                  <Icon className={`h-5 w-5 ${active ? 'text-amber-400' : ''}`} />
+                  {item.label}
+                  {active && (
+                    <span className="ml-auto h-1.5 w-1.5 rounded-full bg-amber-400" />
+                  )}
+                </Link>
+              );
+            })}
+          </>
+        )}
       </nav>
 
       {/* User section at bottom */}

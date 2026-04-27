@@ -132,6 +132,7 @@ Disallow: /billing
 Disallow: /payment-success
 Disallow: /verify-email
 Disallow: /check-email
+Disallow: /admin
 Disallow: /api/
 
 Sitemap: ${SITE}/sitemap.xml
