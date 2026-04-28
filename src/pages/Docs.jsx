@@ -41,7 +41,7 @@ const sections = [
       },
       {
         q: '5. Create and start a bot',
-        a: 'Go to My Bots → Create Bot. Select your broker account, strategy, symbol, timeframe, and lot size. Toggle Live Trading on for real orders, or leave it off for dry-run mode. Click Start.',
+        a: 'Go to My Bots → Create Bot. Select your broker account, strategy, symbol, timeframe, and lot size. Toggle Live Trading on for real orders, or leave it off for dry-run mode. Click Start. Note: each broker account can host only one bot — to run multiple strategies in parallel, connect a separate broker account for each.',
       },
     ],
   },
@@ -84,6 +84,10 @@ const sections = [
       {
         q: 'How many bots can I run?',
         a: 'Free plan: 2 bots, 1 broker account. Paid plans offer more — see the Pricing page.',
+      },
+      {
+        q: 'Can I run multiple bots on the same broker account?',
+        a: 'No. Each broker account can host exactly one bot at a time. This keeps trade attribution and PnL accounting clean — multiple bots on one account would share positions and history. To run more than one strategy in parallel, connect an additional broker account in the Accounts page (most brokers let you open multiple demo / sub-accounts for free), or stop and delete the existing bot before creating a new one on the same account.',
       },
       {
         q: 'What happens during server maintenance?',

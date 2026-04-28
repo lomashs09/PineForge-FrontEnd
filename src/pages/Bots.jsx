@@ -102,6 +102,11 @@ function CreateBotModal({ onClose, onCreated }) {
   const [accounts, setAccounts] = useState([]);
   const [scripts, setScripts] = useState([]);
   const [symbols, setSymbols] = useState([]);
+  // Map: broker_account_id -> name of the bot already using it.
+  // Each broker account can only host one bot (see backend validation
+  // in api/services/bot_service.py). The dropdown disables in-use
+  // accounts and shows which bot is occupying them.
+  const [accountInUse, setAccountInUse] = useState({});
   const [loadingDeps, setLoadingDeps] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
@@ -118,18 +123,32 @@ function CreateBotModal({ onClose, onCreated }) {
   useEffect(() => {
     async function load() {
       try {
-        const [accRes, scrRes, cfgRes] = await Promise.all([
+        const [accRes, scrRes, cfgRes, botsRes] = await Promise.all([
           api.get('/accounts'),
           api.get('/scripts'),
           api.get('/scripts/backtest/config'),
+          api.get('/bots'),
         ]);
         const accs = Array.isArray(accRes.data) ? accRes.data : accRes.data.accounts || [];
         const scrs = Array.isArray(scrRes.data) ? scrRes.data : scrRes.data.scripts || [];
         const syms = cfgRes.data?.symbols || [];
+        const existingBots = Array.isArray(botsRes.data) ? botsRes.data : [];
+
+        // Build the in-use map so the dropdown can disable accounts that
+        // already have a bot.
+        const inUse = {};
+        for (const b of existingBots) {
+          if (b.broker_account_id) inUse[b.broker_account_id] = b.name;
+        }
+        setAccountInUse(inUse);
+
         setAccounts(accs);
         setScripts(scrs);
         setSymbols(syms);
-        if (accs.length) setForm((f) => ({ ...f, broker_account_id: String(accs[0].id) }));
+
+        // Default to the first AVAILABLE account, not just the first.
+        const firstFree = accs.find((a) => !inUse[a.id]);
+        if (firstFree) setForm((f) => ({ ...f, broker_account_id: String(firstFree.id) }));
         if (scrs.length) setForm((f) => ({ ...f, script_id: String(scrs[0].id) }));
         if (syms.length) setForm((f) => ({ ...f, symbol: syms[0].mt5 || syms[0].symbol }));
       } catch {
@@ -152,6 +171,10 @@ function CreateBotModal({ onClose, onCreated }) {
     e.preventDefault();
     if (!form.name.trim()) { toast.error('Bot name is required'); return; }
     if (!form.broker_account_id) { toast.error('Please select a broker account. Connect one first in the Accounts page.'); return; }
+    if (accountInUse[form.broker_account_id]) {
+      toast.error(`This broker account is already used by "${accountInUse[form.broker_account_id]}". Each broker account can host only one bot.`);
+      return;
+    }
     if (!form.script_id) { toast.error('Please select a strategy script'); return; }
     if (!form.lot_size || parseFloat(form.lot_size) <= 0) { toast.error('Lot size must be greater than 0'); return; }
     if (parseFloat(form.lot_size) > 1) { toast.error('Lot size cannot exceed 1'); return; }
@@ -222,15 +245,33 @@ function CreateBotModal({ onClose, onCreated }) {
                 <div className="rounded-lg border border-yellow-900/30 bg-yellow-950/20 p-3">
                   <p className="text-xs text-yellow-300">No broker accounts found. <a href="/accounts" className="underline hover:text-yellow-200">Connect one first</a>.</p>
                 </div>
+              ) : accounts.every((a) => accountInUse[a.id]) ? (
+                <div className="rounded-lg border border-yellow-900/30 bg-yellow-950/20 p-3">
+                  <p className="text-xs text-yellow-300">
+                    All your broker accounts already have a bot.
+                    {' '}
+                    <a href="/accounts" className="underline hover:text-yellow-200">Connect another account</a>
+                    {' '}or delete an existing bot to free a slot.
+                  </p>
+                </div>
               ) : (
-                <select value={form.broker_account_id} onChange={set('broker_account_id')} required className={inputCls}>
-                  <option value="">Select an account...</option>
-                  {accounts.map((a) => (
-                    <option key={a.id} value={a.id}>
-                      {a.label} &mdash; {a.mt5_login} ({a.mt5_server})
-                    </option>
-                  ))}
-                </select>
+                <>
+                  <select value={form.broker_account_id} onChange={set('broker_account_id')} required className={inputCls}>
+                    <option value="">Select an account...</option>
+                    {accounts.map((a) => {
+                      const taken = accountInUse[a.id];
+                      return (
+                        <option key={a.id} value={a.id} disabled={!!taken}>
+                          {a.label} &mdash; {a.mt5_login} ({a.mt5_server})
+                          {taken ? ` — in use by "${taken}"` : ''}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <p className="mt-1 text-xs text-gray-500">
+                    Each broker account can host only one bot. Disabled rows are already in use.
+                  </p>
+                </>
               )}
             </div>
 
