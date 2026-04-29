@@ -54,14 +54,14 @@ const pricingItems = [
     label: 'Inactive Account Hosting',
     price: '$0.002',
     unit: 'per hour',
-    description: 'Keep your account connected when no bots are running. ~$1.44/month.',
+    description: 'Charged only between Stop and Start, while your MT5 account stays connected. Stopping a bot auto-undeploys the account so this fee usually drops to $0.',
   },
   {
     icon: Zap,
     label: 'Bot Deployment',
     price: '$0.13',
     unit: 'per start',
-    description: 'Small fee each time you start or restart a bot.',
+    description: 'One-time fee each time a bot is started — covers the MetaAPI account deployment to a trading server. Stopping the bot auto-undeploys.',
   },
 ];
 
@@ -77,7 +77,7 @@ const freeFeatures = [
 const examples = [
   {
     label: 'Casual Trader',
-    description: '1 account, 1 bot running 12h/day',
+    description: '1 account / 1 bot running 12h/day',
     breakdown: [
       { item: 'Account setup (one-time)', cost: 3.00 },
       { item: 'Bot runtime (12h x 30 days)', cost: 0.022 * 12 * 30 },
@@ -87,18 +87,18 @@ const examples = [
   },
   {
     label: 'Active Trader',
-    description: '2 accounts, 3 bots running 24/7',
+    description: '3 accounts / 3 bots running 24/7',
     breakdown: [
-      { item: 'Account setup (one-time)', cost: 3.00 * 2 },
+      { item: 'Account setup (one-time, x3)', cost: 3.00 * 3 },
       { item: '3 bots x 24h x 30 days', cost: 0.022 * 24 * 30 * 3 },
       { item: 'Deployments (~10/month)', cost: 0.13 * 10 },
     ],
   },
   {
     label: 'Professional',
-    description: '5 accounts, 10 bots running 24/7',
+    description: '10 accounts / 10 bots running 24/7',
     breakdown: [
-      { item: 'Account setup (one-time)', cost: 3.00 * 5 },
+      { item: 'Account setup (one-time, x10)', cost: 3.00 * 10 },
       { item: '10 bots x 24h x 30 days', cost: 0.022 * 24 * 30 * 10 },
       { item: 'Deployments (~20/month)', cost: 0.13 * 20 },
     ],
@@ -108,7 +108,11 @@ const examples = [
 const faqs = [
   {
     q: 'How does usage-based pricing work?',
-    a: 'You only pay for what you use. Bots are billed per hour while running, and accounts have a small hourly hosting fee. Stop a bot anytime and the charges stop immediately.',
+    a: 'You only pay for what you use. Bots are billed per hour while running, and accounts have a small hourly hosting fee while connected to a trading server. Stop a bot anytime — we auto-undeploy the account, so the hourly hosting fee drops to $0 until you start the bot again.',
+  },
+  {
+    q: 'Why one bot per broker account?',
+    a: 'Each broker account hosts exactly one bot. This keeps trade attribution and PnL clean — running multiple bots on one MT5 account would mix their positions and history. To run more strategies in parallel, connect another broker account (most brokers let you open multiple demo or sub-accounts for free), then create a bot on each. Pricing is per account / per bot, so 3 accounts running = 3 bots running.',
   },
   {
     q: 'Is backtesting free?',
