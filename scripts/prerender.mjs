@@ -11,7 +11,34 @@ import { readFile, writeFile, mkdir, stat } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve, dirname, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import puppeteer from 'puppeteer';
+
+// On Vercel's build image, the bundled Puppeteer Chrome can't find NSS libs
+// (libnspr4.so etc) — Vercel doesn't ship them. Switch to @sparticuz/chromium
+// (statically-linked Chromium with libs bundled) when running on Vercel.
+// Locally we keep using `puppeteer` so dev/Mac builds need no extra setup.
+const ON_VERCEL = !!process.env.VERCEL;
+const puppeteer = ON_VERCEL
+  ? (await import('puppeteer-core')).default
+  : (await import('puppeteer')).default;
+const sparticuzChromium = ON_VERCEL
+  ? (await import('@sparticuz/chromium')).default
+  : null;
+
+async function launchBrowser() {
+  if (ON_VERCEL) {
+    return puppeteer.launch({
+      args: sparticuzChromium.args,
+      executablePath: await sparticuzChromium.executablePath(),
+      headless: sparticuzChromium.headless,
+      protocolTimeout: 120000,
+    });
+  }
+  return puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+    protocolTimeout: 120000,
+  });
+}
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, '..');
@@ -163,11 +190,7 @@ async function run() {
   // accumulate state and eventually time out spawning new pages.
   const ROUTES_PER_BROWSER = 30;
 
-  let browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
-    protocolTimeout: 120000,
-  });
+  let browser = await launchBrowser();
 
   let ok = 0;
   let fail = 0;
@@ -177,11 +200,7 @@ async function run() {
     for (const route of routes) {
       if (routesSinceRestart >= ROUTES_PER_BROWSER) {
         await browser.close();
-        browser = await puppeteer.launch({
-          headless: true,
-          args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
-          protocolTimeout: 120000,
-        });
+        browser = await launchBrowser();
         routesSinceRestart = 0;
       }
 
