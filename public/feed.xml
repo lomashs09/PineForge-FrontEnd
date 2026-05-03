@@ -6,7 +6,15 @@
     <atom:link href="https://getpineforge.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>Trading strategies, Pine Script tutorials, and algorithmic trading insights from PineForge.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Apr 2026 04:25:31 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 03 May 2026 10:31:48 GMT</lastBuildDate>
+    <item>
+      <title>How to Backtest a Gold Trading Bot on the 1-Hour Timeframe (XAUUSD Walkthrough)</title>
+      <link>https://getpineforge.com/blog/backtest-gold-trading-bot-1h-timeframe</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/backtest-gold-trading-bot-1h-timeframe</guid>
+      <pubDate>Sun, 03 May 2026 00:00:00 GMT</pubDate>
+      <description>Most gold strategies look brilliant on paper and bleed money live. The gap is almost always sloppy backtesting. Here&apos;s a repeatable workflow for backtesting any gold trading bot on the 1H timeframe — what to test, which metrics matter, and how to read the result honestly.</description>
+      <enclosure url="https://getpineforge.com/blog/backtest-gold-1h-hero.webp" type="image/webp" />
+    </item>
     <item>
       <title>Trading Psychology: Master Your Mind for Market Success</title>
       <link>https://getpineforge.com/blog/trading-psychology-master-your-mind-for-market-success</link>

@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
+    <loc>https://getpineforge.com/blog/backtest-gold-trading-bot-1h-timeframe</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/backtest-gold-1h-hero.webp</image:loc>
+      <image:title>How to Backtest a Gold Trading Bot on the 1-Hour Timeframe (XAUUSD Walkthrough)</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://getpineforge.com/blog/what-is-algorithmic-trading</loc>
     <image:image>
       <image:loc>https://getpineforge.com/blog/algo-trading-hero.webp</image:loc>
