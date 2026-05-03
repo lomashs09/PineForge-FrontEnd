@@ -193,24 +193,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://getpineforge.com/blog/write-a-blog-post-about-heikin-ashi-smoother-charts-cleaner</loc>
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://getpineforge.com/blog/write-a-blog-post-about-the-risks-of-trading-bots-and-how-to</loc>
-    <lastmod>2026-05-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://getpineforge.com/blog/write-a-blog-post-about-complete-beginners-guide-to-trading</loc>
-    <lastmod>2026-05-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://getpineforge.com/strategies/ema-crossover</loc>
     <lastmod>2026-05-03</lastmod>
     <changefreq>monthly</changefreq>

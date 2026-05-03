@@ -6,17 +6,7 @@
     <atom:link href="https://getpineforge.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>Trading strategies, Pine Script tutorials, and algorithmic trading insights from PineForge.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 03 May 2026 11:09:14 GMT</lastBuildDate>
-    <item>
-      <title>Write a blog post about: Complete Beginner&apos;s Guide to Trading Bots</title>
-      <link>https://getpineforge.com/blog/write-a-blog-post-about-complete-beginners-guide-to-trading</link>
-      <guid isPermaLink="true">https://getpineforge.com/blog/write-a-blog-post-about-complete-beginners-guide-to-trading</guid>
-      <pubDate>Sun, 03 May 2026 00:00:00 GMT</pubDate>
-      <description>{
-  \&quot;title\&quot;: \&quot;The Complete Beginner&apos;s Guide to Trading Bots\&quot;,
-  \&quot;excerpt\&quot;: \&quot;Demystify automated trading. This complete beginner&apos;s guide to trading bots...</description>
-      <enclosure url="https://getpineforge.com/blog/write-a-blog-post-about-complete-beginners-guide-to-trading-hero.webp" type="image/webp" />
-    </item>
+    <lastBuildDate>Sun, 03 May 2026 11:16:56 GMT</lastBuildDate>
     <item>
       <title>How to Backtest a Gold Trading Bot on the 1-Hour Timeframe (XAUUSD Walkthrough)</title>
       <link>https://getpineforge.com/blog/backtest-gold-trading-bot-1h-timeframe</link>
@@ -24,26 +14,6 @@
       <pubDate>Sun, 03 May 2026 00:00:00 GMT</pubDate>
       <description>Most gold strategies look brilliant on paper and bleed money live. The gap is almost always sloppy backtesting. Here&apos;s a repeatable workflow for backtesting any gold trading bot on the 1H timeframe — what to test, which metrics matter, and how to read the result honestly.</description>
       <enclosure url="https://getpineforge.com/blog/backtest-gold-1h-hero.webp" type="image/webp" />
-    </item>
-    <item>
-      <title>Write a blog post about: The Risks of Trading Bots (And How to Manage Them)</title>
-      <link>https://getpineforge.com/blog/write-a-blog-post-about-the-risks-of-trading-bots-and-how-to</link>
-      <guid isPermaLink="true">https://getpineforge.com/blog/write-a-blog-post-about-the-risks-of-trading-bots-and-how-to</guid>
-      <pubDate>Sat, 02 May 2026 00:00:00 GMT</pubDate>
-      <description>{
-  \&quot;title\&quot;: \&quot;The True Costs: Navigating Trading Bot Risks and Mastering Mitigation\&quot;,
-  \&quot;excerpt\&quot;: \&quot;Understand the inherent trading bot risks and implement...</description>
-      <enclosure url="https://getpineforge.com/blog/write-a-blog-post-about-the-risks-of-trading-bots-and-how-to-hero.webp" type="image/webp" />
-    </item>
-    <item>
-      <title>Write a blog post about: Heikin Ashi: Smoother Charts, Cleaner Signals</title>
-      <link>https://getpineforge.com/blog/write-a-blog-post-about-heikin-ashi-smoother-charts-cleaner</link>
-      <guid isPermaLink="true">https://getpineforge.com/blog/write-a-blog-post-about-heikin-ashi-smoother-charts-cleaner</guid>
-      <pubDate>Fri, 01 May 2026 00:00:00 GMT</pubDate>
-      <description>{
-  \&quot;title\&quot;: \&quot;Heikin Ashi Candles: Smoother Charts, Cleaner Trading Signals\&quot;,
-  \&quot;excerpt\&quot;: \&quot;Master Heikin Ashi candles for clearer trend identification and...</description>
-      <enclosure url="https://getpineforge.com/blog/write-a-blog-post-about-heikin-ashi-smoother-charts-cleaner-hero.webp" type="image/webp" />
     </item>
     <item>
       <title>Trading Psychology: Master Your Mind for Market Success</title>
