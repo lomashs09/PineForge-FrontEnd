@@ -1,5 +1,396 @@
 const blogPosts = [
   // ═══════════════════════════════════════════════════════════════
+  // Post 14: Connect Exness MT5 to Trading Bot
+  // Primary keyword: connect Exness MT5 to a trading bot
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: "connect-exness-mt5-trading-bot",
+    title: "How to Connect Exness MT5 to a Trading Bot in 2026 (Full Walkthrough)",
+    excerpt: "Exness is one of the most popular MT5 brokers in the world — and one of the trickiest to automate. Here's exactly how to connect your Exness MT5 account to an automated trading bot, from credentials to deployment.",
+    category: "Tutorial",
+    date: "2026-05-03",
+    readTime: "8 min read",
+    image: "/blog/exness-mt5-connect-hero.webp",
+    keywords: [
+      "connect Exness MT5 to trading bot",
+      "Exness automated trading",
+      "Exness MT5 bot",
+      "MetaAPI Exness",
+      "automated forex bot",
+    ],
+    content: `
+You've built a strategy. You've [backtested it](/blog/backtest-gold-trading-bot-1h-timeframe). The numbers look real. Now you need to put it on a live broker — and Exness is the most likely candidate. It's one of the largest MT5 brokers in the world, ships tight spreads on XAUUSD and forex majors, and is available in most regions where retail trading is legal.
+
+This guide walks you through how to **connect Exness MT5 to a trading bot** end to end — credentials you'll need, the security model, exactly what PineForge does behind the scenes, and how to verify your bot is live and trading. Five minutes of setup, lifetime of automation.
+
+![PineForge connecting to an Exness MT5 account — login form with the green "connected" status indicator](/blog/exness-mt5-connect-hero.webp)
+
+## What You Need Before You Start
+
+Three things — get them ready and the connection itself takes ninety seconds.
+
+### A Funded Exness MT5 Account
+
+You need an actual MT5 account on Exness, not MT4. PineForge connects via the MT5 protocol exclusively. Go to your Exness Personal Area, open a new MT5 account if you don't already have one (Real or Demo both work), and note three values: **MT5 login number** (a 7-9 digit ID), **password** (the trading password, not your portal login), and **server name** (something like \`Exness-MT5Real6\` or \`Exness-MT5Trial7\`).
+
+If you've forgotten the trading password, reset it from Exness Personal Area → Settings → Trading password. Don't reuse your portal login password — they're different credentials.
+
+### A Bot Strategy You Trust
+
+Don't connect Exness so you can hunt for a strategy. Connect Exness because you already have one. Run your Pine Script through [PineForge's backtest engine](/backtest) on at least 12 months of XAUUSD or your chosen symbol. Verify the metrics: profit factor above 1.5, max drawdown you can stomach, enough trades to be statistically meaningful. Live execution magnifies a strategy's true edge — or its true flaws.
+
+### A Clear Risk Plan
+
+Decide your lot size and your hard daily loss limit *before* you wire up the account. Live emotion overrides logic, and the moment your bot is connected to real capital, every "I'll figure it out later" decision becomes a real money decision. Cap your daily loss at 2-3% of account equity. Set a maximum lot size your script can never exceed.
+
+## The Step-by-Step Connection Flow
+
+Once your prerequisites are ready, here's the exact sequence inside PineForge.
+
+### Step 1 — Open the Accounts Page and Click "Add Broker"
+
+Inside your PineForge dashboard, navigate to Trading Accounts. Click the green "Add Broker Account" button. A connection dialog opens with a single dropdown for broker selection.
+
+### Step 2 — Choose Exness From the Broker List
+
+Pick Exness from the dropdown. PineForge has pre-configured server profiles for major MT5 brokers including Exness, IC Markets, FTMO, and others, so the next field will surface only the Exness servers MetaAPI supports. This eliminates one of the most common setup errors — manually typing a server name and getting it wrong.
+
+### Step 3 — Enter Your MT5 Credentials
+
+![Entering MT5 login credentials with end-to-end encryption shield indicator](/blog/exness-mt5-connect-credentials.webp)
+
+Three fields:
+
+- **Login** — your MT5 account number (7-9 digits)
+- **Password** — your MT5 *trading* password (not your Exness portal password)
+- **Server** — pick from the dropdown (e.g., Exness-MT5Real6, Exness-MT5Trial7)
+
+PineForge encrypts credentials in transit and at rest. Your password is never stored as plain text — it lives in an encrypted vault that only the connection layer can decrypt at runtime to authenticate with MetaAPI.
+
+### Step 4 — Submit and Watch the Deploy
+
+Click Connect. PineForge does several things in parallel:
+
+1. Validates the credentials against the Exness MT5 server via MetaAPI
+2. Provisions a dedicated MetaAPI account ID for your connection
+3. Deploys the account to MetaAPI's cloud infrastructure
+4. Pulls your live balance, equity, margin, and open positions
+
+If credentials are correct, the account flips to "Deployed" within 30-60 seconds. If something fails — wrong password, wrong server, account not yet activated — you'll see an explicit error message. No silent failures.
+
+### Step 5 — Verify the Connection
+
+![Connected Exness account on the PineForge dashboard with live balance and "Deployed" status](/blog/exness-mt5-connect-deployed.webp)
+
+Once green, the account card shows your live balance, equity, and margin. Pull up MT5 Desktop on your phone or computer — the values should match exactly. If they do, the connection is working and ready to host a bot. If they don't, the credentials connected to the wrong account (the most common cause is using the demo password on a real account or vice versa).
+
+## How Does PineForge Actually Connect to Exness MT5?
+
+Under the hood, PineForge uses [MetaAPI](https://metaapi.cloud), a cloud-based MT5 protocol gateway that acts as the bridge between your bot's logic and Exness's MT5 servers. Your bot doesn't run on a Windows VPS, doesn't need a downloaded MT5 terminal, and never touches Exness's servers directly.
+
+This matters for three reasons:
+
+- **No VPS upkeep.** Traditional bots require a Windows server hosting MT5 24/7. MetaAPI handles that for you.
+- **Connection resilience.** When Exness has maintenance windows or network blips, MetaAPI's cloud auto-reconnects and queues orders. Your bot doesn't crash on a single disconnect.
+- **Multi-account support.** You can connect multiple Exness accounts (one per bot) and orchestrate them from a single PineForge dashboard.
+
+## Is It Safe to Give My MT5 Credentials to PineForge?
+
+Yes, with the standard caveats that apply to any third-party connection. Three practical points:
+
+**Credentials are encrypted, not stored as plain text.** PineForge stores your MT5 password in an encrypted vault. The decryption only happens at runtime, in memory, when the bot needs to authenticate to MetaAPI.
+
+**Use a separate MT5 account from your manual trading account.** Even if you trust the platform, isolation is good security hygiene. Create a dedicated MT5 account on Exness for your bot. If anything ever goes wrong, the blast radius is contained.
+
+**MT5 trading password ≠ Exness portal password.** PineForge only needs the trading password — the credential MT5 itself uses to send orders. Your Exness portal login (which controls fund withdrawals and KYC) is never required and never shared.
+
+## Why Doesn't My Bot Trade After I Connect Exness?
+
+A connected account is necessary but not sufficient. After Exness is connected, you still need to:
+
+1. Create a [bot](/blog/how-to-build-your-first-bot) and assign it to the Exness account
+2. Pick a strategy (Pine Script) for the bot to run
+3. Configure symbol, timeframe, and lot size
+4. Click Start
+
+Once started, the bot will trade on your Exness account using its strategy logic. If the strategy says "no entry signal yet," the bot will sit idle — that's correct behaviour. Watch the logs, not the trade count.
+
+## Can I Connect Multiple Exness Accounts to One PineForge User?
+
+Yes. Each Exness MT5 account becomes a separate Trading Account record in PineForge, with its own credentials, its own bot, and its own isolated execution. PineForge enforces [one bot per broker account](/blog/how-many-bots-per-mt5-account) — magic-number collisions are impossible because each bot owns its account.
+
+If you want to run a Gold strategy on one Exness account and an EURUSD strategy on another, just connect both. The dashboard aggregates the PnL across all of them.
+
+## What Happens If My Exness Password Changes?
+
+The connection breaks. PineForge will show an authentication error in the bot's logs and the account card will flip to a red status. Update the password from Trading Accounts → click the account → "Update credentials." The bot resumes once the new password is verified.
+
+This is also why you should never reuse a trading password you also use elsewhere — rotation cascades into bot downtime.
+
+## Conclusion
+
+Connecting Exness MT5 to a trading bot is no longer a Windows VPS project. With PineForge, it's a five-step form. The hard part isn't the connection — it's the strategy, the risk plan, and the discipline to let the bot do its job once it's live.
+
+Three takeaways. First, get your MT5 trading password (not your portal password) and the right server name before you start. Second, isolate your bot's MT5 account from your manual trading account. Third, verify the connection by cross-referencing balance against MT5 Desktop before you click Start.
+
+[Connect your Exness MT5 account on PineForge](https://getpineforge.com/signup) — usage-based pricing, no monthly fees, your strategy on autopilot.
+    `,
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // Post 13: Profit Factor vs Win Rate
+  // Primary keyword: profit factor vs win rate
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: "profit-factor-vs-win-rate",
+    title: "Profit Factor vs Win Rate: The Metric That Actually Predicts Bot Profitability",
+    excerpt: "Most traders obsess over win rate. Most professionals barely look at it. Here's why profit factor is the metric that separates strategies with edge from strategies that are secretly coin flips — and how to read it correctly.",
+    category: "Education",
+    date: "2026-05-03",
+    readTime: "8 min read",
+    image: "/blog/profit-factor-win-rate-hero.webp",
+    keywords: [
+      "profit factor vs win rate",
+      "profit factor",
+      "win rate",
+      "trading metrics",
+      "backtest metrics",
+    ],
+    content: `
+A 70% win rate sounds incredible. A 2.0 profit factor sounds like jargon. So most retail traders chase the first number and ignore the second — and lose money to a strategy that wins seven times out of ten.
+
+This article explains why **profit factor** is the metric that actually predicts whether your bot will make money over time, why **win rate** alone is one of the most misleading numbers in all of trading, and how to read both of them correctly the next time you look at a backtest.
+
+![A 70% win rate paired with a falling equity curve vs a 2.3 profit factor paired with a rising one — same backtest data, two ways to read it](/blog/profit-factor-win-rate-hero.webp)
+
+## What Is Profit Factor (and Why It's Hard to Fake)
+
+Profit factor is a single number that captures whether your strategy makes more money on its winners than it loses on its losers. The formula is:
+
+**Profit Factor = Gross Winning Trades ÷ Absolute Value of Gross Losing Trades**
+
+If your strategy made $5,000 across all winning trades and lost $2,500 across all losing trades, your profit factor is 2.0. You earned two dollars for every one you gave back.
+
+### What the Numbers Mean in Practice
+
+| Profit Factor | Interpretation |
+|---|---|
+| Below 1.0 | Strategy loses money. Don't deploy. |
+| 1.0 – 1.3 | Marginal. Costs (spread, slippage) will kill it. |
+| 1.3 – 1.5 | Acceptable. Survivable in live trading. |
+| 1.5 – 2.0 | Solid. Most professionally managed strategies live here. |
+| Above 2.0 | Excellent. Be skeptical — verify it's not overfit. |
+| Above 3.0 | Almost certainly overfit or look-ahead bias. |
+
+### Why Profit Factor Is Hard to Fake
+
+You can manufacture a high win rate by closing every trade quickly with a tiny gain — the "snowflake" strategy. But the moment a few trades go against you, the loss tax dwarfs all the small wins. Profit factor catches this immediately because it weighs the dollar magnitude of wins against losses, not the count.
+
+A strategy with a 95% win rate and a 0.4 profit factor is bleeding money — the 5% of losses are wiping out the 95% of wins. Profit factor surfaces this in one number.
+
+## Why Win Rate Alone Tells You Almost Nothing
+
+Win rate measures how many trades closed in profit out of total trades. A 70% win rate means seven out of ten trades made money. Sounds great. It isn't.
+
+![Profit factor as a balance scale — gross winning dollars on one side, gross losing dollars on the other](/blog/profit-factor-formula-visual.webp)
+
+### The Snowflake Trap
+
+A common entry-level strategy: enter on every signal, take a 5-pip profit, close on a 50-pip stop. You'll win 80%+ of the time because the small target is easy to hit. But every loser wipes out ten winners. After a normal market drawdown, the account is gone.
+
+This is why high-win-rate strategies are dangerous for new traders. The pattern is intuitive (winning often *feels* like winning) but the math is unforgiving (you're just front-loading wins and back-loading the bankrupting loss).
+
+### The Reverse Pattern: Low Win Rate, High Profit Factor
+
+Trend-following strategies win 35-45% of the time, but their winners run 3-5x larger than their losers. The Turtle Traders, Renaissance Medallion, and most managed-futures funds operate at sub-50% win rates with profit factors above 2.0. They lose more often than they win, and they're some of the most profitable systems ever deployed.
+
+If you only looked at win rate, you'd reject these strategies as broken. The profit factor tells you they're not.
+
+## Reading Win Rate and Profit Factor Together
+
+The two numbers must always be read as a pair. Here's how the four combinations actually behave.
+
+| Win Rate | Profit Factor | Verdict |
+|---|---|---|
+| High (60%+) | High (>1.5) | Strong system. Verify no overfit. |
+| High (60%+) | Low (<1.3) | Snowflake trap. Wins are tiny, losses are huge. |
+| Low (<50%) | High (>1.5) | Trend-follower. Few big wins offset many small losses. |
+| Low (<50%) | Low (<1.3) | Strategy doesn't work. Move on. |
+
+The most dangerous combination for retail traders is **high win rate + low profit factor**. It feels like a winning system because most days end in green. The loss is concentrated in a handful of catastrophic trades — usually after a drawdown the trader didn't think possible.
+
+### How Big Should the Gap Between Average Win and Average Loss Be?
+
+Pair win rate with the **average win to average loss ratio**. If your average winner is $200 and your average loser is $100, that's a 2:1 ratio — you only need a 35% win rate to be profitable. If your average winner is $50 and your average loser is $300, you need an 86% win rate just to break even.
+
+PineForge's [backtest engine](/backtest) shows both numbers in the metrics panel. Always cross-check them before celebrating a high win rate.
+
+## A Real-World Worked Example
+
+![Histogram of backtest trade PnLs showing a long right tail of big wins and a tight cluster of small losses](/blog/profit-factor-trade-distribution.webp)
+
+Take a real Gold Trend Hunter V2 backtest on XAUUSD 1H from a recent run on PineForge:
+
+- **Win Rate:** 48.95%
+- **Profit Factor:** 2.09
+- **Total Return:** +1,938%
+- **Max Drawdown:** 36.78%
+- **Sharpe Ratio:** -0.23
+
+A retail trader staring at the 48.95% win rate would say "this strategy doesn't work — it loses more than half its trades." A professional would look at the 2.09 profit factor and say "this strategy is right at the edge of viable, but the negative Sharpe and 37% drawdown reveal it's heavily reliant on a few outsized winners during a trending year."
+
+Same backtest, two completely different reads. The professional read is the correct one — and you only get there by reading profit factor and win rate together, not in isolation.
+
+For a deeper walkthrough of the metrics that matter for gold strategies, see our [backtest gold trading bot guide](/blog/backtest-gold-trading-bot-1h-timeframe).
+
+## What Profit Factor Doesn't Tell You
+
+Profit factor isn't a complete metric. Don't deploy a strategy on profit factor alone — pair it with:
+
+- **Max drawdown** — even a 3.0 profit factor can wipe an account if the drawdown is 60%
+- **Sharpe ratio** — profit factor doesn't capture volatility-adjusted returns
+- **Trade count** — a 3.0 profit factor on 12 trades is meaningless
+- **Time period** — profit factor on a single trending year is inflated
+
+A strategy is only ready for live trading when **all** of these check out. Profit factor is the headline metric — the others are the fine print that prevents a disaster. Read our [risk management guide](/blog/risk-management-strategies) for how to size positions and limit catastrophic losses.
+
+## Is a 1.5 Profit Factor Good Enough to Trade Live?
+
+For most retail traders on most strategies, yes — provided your max drawdown is under 20% and you have a sample of 100+ trades. The reason: live trading degrades backtest performance by 10-20% on average due to slippage, spread, and execution delay. A 1.5 profit factor in a backtest typically becomes 1.3 in live, which is still profitable. A 1.2 profit factor in a backtest typically becomes 1.0 or below — exactly break-even or losing.
+
+If your strategy backtests at 1.2, don't deploy it. Iterate.
+
+## How Do I Improve My Profit Factor?
+
+Three levers, in order of impact:
+
+1. **Cut the worst losers.** Tighten your stop-loss, exclude the worst-performing market regimes, or filter signals during low-liquidity hours. Even removing the bottom 10% of losing trades often pushes profit factor from 1.4 to 1.7+.
+2. **Let winners run.** Replace fixed-target take-profits with trailing stops. The biggest profit factor uplift in most strategies comes from holding winners longer, not from finding more entries.
+3. **Filter weak signals.** Add a confirmation filter (volume, ADX, higher-timeframe trend) so the bot only takes the cleanest setups. Fewer trades, but each one with better expectancy.
+
+## Conclusion
+
+Win rate is the number that gets shouted in marketing screenshots. Profit factor is the number that determines whether your account grows. Read them together, weight them honestly, and never trust a single metric in isolation.
+
+Three takeaways. First, profit factor catches the mathematical reality that win rate hides — you can win 90% of the time and still lose money. Second, low win rate combined with high profit factor is a feature, not a bug, of trend-following systems. Third, no metric is sufficient on its own — pair profit factor with drawdown, Sharpe, and trade count before you deploy.
+
+[Run a backtest on PineForge](https://getpineforge.com/signup) and read the metrics the way professionals do — gross profit divided by gross loss, with eyes wide open.
+    `,
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // Post 12: One Bot Per MT5 Account
+  // Primary keyword: how many bots per MT5 account
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: "how-many-bots-per-mt5-account",
+    title: "How Many Trading Bots Should You Run Per MT5 Account? (Hint: One)",
+    excerpt: "Stacking multiple bots on a single MT5 account sounds efficient. It's actually a recipe for magic-number collisions, lost trades, and an unauditable PnL. Here's why one bot per account is the only safe model — and how to scale without sharing.",
+    category: "Strategy",
+    date: "2026-05-03",
+    readTime: "7 min read",
+    image: "/blog/one-bot-per-account-hero.webp",
+    keywords: [
+      "how many bots per MT5 account",
+      "bots per broker account",
+      "multi-bot trading",
+      "magic number trading",
+      "MT5 account isolation",
+    ],
+    content: `
+"Why can't I run three bots on the same MT5 account? They use different magic numbers — they shouldn't conflict."
+
+This is one of the most common questions new automated traders ask. The intuitive answer is "you can." The correct answer is "you shouldn't." The difference between the two is the gap between a reliable trading operation and one that quietly breaks at 3am on a Tuesday.
+
+This guide explains why **one bot per MT5 account** is the only safe deployment model, what specifically goes wrong when you stack bots, and how to scale to multiple strategies without ever sharing an account.
+
+![One focused bot owning its MT5 terminal cleanly, while in the background three bots fight over a single shared terminal](/blog/one-bot-per-account-hero.webp)
+
+## What "Magic Numbers" Are Supposed to Do
+
+Every order placed on MT5 carries an integer **magic number**, a tag that identifies which strategy or bot opened the position. The theory is elegant: bot A uses magic 1001, bot B uses magic 2002, and each bot only manages positions tagged with its own magic. Multiple strategies on one account, peacefully coexisting.
+
+The theory works for the strategy logic. It breaks for everything else.
+
+## Where the One-Bot-Per-Account Model Wins
+
+### Brokers Strip Magic Numbers on Closes
+
+This is the single biggest reason. When MT5 brokers — including Exness, IC Markets, FTMO, and most ECN providers — close a position via the broker's own logic (stop-out, margin call, weekend close), the resulting deal record often has the magic number reset to zero. Your bot sees a position vanish, can't match it to its own order log, and either skips the cleanup or tries to re-open it.
+
+We've reproduced this on Exness specifically with multiple shared-account setups. The magic-stripping happens silently. Logs show the bot opening the position with magic 1001, but the OUT deal carries magic 0. From the bot's perspective, the position never closed — it just disappeared.
+
+### PnL Aggregation Becomes Unauditable
+
+![Two bots tagging the same broker position with conflicting magic-number identifiers, triggering double-counting](/blog/magic-number-collision.webp)
+
+When three bots share an account and a position closes with a stripped magic, you can't attribute the PnL to any specific bot. Total account PnL is correct. Per-bot performance is fiction. You have no way to evaluate which strategy is actually working — every bot's reported PnL silently includes a slice of every other bot's losses or gains.
+
+The consequence: you can't make rational decisions about which strategy to scale or kill. You're flying blind.
+
+### Margin Conflicts Don't Resolve Cleanly
+
+Two bots on the same account both want to enter long XAUUSD 0.5 lots. The account has $2,000 of free margin. The first bot's order goes through. The second bot's order is rejected for insufficient margin. From each bot's perspective, the rejection looks like a broker error — neither has any awareness that another bot just consumed the available margin.
+
+The result is silent strategy degradation. Each bot thinks it's executing its plan; in reality, both are operating on a half-functional account.
+
+### Account-Level Stops Hit One Bot's Trade Randomly
+
+You set a 3% daily loss cap on the MT5 account. One bot trades aggressively in the morning and loses 2.8%. The second bot opens a position in the afternoon. The market moves 0.5% against it and the account-level circuit breaker fires — closing all positions. The second bot just took a loss that wasn't its fault, with no awareness that the cause was bot A's bad morning.
+
+In an isolated account, that doesn't happen. Each bot's account stop is its own.
+
+## How to Run Multiple Strategies the Right Way
+
+The mental shift: instead of "one account, many bots," think "one bot, one account, many accounts."
+
+![Three independent MT5 terminals, each with its own dedicated bot running an isolated strategy — gold, EURUSD, BTCUSD](/blog/multi-account-fleet.webp)
+
+### Open a Separate MT5 Account Per Strategy
+
+Most brokers — including Exness — let you open multiple MT5 accounts under one Personal Area at no cost. Each account gets its own login, its own balance, its own margin pool. Fund each one independently based on the capital you want allocated to that strategy.
+
+If you want to run a Gold scalper, an EURUSD trend-follower, and a BTC swing strategy, that's three MT5 accounts. Three logins, three balances, three sets of trades that never touch each other.
+
+### Connect Each Account to Its Own Bot
+
+Inside PineForge, [connect each MT5 account](/blog/connect-exness-mt5-trading-bot) as a separate Trading Account record. Then create one bot per account, each with its own Pine Script strategy. PineForge enforces the one-bot-per-account model at the database level — you can't accidentally assign a second bot to an account that already has one.
+
+This isolation is what gives you clean PnL attribution, no margin conflicts, and clean shutdowns.
+
+### Aggregate at the Dashboard, Not the Broker
+
+Your dashboard view should aggregate across all accounts — total balance, total PnL, total open positions. Your *trading* should stay isolated per account. PineForge does this automatically. The dashboard sums everything; the execution layer keeps it apart.
+
+## Doesn't One Bot Per Account Mean More Setup Fees?
+
+Yes — and that cost is the price of clean audit trails. Most retail-friendly brokers have minimal or no per-account fees. Exness, for example, lets you open as many MT5 accounts as you want under one verified Personal Area. The marginal cost is essentially zero.
+
+The cost of *not* isolating, on the other hand, is one bad weekend close from a stripped magic number that wipes a position your bot can't recover from. In dollar terms over a year, the savings from sharing an account are dwarfed by even one mishandled trade.
+
+## Can I Run a Single Bot With Multiple Strategies Internally?
+
+Yes, and this is actually the elegant answer for traders who want strategy diversification without account sprawl. Write one Pine Script that internally combines two or three signal sources — say, an EMA crossover plus an RSI filter plus a volume confirmation — and run it as a single bot on a single account.
+
+The bot still has one identity, one magic number, and one clean PnL record. The strategy diversification happens inside the script, not across accounts. This works well when your strategies share the same symbol and timeframe. It doesn't work when you want to trade XAUUSD on 1H and BTCUSD on 4H — those genuinely need separate bots, which means separate accounts.
+
+## What If My Broker Doesn't Strip Magic Numbers?
+
+Some brokers do preserve magic numbers on close deals. Don't bet your trading on it. The behaviour depends on the specific broker, the deal type, the closing reason, and sometimes on the broker's version of MT5 server software. Even if your broker preserves them today, an upgrade tomorrow can change that — and you won't get an announcement.
+
+The one-bot-per-account model is broker-independent. It works the same across Exness, IC Markets, FTMO, and any other MT5 provider. Robustness beats optimisation.
+
+## Conclusion
+
+Three takeaways. First, magic numbers are a strategy-logic feature, not an operational guarantee — brokers can and do strip them, especially on broker-initiated closes. Second, account isolation gives you clean PnL attribution, no margin conflicts, and clean per-strategy circuit breakers. Third, scaling to multiple strategies is easier with multiple accounts than it is with multi-tenant magic-number juggling.
+
+You don't pay anything meaningful in setup costs to isolate. You pay catastrophically in audit and reliability costs to share.
+
+[Connect your Exness MT5 account to PineForge](https://getpineforge.com/signup) — one bot per account, magic-number isolation by design, every dollar of PnL traceable.
+    `,
+  },
+
+  // ═══════════════════════════════════════════════════════════════
   // Post 11: Backtest Gold on 1H Timeframe (Featured)
   // Primary keyword: backtest gold trading bot 1H timeframe
   // ═══════════════════════════════════════════════════════════════

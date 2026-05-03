@@ -121,6 +121,24 @@
     <priority>0.3</priority>
   </url>
   <url>
+    <loc>https://getpineforge.com/blog/connect-exness-mt5-trading-bot</loc>
+    <lastmod>2026-05-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://getpineforge.com/blog/profit-factor-vs-win-rate</loc>
+    <lastmod>2026-05-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://getpineforge.com/blog/how-many-bots-per-mt5-account</loc>
+    <lastmod>2026-05-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://getpineforge.com/blog/backtest-gold-trading-bot-1h-timeframe</loc>
     <lastmod>2026-05-03</lastmod>
     <changefreq>monthly</changefreq>

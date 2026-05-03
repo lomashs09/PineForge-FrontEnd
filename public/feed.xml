@@ -6,7 +6,7 @@
     <atom:link href="https://getpineforge.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>Trading strategies, Pine Script tutorials, and algorithmic trading insights from PineForge.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 03 May 2026 11:16:56 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 03 May 2026 11:59:28 GMT</lastBuildDate>
     <item>
       <title>How to Backtest a Gold Trading Bot on the 1-Hour Timeframe (XAUUSD Walkthrough)</title>
       <link>https://getpineforge.com/blog/backtest-gold-trading-bot-1h-timeframe</link>
@@ -14,6 +14,30 @@
       <pubDate>Sun, 03 May 2026 00:00:00 GMT</pubDate>
       <description>Most gold strategies look brilliant on paper and bleed money live. The gap is almost always sloppy backtesting. Here&apos;s a repeatable workflow for backtesting any gold trading bot on the 1H timeframe — what to test, which metrics matter, and how to read the result honestly.</description>
       <enclosure url="https://getpineforge.com/blog/backtest-gold-1h-hero.webp" type="image/webp" />
+    </item>
+    <item>
+      <title>How Many Trading Bots Should You Run Per MT5 Account? (Hint: One)</title>
+      <link>https://getpineforge.com/blog/how-many-bots-per-mt5-account</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/how-many-bots-per-mt5-account</guid>
+      <pubDate>Sun, 03 May 2026 00:00:00 GMT</pubDate>
+      <description>Stacking multiple bots on a single MT5 account sounds efficient. It&apos;s actually a recipe for magic-number collisions, lost trades, and an unauditable PnL. Here&apos;s why one bot per account is the only safe model — and how to scale without sharing.</description>
+      <enclosure url="https://getpineforge.com/blog/one-bot-per-account-hero.webp" type="image/webp" />
+    </item>
+    <item>
+      <title>Profit Factor vs Win Rate: The Metric That Actually Predicts Bot Profitability</title>
+      <link>https://getpineforge.com/blog/profit-factor-vs-win-rate</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/profit-factor-vs-win-rate</guid>
+      <pubDate>Sun, 03 May 2026 00:00:00 GMT</pubDate>
+      <description>Most traders obsess over win rate. Most professionals barely look at it. Here&apos;s why profit factor is the metric that separates strategies with edge from strategies that are secretly coin flips — and how to read it correctly.</description>
+      <enclosure url="https://getpineforge.com/blog/profit-factor-win-rate-hero.webp" type="image/webp" />
+    </item>
+    <item>
+      <title>How to Connect Exness MT5 to a Trading Bot in 2026 (Full Walkthrough)</title>
+      <link>https://getpineforge.com/blog/connect-exness-mt5-trading-bot</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/connect-exness-mt5-trading-bot</guid>
+      <pubDate>Sun, 03 May 2026 00:00:00 GMT</pubDate>
+      <description>Exness is one of the most popular MT5 brokers in the world — and one of the trickiest to automate. Here&apos;s exactly how to connect your Exness MT5 account to an automated trading bot, from credentials to deployment.</description>
+      <enclosure url="https://getpineforge.com/blog/exness-mt5-connect-hero.webp" type="image/webp" />
     </item>
     <item>
       <title>Trading Psychology: Master Your Mind for Market Success</title>

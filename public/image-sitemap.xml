@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
+    <loc>https://getpineforge.com/blog/connect-exness-mt5-trading-bot</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/exness-mt5-connect-hero.webp</image:loc>
+      <image:title>How to Connect Exness MT5 to a Trading Bot in 2026 (Full Walkthrough)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://getpineforge.com/blog/profit-factor-vs-win-rate</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/profit-factor-win-rate-hero.webp</image:loc>
+      <image:title>Profit Factor vs Win Rate: The Metric That Actually Predicts Bot Profitability</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://getpineforge.com/blog/how-many-bots-per-mt5-account</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/one-bot-per-account-hero.webp</image:loc>
+      <image:title>How Many Trading Bots Should You Run Per MT5 Account? (Hint: One)</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://getpineforge.com/blog/backtest-gold-trading-bot-1h-timeframe</loc>
     <image:image>
       <image:loc>https://getpineforge.com/blog/backtest-gold-1h-hero.webp</image:loc>
