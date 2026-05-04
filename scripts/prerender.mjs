@@ -207,6 +207,21 @@ async function run() {
       const url = `http://127.0.0.1:${PORT}${route}`;
       const page = await browser.newPage();
       try {
+        // Seed localStorage BEFORE the React app mounts so any component
+        // whose useEffect reads localStorage to decide whether to render
+        // (e.g. ConsentBanner) stays hidden in the snapshot. Without this,
+        // Puppeteer renders the cookie banner into the prerendered HTML;
+        // a real client visit (no localStorage) starts with the banner
+        // hidden, and React 19 throws a hydration mismatch error
+        // (~50 users/day in Sentry). Seeding 'denied' for pf_consent
+        // makes the snapshot consent-free; the banner then appears via
+        // a normal post-hydration state update on the live page.
+        await page.evaluateOnNewDocument(() => {
+          try {
+            window.localStorage.setItem('pf_consent', 'denied');
+          } catch {}
+        });
+
         // domcontentloaded fires once the HTML is parsed — React + helmet then
         // run synchronously. We add a fixed settle delay below for helmet's
         // microtask flush; networkidle0 hangs on long-tail requests (toaster
