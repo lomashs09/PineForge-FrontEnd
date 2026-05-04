@@ -83,12 +83,21 @@ const urls = [
     changefreq: 'monthly',
     priority: '0.7',
   })),
-  ...comboPaths.map((p) => ({
-    path: p,
-    lastmod: today,
-    changefreq: 'monthly',
-    priority: '0.75',
-  })),
+  // Symbol×strategy combo pages (e.g. /strategies/xauusd-ema-crossover)
+  // are intentionally EXCLUDED from the sitemap. Google's quality filter
+  // flags ~95 near-templated pages with only the symbol changing as
+  // programmatic SEO and silently drops them from the index — that was
+  // exactly the "Discovered - currently not indexed: 143" pattern in
+  // Search Console. The pages remain live and accessible; they're just
+  // not pushed for priority crawl. Once each combo page has unique,
+  // substantive content (~300+ words of differentiated copy, real
+  // backtest data, charts) we can re-include them.
+  // ...comboPaths.map((p) => ({
+  //   path: p,
+  //   lastmod: today,
+  //   changefreq: 'monthly',
+  //   priority: '0.75',
+  // })),
   ...symbolPaths.map((p) => ({
     path: p, lastmod: today, changefreq: 'monthly', priority: '0.8',
   })),
