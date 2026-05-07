@@ -3,7 +3,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Seo from '../components/Seo';
-import { buildBreadcrumbLd, SITE_URL } from '../components/seoLd';
+import { buildBreadcrumbLd, buildFaqLd, SITE_URL } from '../components/seoLd';
 import glossary, { getGlossaryBySlug } from '../data/glossary';
 import { getStrategyBySlug } from '../data/strategies';
 
@@ -152,6 +152,9 @@ export default function GlossaryEntry() {
     { name: 'Glossary', url: '/glossary' },
     { name: term.title, url: path },
   ]);
+  const faqs = term.faqs || [];
+  const structuredData = [definitionLd, breadcrumbLd];
+  if (faqs.length) structuredData.push(buildFaqLd(faqs));
 
   const related = (term.related || []).map((s) => glossary.find((g) => g.slug === s)).filter(Boolean);
   const linkedStrategies = (term.linkedStrategies || []).map((s) => getStrategyBySlug(s)).filter(Boolean);
@@ -164,7 +167,7 @@ export default function GlossaryEntry() {
         path={path}
         type="article"
         keywords={`${term.title}, ${term.slug}, trading definition, pine script ${term.slug}`}
-        structuredData={[definitionLd, breadcrumbLd]}
+        structuredData={structuredData}
       />
       <Navbar />
 
@@ -182,6 +185,23 @@ export default function GlossaryEntry() {
         <div className="mt-8 prose-pineforge">
           {renderBody(term.body)}
         </div>
+
+        {faqs.length > 0 && (
+          <section className="mt-12 border-t border-gray-800 pt-8">
+            <h2 className="text-xl font-bold text-white">Frequently Asked Questions</h2>
+            <div className="mt-4 space-y-3">
+              {faqs.map((faq, i) => (
+                <details key={i} className="group rounded-xl border border-gray-800 bg-gray-900">
+                  <summary className="flex cursor-pointer items-center justify-between px-5 py-3 text-sm font-medium text-gray-200 transition hover:text-white [&::-webkit-details-marker]:hidden">
+                    {faq.q}
+                    <span className="ml-4 shrink-0 text-gray-500 transition group-open:rotate-45">+</span>
+                  </summary>
+                  <p className="px-5 pb-4 text-sm leading-relaxed text-gray-400">{renderInline(faq.a)}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        )}
 
         {linkedStrategies.length > 0 && (
           <section className="mt-12 border-t border-gray-800 pt-8">

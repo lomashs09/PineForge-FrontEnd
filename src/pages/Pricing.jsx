@@ -107,12 +107,16 @@ const examples = [
 
 const faqs = [
   {
+    q: 'How much does an MT5 trading bot cost on PineForge?',
+    a: 'Running an MT5 trading bot 24/7 costs about $15.84/month in runtime ($0.022 per hour) plus a one-time $3.00 setup fee per broker account. Backtesting and strategy uploads are free forever. There are no monthly subscriptions and no commission on your trades — your trading profits are 100% yours.',
+  },
+  {
     q: 'How does usage-based pricing work?',
     a: 'You only pay for what you use. Bots are billed per hour while running, and accounts have a small hourly hosting fee while connected to a trading server. Stop a bot anytime — we auto-undeploy the account, so the hourly hosting fee drops to $0 until you start the bot again.',
   },
   {
     q: 'Why one bot per broker account?',
-    a: 'Each broker account hosts exactly one bot. This keeps trade attribution and PnL clean — running multiple bots on one MT5 account would mix their positions and history. To run more strategies in parallel, connect another broker account (most brokers let you open multiple demo or sub-accounts for free), then create a bot on each. Pricing is per account / per bot, so 3 accounts running = 3 bots running.',
+    a: 'Each broker account hosts exactly one bot to keep PnL attribution clean and avoid magic-number collisions on broker-initiated closes. To run more strategies in parallel, connect another broker account (most brokers let you open multiple demo or sub-accounts for free), then create a bot on each. Pricing is per account / per bot, so 3 accounts running = 3 bots running. Read [why one bot per MT5 account is the only safe model](/blog/how-many-bots-per-mt5-account) for the full explanation.',
   },
   {
     q: 'Is backtesting free?',
@@ -124,7 +128,7 @@ const faqs = [
   },
   {
     q: 'Which brokers do you support?',
-    a: 'PineForge connects to Exness MT5 accounts via MetaAPI. This gives you access to forex pairs (EUR/USD, GBP/USD), commodities (Gold, Silver, Oil), indices, and more.',
+    a: 'PineForge connects to Exness MT5 accounts via MetaAPI. This gives you access to forex pairs (EUR/USD, GBP/USD), commodities (Gold, Silver, Oil), indices, and more. See our [Exness MT5 connection guide](/blog/connect-exness-mt5-trading-bot) for the full setup walkthrough.',
   },
   {
     q: 'Do I need to know Pine Script?',
@@ -140,13 +144,35 @@ const faqs = [
   },
 ];
 
+function renderFaqAnswer(text) {
+  const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g);
+  return parts.map((part, i) => {
+    const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (!link) return part;
+    const [, label, href] = link;
+    if (href.startsWith('/')) {
+      return (
+        <Link key={i} to={href} className="text-emerald-400 underline decoration-emerald-400/30 hover:decoration-emerald-400 transition">
+          {label}
+        </Link>
+      );
+    }
+    return (
+      <a key={i} href={href} target="_blank" rel="noopener noreferrer" className="text-emerald-400 underline decoration-emerald-400/30 hover:decoration-emerald-400 transition">
+        {label}
+      </a>
+    );
+  });
+}
+
 export default function Pricing() {
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100">
       <Seo
-        title="Pricing — Pay-As-You-Go Trading Bot Platform"
-        description="No subscriptions. Pay only for what you use: $0.022/hr per active bot, $0.002/hr account hosting, $3.00 account setup. Start with as little as $5."
+        title="Trading Bot Pricing — Pay-As-You-Go MT5 Automation"
+        description="MT5 trading bot pricing without subscriptions. Pay $0.022/hr per active bot (~$15.84/month 24/7), $0.002/hr account hosting, $3.00 one-time account setup. Backtesting is free forever."
         path="/pricing"
+        keywords="trading bot pricing, MT5 trading bot cost, automated trading platform pricing, pay as you go trading bot, pine script bot cost"
         structuredData={[
           PRICING_LD,
           buildFaqLd(faqs),
@@ -291,7 +317,7 @@ export default function Pricing() {
                   {faq.q}
                   <span className="ml-4 shrink-0 text-gray-500 transition group-open:rotate-45">+</span>
                 </summary>
-                <p className="px-6 pb-4 text-sm leading-relaxed text-gray-400">{faq.a}</p>
+                <p className="px-6 pb-4 text-sm leading-relaxed text-gray-400">{renderFaqAnswer(faq.a)}</p>
               </details>
             ))}
           </div>

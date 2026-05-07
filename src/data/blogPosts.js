@@ -1113,6 +1113,10 @@ Without a daily cap, one bad morning can erase weeks of gains. Professional trad
 
 Your broker offers 500:1 leverage. That doesn't mean you should use it. High leverage amplifies losses exactly as much as profits. The most consistent traders use 10:1 or less.
 
+### Stacking Multiple Bots on One Account
+
+Running several strategies on a single MT5 account looks efficient — until a broker-initiated close strips the magic number, your PnL becomes unauditable, and one bot's bad morning trips an account-level stop that closes another bot's perfectly good trade. Account isolation is risk isolation. Read [why one bot per MT5 account is the only safe model](/blog/how-many-bots-per-mt5-account) for the full breakdown.
+
 ## How Does PineForge Help Manage Risk?
 
 Every [PineForge bot](/blog/trading-bots-explained) comes with built-in risk controls:

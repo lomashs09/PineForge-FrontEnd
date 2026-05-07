@@ -71,12 +71,17 @@ const staticPages = [
 
 const urls = [
   ...staticPages.map((p) => ({ ...p, lastmod: today })),
-  ...blogEntries.map((b) => ({
-    path: `/blog/${b.slug}`,
-    lastmod: b.date,
-    changefreq: 'monthly',
-    priority: '0.8',
-  })),
+  ...blogEntries.map((b) => {
+    // Featured posts get priority 0.9 — recent, high-intent, and currently
+    // earning impressions or fighting "Discovered – not indexed" status.
+    const featured = ['how-many-bots-per-mt5-account', 'connect-exness-mt5-trading-bot', 'backtest-gold-trading-bot-1h-timeframe', 'profit-factor-vs-win-rate'];
+    return {
+      path: `/blog/${b.slug}`,
+      lastmod: b.date,
+      changefreq: 'monthly',
+      priority: featured.includes(b.slug) ? '0.9' : '0.8',
+    };
+  }),
   ...strategyHubPaths.map((p) => ({
     path: p,
     lastmod: today,
@@ -101,9 +106,17 @@ const urls = [
   ...symbolPaths.map((p) => ({
     path: p, lastmod: today, changefreq: 'monthly', priority: '0.8',
   })),
-  ...glossaryPaths.map((p) => ({
-    path: p, lastmod: today, changefreq: 'monthly', priority: '0.7',
-  })),
+  // Glossary entries earning impressions in Search Console get priority
+  // 0.9 to push crawl budget toward expanding/competitive content.
+  ...glossaryPaths.map((p) => {
+    const hot = ['/glossary/walk-forward', '/glossary/profit-factor', '/glossary/win-rate', '/glossary/macd'];
+    return {
+      path: p,
+      lastmod: today,
+      changefreq: 'monthly',
+      priority: hot.includes(p) ? '0.9' : '0.8',
+    };
+  }),
   ...comparePaths.map((p) => ({
     path: p, lastmod: today, changefreq: 'monthly', priority: '0.8',
   })),
