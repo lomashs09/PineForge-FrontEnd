@@ -6,7 +6,17 @@
     <atom:link href="https://getpineforge.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>Trading strategies, Pine Script tutorials, and algorithmic trading insights from PineForge.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 May 2026 07:16:35 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 07 May 2026 08:33:30 GMT</lastBuildDate>
+    <item>
+      <title>Write a blog post about: 7 Mistakes Every First-Time Bot Trader Makes</title>
+      <link>https://getpineforge.com/blog/write-a-blog-post-about-7-mistakes-every-first-time-bot-trad</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/write-a-blog-post-about-7-mistakes-every-first-time-bot-trad</guid>
+      <pubDate>Mon, 04 May 2026 00:00:00 GMT</pubDate>
+      <description>{
+  \&quot;title\&quot;: \&quot;Avoid These 7 First Bot Mistakes: Master Algorithmic Trading\&quot;,
+  \&quot;excerpt\&quot;: \&quot;Learn the 7 common first bot mistakes new algorithmic traders make....</description>
+      <enclosure url="https://getpineforge.com/blog/write-a-blog-post-about-7-mistakes-every-first-time-bot-trad-hero.webp" type="image/webp" />
+    </item>
     <item>
       <title>How to Backtest a Gold Trading Bot on the 1-Hour Timeframe (XAUUSD Walkthrough)</title>
       <link>https://getpineforge.com/blog/backtest-gold-trading-bot-1h-timeframe</link>
