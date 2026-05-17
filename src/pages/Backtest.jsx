@@ -10,6 +10,7 @@ import {
   AlertCircle,
   BarChart3,
   Info,
+  Sparkles,
 } from 'lucide-react';
 import {
   LineChart,
@@ -25,15 +26,21 @@ import api from '../services/api';
 
 export default function Backtest() {
   const [searchParams] = useSearchParams();
+  const guidedScriptName = searchParams.get('scriptName') || '';
+  const guidedInterval = searchParams.get('interval') || '';
+  const guidedQuantity = searchParams.get('quantity') || '';
+  const guidedPreset = searchParams.get('preset') || '';
+  const isGuided = Boolean(guidedScriptName || guidedInterval || guidedQuantity || guidedPreset);
+
   const [scripts, setScripts] = useState([]);
   const [config, setConfig] = useState(null);
   const [scriptId, setScriptId] = useState(searchParams.get('script') || '');
   const [symbol, setSymbol] = useState('XAUUSD');
-  const [interval, setInterval] = useState('1d');
+  const [interval, setInterval] = useState(guidedInterval || '1d');
   const [start, setStart] = useState('');
   const [end, setEnd] = useState('');
   const [capital, setCapital] = useState(1000);
-  const [quantity, setQuantity] = useState('');
+  const [quantity, setQuantity] = useState(guidedQuantity || '');
   const [running, setRunning] = useState(false);
   const [results, setResults] = useState(null);
   const [error, setError] = useState(null);
@@ -46,15 +53,28 @@ export default function Backtest() {
     ]).then(([configRes, scriptsRes]) => {
       setConfig(configRes.data);
       setScripts(scriptsRes.data);
-      if (!scriptId && scriptsRes.data.length > 0) {
-        setScriptId(String(scriptsRes.data[0].id));
+
+      // Resolve script ID — explicit ?script= wins, then ?scriptName= match,
+      // then first available script.
+      let resolvedId = scriptId;
+      if (!resolvedId && guidedScriptName) {
+        const match = scriptsRes.data.find(
+          (s) => s.name?.toLowerCase() === guidedScriptName.toLowerCase()
+        );
+        if (match) resolvedId = String(match.id);
       }
-      // Set initial dates based on config
+      if (!resolvedId && scriptsRes.data.length > 0) {
+        resolvedId = String(scriptsRes.data[0].id);
+      }
+      if (resolvedId !== scriptId) setScriptId(resolvedId);
+
+      // Set initial dates. Guided preset=last-year overrides interval default.
       const today = configRes.data.today;
       setEnd(today);
-      const maxDays = configRes.data.intervals.find(i => i.value === '1d')?.max_days || 365;
-      const startDate = daysAgo(maxDays, today);
-      setStart(startDate);
+      const intervalValue = guidedInterval || '1d';
+      const maxDays = configRes.data.intervals.find(i => i.value === intervalValue)?.max_days || 365;
+      const targetDays = guidedPreset === 'last-year' ? Math.min(365, maxDays) : maxDays;
+      setStart(daysAgo(targetDays, today));
     }).catch(() => {});
   }, []);
 
@@ -110,6 +130,18 @@ export default function Backtest() {
     <DashboardLayout>
       <div className="space-y-6">
         <h1 className="text-2xl font-bold text-white">Backtesting Engine</h1>
+
+        {isGuided && !results && (
+          <div className="flex items-start gap-3 rounded-xl border border-emerald-900/40 bg-emerald-950/20 px-4 py-3">
+            <Sparkles className="mt-0.5 h-5 w-5 shrink-0 text-emerald-400" />
+            <div className="flex-1">
+              <p className="text-sm font-medium text-emerald-300">Your first backtest — pre-configured</p>
+              <p className="mt-0.5 text-xs text-emerald-400/70">
+                We've loaded Gold Trend Hunter V2 on XAUUSD, 1H timeframe, quantity 3, over the last 12 months. Click <strong>Run Backtest</strong> to see how it would have performed.
+              </p>
+            </div>
+          </div>
+        )}
 
         <div className="grid gap-6 lg:grid-cols-3">
           {/* Config panel */}

@@ -11,7 +11,13 @@ import {
   FlaskConical,
   ChevronRight,
   Loader2,
+  Sparkles,
+  X,
 } from 'lucide-react';
+
+const GUIDE_DISMISSED_KEY = 'pf_first_backtest_guide_dismissed';
+const GUIDED_BACKTEST_URL =
+  '/backtest?scriptName=Gold+Trend+Hunter+V2&interval=1h&quantity=3&preset=last-year';
 
 const STATUS_STYLES = {
   running: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
@@ -87,6 +93,14 @@ export default function Dashboard() {
   const [stats, setStats] = useState(null);
   const [bots, setBots] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [guideDismissed, setGuideDismissed] = useState(() => {
+    try { return localStorage.getItem(GUIDE_DISMISSED_KEY) === '1'; } catch { return false; }
+  });
+
+  function dismissGuide() {
+    setGuideDismissed(true);
+    try { localStorage.setItem(GUIDE_DISMISSED_KEY, '1'); } catch { /* ignore quota errors */ }
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -123,6 +137,7 @@ export default function Dashboard() {
   const winRate = stats?.win_rate_pct ?? 0;
 
   const recentBots = bots.slice(0, 6);
+  const showFirstBacktestGuide = !loading && totalBots === 0 && !guideDismissed;
 
   return (
     <DashboardLayout>
@@ -132,6 +147,53 @@ export default function Dashboard() {
           <h1 className="text-2xl font-bold text-white">Dashboard</h1>
           <p className="text-sm text-gray-400 mt-1">Overview of your trading bots</p>
         </div>
+
+        {showFirstBacktestGuide && (
+          <div className="relative overflow-hidden rounded-2xl border border-emerald-800/40 bg-gradient-to-br from-emerald-950/40 to-gray-900 p-6 sm:p-8">
+            <button
+              onClick={dismissGuide}
+              aria-label="Dismiss"
+              className="absolute right-3 top-3 rounded p-1.5 text-gray-500 transition hover:bg-gray-800 hover:text-gray-300"
+            >
+              <X className="h-4 w-4" />
+            </button>
+            <div className="flex items-start gap-4">
+              <div className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-600/15 sm:flex">
+                <Sparkles className="h-6 w-6 text-emerald-400" />
+              </div>
+              <div className="flex-1">
+                <p className="text-xs font-semibold uppercase tracking-wide text-emerald-400">
+                  Start here
+                </p>
+                <h2 className="mt-1 text-xl font-bold text-white sm:text-2xl">
+                  Run your first backtest in 30 seconds
+                </h2>
+                <p className="mt-2 max-w-2xl text-sm text-gray-300">
+                  Before deploying a live bot, see how a strategy performs on real historical data.
+                  We've pre-configured <strong className="text-white">Gold Trend Hunter V2</strong> on
+                  XAUUSD — <strong className="text-white">1-hour timeframe</strong>,
+                  {' '}<strong className="text-white">quantity 3</strong>, over the
+                  {' '}<strong className="text-white">last 12 months</strong>. One click and you'll see equity curve, win rate, and drawdown.
+                </p>
+                <div className="mt-5 flex flex-wrap items-center gap-3">
+                  <button
+                    onClick={() => navigate(GUIDED_BACKTEST_URL)}
+                    className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-500"
+                  >
+                    <FlaskConical className="h-4 w-4" />
+                    Run guided backtest
+                  </button>
+                  <button
+                    onClick={dismissGuide}
+                    className="text-sm font-medium text-gray-400 hover:text-gray-200"
+                  >
+                    Skip — I'll explore on my own
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Stats row */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
