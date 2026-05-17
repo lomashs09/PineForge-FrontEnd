@@ -1,5 +1,175 @@
 const blogPosts = [
   // ═══════════════════════════════════════════════════════════════
+  // Post 16: Position Sizing for Trading Bots (Featured)
+  // Primary keyword: position sizing trading bot
+  // ═══════════════════════════════════════════════════════════════
+  {
+    slug: "position-sizing-for-trading-bots",
+    title: "Position Sizing for Trading Bots: The Math That Keeps Your Account Alive",
+    excerpt: "A 70% win rate won't save you if your position sizes are wrong. Most retail bot blow-ups aren't strategy failures — they're sizing failures. Here's the framework that keeps your account alive across the losing streaks every strategy eventually delivers.",
+    category: "Strategy",
+    date: "2026-05-17",
+    readTime: "9 min read",
+    image: "/blog/position-sizing-for-trading-bots-hero.webp",
+    keywords: [
+      "position sizing trading bot",
+      "position sizing automated trading",
+      "risk per trade bot",
+      "fixed fractional sizing",
+      "ATR position sizing",
+      "Pine Script position size",
+      "lot size calculator",
+      "portfolio risk cap",
+    ],
+    content: `
+A 70% win rate won't save you if your position sizes are wrong. Most retail traders who blow up automated accounts didn't pick a bad strategy — they picked a reasonable one and over-sized it. The bot took every signal exactly as instructed. The strategy worked exactly as designed. The account still went to zero because the math of consecutive losers caught up faster than the math of expectancy could pay it back.
+
+Position sizing is the single variable that decides whether your bot survives long enough for its edge to materialise. This guide walks through the three sizing methods that actually work, the math behind risk-per-trade, how to size across multiple bots, and how to write it directly into Pine Script. If you haven't already read our [broader risk management framework](/blog/risk-management-strategies), this is the chapter on the part most traders skip.
+
+![A glowing emerald position-size formula floating above a shrinking equity curve in a dark fintech environment](/blog/position-sizing-for-trading-bots-hero.webp)
+
+## Why position sizing matters more for bots than for manual traders
+
+Manual traders have a safety valve they don't acknowledge: hesitation. After three losses in a row, they shrink their next trade. After five, they walk away from the screen. The emotional response that wrecks discretionary trading also, accidentally, caps the damage.
+
+Bots have none of that. A bot configured to risk 3% per trade will risk 3% on trade ten, twenty, and one hundred, regardless of equity, regardless of streak, regardless of regime. It doesn't flinch on the seventh consecutive loser. It doesn't second-guess after a 20% drawdown. That discipline is what you pay for — but only if the size was correct in the first place.
+
+The asymmetry is brutal. A 50% drawdown requires a 100% gain to recover. A 75% drawdown requires a 300% gain. Bad sizing compounds losses geometrically while compounding gains arithmetically. The math doesn't care that your strategy has positive expectancy.
+
+## The three sizing methods that actually work
+
+There are dozens of sizing systems in the literature. Three of them are worth implementing in an automated context. Everything else is either a variant of these or a sophisticated way to take more risk than you should.
+
+### Fixed-fractional (the default for most bots)
+
+Risk a fixed percentage of equity on every trade. If your stop is 50 pips away and you're risking 1% of a $10,000 account, the position size is calculated so that hitting the stop loses exactly $100. The lot size changes as your equity changes — winners grow your position, losers shrink it.
+
+This is the right default for almost every retail bot. It's robust, scales with the account, and doesn't require volatility estimation. Set it once. Forget it.
+
+### ATR-based sizing (volatility-aware)
+
+Use the Average True Range to size based on current market volatility. When XAUUSD's daily ATR is 18 points, your stop and position size adjust accordingly. When it spikes to 45 during a Fed week, the position shrinks automatically.
+
+ATR sizing is mathematically cleaner for strategies that trade across regimes — trend-following systems especially. The cost is added complexity in your Pine Script and the need to backtest the ATR multiplier itself.
+
+### Kelly Criterion (advanced — and why you should use fractional Kelly)
+
+The Kelly formula gives the mathematically optimal bet size given a known edge. For most retail strategies, full Kelly suggests sizing between 8% and 25% per trade. Don't do this.
+
+Full Kelly assumes you know your win rate and average win/loss to high precision. You don't. Your backtest is a noisy estimate. Use **fractional Kelly** — typically one-quarter Kelly — which dramatically reduces drawdown while capturing most of the geometric growth. If [the math behind Kelly](https://www.investopedia.com/articles/trading/04/091504.asp) interests you, the practical takeaway is simple: divide whatever Kelly suggests by four, and you'll still be at the top end of what's prudent.
+
+## How much should you risk per trade?
+
+The direct answer: **0.5% to 2% per trade for most strategies, with 1% as the sensible default.** Anything above 3% is mathematically reckless for any strategy with realistic win rates.
+
+This isn't an opinion. It's what the losing-streak math forces. Here's what happens to your account after consecutive losers at different risk levels:
+
+| Risk per trade | After 5 losses | After 10 losses | After 15 losses |
+|----------------|---------------:|----------------:|----------------:|
+| 1% | -4.9% | -9.6% | -14.0% |
+| 2% | -9.6% | -18.3% | -26.1% |
+| 3% | -14.1% | -26.3% | -36.7% |
+| 5% | -22.6% | -40.1% | -53.7% |
+
+A 70%-win-rate strategy will still produce a 5-loss streak roughly every 400 trades. A 60% strategy will hit 10 consecutive losses every couple of years. If your sizing turns those normal events into 40%+ drawdowns, your bot doesn't have a strategy problem. It has a sizing problem.
+
+Use our free [position size calculator](/tools/position-size-calculator) to translate your risk percentage into the exact lot size for any symbol and stop distance — it does the per-pip math automatically.
+
+## Sizing across multiple bots on one account
+
+A single bot risking 1% per trade is safe. Five bots each risking 1% per trade are not, because they might all be in losing positions simultaneously. **Cap total open portfolio risk at 5% to 8% of equity across all bots combined.**
+
+This is where correlation traps catch traders. Running EURUSD + GBPUSD bots feels like diversification — different pairs, different timeframes. It isn't. EURUSD and GBPUSD have a 90-day correlation that typically sits between 0.7 and 0.9. When the dollar moves, both pairs move together. Both bots take losses on the same day. Your "diversified" portfolio is one trade dressed up as two.
+
+The PineForge live multi-bot dashboard demonstrates this pattern in practice — four bots across XAUUSD, EURUSD, BTCUSD, and GBPUSD, isolated via magic numbers, each capped at conservative per-trade risk so that total simultaneous exposure stays below 6%. We cover the operational side in [running multiple bots on one account](/blog/how-many-bots-per-mt5-account).
+
+The rule: before adding a new bot, check the correlation of its symbol against everything you're already running. Anything above 0.5 deserves a sizing haircut.
+
+## How do you set position size in Pine Script?
+
+The cleanest way is to declare it in the \`strategy()\` header so every \`strategy.entry()\` call inherits the sizing automatically.
+
+\`\`\`pinescript
+//@version=5
+strategy("Risk-Based Sizing",
+     overlay=true,
+     default_qty_type=strategy.percent_of_equity,
+     default_qty_value=2,
+     initial_capital=10000,
+     commission_type=strategy.commission.percent,
+     commission_value=0.1)
+\`\`\`
+
+This risks 2% of current equity on each entry, recalculated dynamically. For ATR-based sizing, override the quantity per-trade:
+
+\`\`\`pinescript
+atr = ta.atr(14)
+risk_per_trade = strategy.equity * 0.01      // 1% of equity
+stop_distance = atr * 2.0                    // 2x ATR stop
+qty = risk_per_trade / stop_distance         // lots that put exactly 1% at risk
+
+if (longCondition)
+    strategy.entry("Long", strategy.long, qty=qty)
+    strategy.exit("Exit", "Long", stop=close - stop_distance)
+\`\`\`
+
+The [TradingView Pine Script documentation](https://www.tradingview.com/pine-script-reference/v5/#fun_strategy) covers the full set of \`strategy()\` parameters. When you upload this to PineForge, the [backtest engine](/backtest) honours your sizing exactly — so the equity curve you see is the equity curve you'd actually trade.
+
+## What's the right position size for a small account?
+
+Below roughly $1,000, fixed-fractional sizing stops working cleanly. Most brokers enforce a minimum lot size of 0.01 (a micro-lot), and on a $500 account with a 50-pip stop on EURUSD, 1% risk would call for 0.001 lots — which your broker won't accept.
+
+For small accounts, the practical fix is **fixed-lot sizing at the broker minimum** until your equity grows past the threshold where percentage sizing produces tradable lots. Run the math once: on a 50-pip stop, 0.01 lots risks roughly $5. That's a 1% risk on a $500 account — coincidentally aligning with where you want to be.
+
+The discipline trap to avoid: don't compensate for a small account by widening leverage or removing the stop. A small account survives only by accepting it'll grow slowly. As we noted in [risk reward ratios that actually work](/blog/risk-reward-ratios-that-actually-wor), aggressive sizing on a small account is the fastest way to make it smaller.
+
+## What about position size during a drawdown?
+
+Risk a percentage of **current balance**, not initial equity. This is the part most retail traders get wrong even when they get everything else right.
+
+If you start with $10,000 and risk 1% per trade based on initial capital, you're still risking $100 per trade after a 30% drawdown — even though your account is now $7,000. That's no longer 1%. It's 1.43%. The math accelerates against you precisely when you can least afford it.
+
+Every serious sizing system recalculates on current equity. PineForge's backtester does this by default when \`default_qty_type=strategy.percent_of_equity\` is set. If you size manually per-trade, reference \`strategy.equity\` (not \`strategy.initial_capital\`) in your calculation.
+
+## Five sizing mistakes that kill bot accounts
+
+These are the patterns we see in support tickets when traders ask why their bot blew up. None of them are strategy problems.
+
+1. **Same lot size regardless of stop distance.** A 20-pip stop and a 200-pip stop with the same 0.1-lot size means one trade risks 10x what the other does. Risk-based sizing fixes this. Fixed-lot sizing doesn't.
+
+2. **Doubling down after losers (martingale).** Every martingale system eventually meets the streak that kills it. The math is not optional. Don't.
+
+3. **No daily loss cap.** Even with 1% per trade, a bot that takes 15 signals in a single Fed-day chop session can lose 10%+ in a few hours. Configure a daily loss limit at the platform level — 3% to 5% of equity is reasonable for most strategies.
+
+4. **Ignoring overnight gaps on weekend-open instruments.** Crypto trades through weekends. Forex gaps on Sunday opens. Your stop may execute many pips away from where you set it. Size assuming the gap, not the stop.
+
+5. **Risking equity instead of balance.** Floating profits are not realised. Sizing the next trade off equity that includes unrealised gains is sizing off a number that can disappear before the next entry triggers.
+
+A live PineForge XAUUSD bot recently posted +$847 in realised P&L across 34 trades at a 71% win rate. The strategy was unremarkable — a 1H EMA crossover with an RSI filter. What made it work was per-trade risk capped at 1% of balance, recalculated after each fill. Disciplined sizing, modest expectancy, compounding result.
+
+## How position sizing interacts with backtest results
+
+Two backtests of the same strategy with different sizing produce different metrics in ways that don't average out. A 2% risk-per-trade backtest doesn't show a "2x worse" curve than a 1% backtest — it shows a curve with materially different drawdown shape, recovery time, and Sharpe ratio.
+
+This is why sizing must be set **before** the backtest, not adjusted after. If you backtest at 1%, deploy at 2% because the numbers look modest, you're not deploying the strategy you tested. You're deploying a strategy with twice the drawdown sensitivity and no historical evidence of how it behaves.
+
+When you walk-forward a strategy on PineForge — which you should, as covered in [walk-forward analysis](/blog/walk-forward-analysis-trading-bots) — keep the sizing constant across all in-sample and out-of-sample windows. The point is to validate the strategy, not the sizing optimisation, and varying both at once tells you nothing useful.
+
+## Conclusion
+
+Position sizing isn't glamorous. It's not what gets retail traders excited about algo trading. But it's the variable that decides whether your bot is still running in twelve months or whether you're nursing a 60% drawdown wondering what went wrong.
+
+Three rules cover 95% of the discipline you need:
+
+1. **Size by risk, not by lots** — 1% of current balance per trade is the sensible default
+2. **Cap total portfolio exposure** at 5% to 8% across all running bots, weighted for correlation
+3. **Stress-test the losing streak** — if a normal 10-loser sequence at your chosen risk would put you in a drawdown you can't emotionally survive, your sizing is wrong before the strategy ever ran
+
+Backtest your strategy with realistic, risk-based sizing on PineForge — pay-as-you-go, no monthly fees, and the backtest engine honours your \`strategy()\` parameters exactly. [Run a backtest now](/backtest) and check the drawdown curve before you deploy.
+    `,
+  },
+
+  // ═══════════════════════════════════════════════════════════════
   // Post 15: Walk-Forward Analysis (Featured)
   // Primary keyword: walk-forward analysis trading bots
   // ═══════════════════════════════════════════════════════════════

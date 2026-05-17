@@ -25,15 +25,40 @@ import time
 import urllib.request
 from datetime import datetime
 
+
+def _load_dotenv():
+    """Minimal .env loader — picks up KEY=VALUE lines from project .env."""
+    env_path = os.path.join(os.path.dirname(__file__), "..", ".env")
+    if not os.path.exists(env_path):
+        return
+    with open(env_path) as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, _, value = line.partition("=")
+            key = key.strip()
+            value = value.strip().strip('"').strip("'")
+            os.environ.setdefault(key, value)
+
+
+_load_dotenv()
+
 # ── Config ───────────────────────────────────────────────────────
 
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 if not GEMINI_API_KEY:
-    print("ERROR: GEMINI_API_KEY environment variable is required.")
-    print("Set it via: export GEMINI_API_KEY=your_key_here")
+    print("ERROR: GEMINI_API_KEY not set (checked env + .env).")
+    print("Set it via: export GEMINI_API_KEY=your_key_here  OR add to .env")
     sys.exit(1)
 GEMINI_MODEL = "gemini-2.5-flash"
-IMAGE_MODEL = "gemini-2.5-flash-image"
+
+# Image generation via Cloudflare Workers AI (free tier, Flux Schnell).
+# Falls back to Gemini if CF creds are missing.
+CF_ACCOUNT_ID = os.environ.get("CF_ACCOUNT_ID", "")
+CF_API_TOKEN = os.environ.get("CF_API_TOKEN", "")
+CF_IMAGE_MODEL = os.environ.get("CF_IMAGE_MODEL", "@cf/black-forest-labs/flux-1-schnell")
+IMAGE_MODEL = "gemini-2.5-flash-image"  # Gemini fallback
 BLOG_DATA_FILE = os.path.join(os.path.dirname(__file__), "..", "src", "data", "blogPosts.js")
 IMAGE_DIR = os.path.join(os.path.dirname(__file__), "..", "public", "blog")
 PROJECT_DIR = os.path.join(os.path.dirname(__file__), "..")
@@ -292,8 +317,59 @@ Include 2 image placeholders:
     return metadata
 
 
+def cloudflare_generate_image(prompt, output_path):
+    """Generate an image using Cloudflare Workers AI (Flux Schnell, free tier).
+
+    Flux Schnell returns JSON `{ result: { image: "<base64 PNG>" } }`.
+    SDXL-family models return raw image bytes — branch on Content-Type.
+    """
+    if os.path.exists(output_path) and os.path.getsize(output_path) > 10000:
+        print(f"    SKIP image (exists)")
+        return True
+
+    url = f"https://api.cloudflare.com/client/v4/accounts/{CF_ACCOUNT_ID}/ai/run/{CF_IMAGE_MODEL}"
+    body = json.dumps({"prompt": prompt}).encode()
+    req = urllib.request.Request(
+        url,
+        data=body,
+        headers={
+            "Authorization": f"Bearer {CF_API_TOKEN}",
+            "Content-Type": "application/json",
+        },
+    )
+
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=120) as resp:
+                content_type = resp.headers.get("Content-Type", "")
+                raw = resp.read()
+
+            if content_type.startswith("application/json"):
+                payload = json.loads(raw)
+                if not payload.get("success", True):
+                    errs = payload.get("errors", [])
+                    raise RuntimeError(f"CF API error: {errs}")
+                img_b64 = payload.get("result", {}).get("image", "")
+                if not img_b64:
+                    raise RuntimeError("CF response missing result.image")
+                img_data = base64.b64decode(img_b64)
+            else:
+                img_data = raw
+
+            with open(output_path, "wb") as f:
+                f.write(img_data)
+            print(f"    OK image ({len(img_data) // 1024}KB, via Cloudflare)")
+            return True
+        except Exception as e:
+            if attempt < 2:
+                time.sleep(5)
+                continue
+            print(f"    FAIL Cloudflare image: {e}")
+            return False
+
+
 def gemini_generate_image(prompt, output_path):
-    """Generate an image using Gemini Image API."""
+    """Generate an image using Gemini Image API (fallback when CF creds missing)."""
     if os.path.exists(output_path) and os.path.getsize(output_path) > 10000:
         print(f"    SKIP image (exists)")
         return True
@@ -316,7 +392,7 @@ def gemini_generate_image(prompt, output_path):
                     img_data = base64.b64decode(p["inlineData"]["data"])
                     with open(output_path, "wb") as f:
                         f.write(img_data)
-                    print(f"    OK image ({len(img_data) // 1024}KB)")
+                    print(f"    OK image ({len(img_data) // 1024}KB, via Gemini)")
                     return True
             if attempt < 2:
                 time.sleep(5)
@@ -326,8 +402,15 @@ def gemini_generate_image(prompt, output_path):
             if attempt < 2:
                 time.sleep(5)
                 continue
-            print(f"    FAIL image: {e}")
+            print(f"    FAIL Gemini image: {e}")
             return False
+
+
+def generate_image(prompt, output_path):
+    """Dispatch image generation — prefer Cloudflare, fall back to Gemini."""
+    if CF_ACCOUNT_ID and CF_API_TOKEN:
+        return cloudflare_generate_image(prompt, output_path)
+    return gemini_generate_image(prompt, output_path)
 
 
 def get_existing_slugs():
@@ -460,17 +543,17 @@ End with CTA to PineForge signup or backtesting."""
 
     print("  Generating hero image...")
     hero_prompt = result.get("image_prompt_hero", f"A professional dark-themed image about {topic['keyword']}. Emerald green accents on dark background. Fintech style.")
-    gemini_generate_image(hero_prompt, os.path.join(IMAGE_DIR, f"{slug}-hero.png"))
+    generate_image(hero_prompt, os.path.join(IMAGE_DIR, f"{slug}-hero.png"))
     time.sleep(3)
 
     print("  Generating inline image 1...")
     inline1_prompt = result.get("image_prompt_inline1", f"An infographic about {topic['keyword']} on dark background with green accents. Clean fintech design.")
-    gemini_generate_image(inline1_prompt, os.path.join(IMAGE_DIR, f"{slug}-inline1.png"))
+    generate_image(inline1_prompt, os.path.join(IMAGE_DIR, f"{slug}-inline1.png"))
     time.sleep(3)
 
     print("  Generating inline image 2...")
     inline2_prompt = result.get("image_prompt_inline2", f"A data visualization related to {topic['keyword']}. Dark theme, emerald highlights. Professional chart style.")
-    gemini_generate_image(inline2_prompt, os.path.join(IMAGE_DIR, f"{slug}-inline2.png"))
+    generate_image(inline2_prompt, os.path.join(IMAGE_DIR, f"{slug}-inline2.png"))
 
     # Step 3: Save post
     post_data = {
