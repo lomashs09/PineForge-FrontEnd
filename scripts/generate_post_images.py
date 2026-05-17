@@ -53,21 +53,96 @@ PROMPT_SETS = {
             "candlestick chart elements in the background. Cinematic lighting, "
             "depth of field, photorealistic 3D render style, 16:9 aspect ratio."
         ),
-        "inline1": (
-            "A clean dark-themed infographic comparing risk-per-trade percentages — "
-            "1%, 2%, 3%, and 5% — as four vertical bars showing drawdown depth after "
-            "ten consecutive losing trades. Each bar labeled with its risk level and "
-            "resulting drawdown percentage. Emerald green for the 1% bar, yellow for "
-            "2%, orange for 3%, red for 5%. Minimalist data-visualization style on "
-            "dark navy background. Sharp typography, professional fintech aesthetic."
+    },
+    "ai-trading-bots-2026": {
+        "hero": (
+            "A glowing neural network with interconnected emerald nodes projecting "
+            "candlestick patterns and trade signals onto a dark futuristic trading "
+            "floor. AI brain icon with circuit lines in the foreground, financial "
+            "charts floating in background. Cinematic emerald-and-teal fintech "
+            "aesthetic, photorealistic 3D render, 16:9 aspect ratio."
         ),
-        "inline2": (
-            "A Pine Script code editor in a dark IDE theme showing a strategy() "
-            "declaration with default_qty_type and default_qty_value parameters "
-            "highlighted in emerald green. Glowing annotation arrows pointing at the "
-            "risk percentage value. Syntax highlighting in green, blue, and white on "
-            "near-black background. Clean modern code editor aesthetic, slight bloom "
-            "on the highlighted parameters. 16:9 aspect ratio."
+    },
+    "funded-trader-bots-vs-personal-account": {
+        "hero": (
+            "A dramatic split-screen scene: left side shows a funded trader challenge "
+            "dashboard with strict drawdown limits glowing in red and amber, right "
+            "side shows a personal trading account with a freely compounding emerald "
+            "equity curve climbing upward. Stacks of coins and currency symbols "
+            "between them. Dark fintech aesthetic, cinematic lighting, 16:9 aspect ratio."
+        ),
+    },
+    "pine-script-v6-whats-new": {
+        "hero": (
+            "A glowing Pine Script v6 code editor in a dark IDE theme showing modern "
+            "syntax features with 'v6' version labels highlighted in emerald green. "
+            "New language constructs and type definitions visible. TradingView-style "
+            "chart in background. Cinematic fintech aesthetic, sharp typography, "
+            "professional code editor look, 16:9 aspect ratio."
+        ),
+    },
+    "trading-bot-fed-day-strategy": {
+        "hero": (
+            "A trading screen showing extreme red and green volatile candles during "
+            "an FOMC announcement, with widened spread bars in red and a paused "
+            "trading bot indicator with shield icon on the side. Federal Reserve "
+            "building silhouette subtly in background. Dark cinematic fintech "
+            "aesthetic with emerald, red, and amber accents, 16:9 aspect ratio."
+        ),
+    },
+    "multi-timeframe-trading-bot": {
+        "hero": (
+            "A trading dashboard showing three synchronized chart panels stacked "
+            "vertically — daily, 4-hour, and 15-minute timeframes — with aligned "
+            "emerald trend arrows pointing the same direction across all three and "
+            "confirmation checkmarks. Dark fintech aesthetic with emerald and teal "
+            "accents, clean data visualization style, 16:9 aspect ratio."
+        ),
+    },
+    "gbpjpy-trading-bot-strategy": {
+        "hero": (
+            "An extremely volatile GBPJPY candlestick chart with dramatic long wicks "
+            "and rapid price spikes on a dark trading screen. Pound sterling (£) and "
+            "Japanese yen (¥) symbols highlighted in red and emerald, with 'Beast Pair' "
+            "subtle text. Lightning bolt and volatility indicators. Cinematic fintech "
+            "aesthetic with dramatic red, gold, and emerald accents, 16:9 aspect ratio."
+        ),
+    },
+    "detect-strategy-decay-trading-bot": {
+        "hero": (
+            "A trading dashboard showing two diverging equity curves: a smooth "
+            "idealised backtest curve climbing steadily in emerald, and a degrading "
+            "live trading curve dropping below it in amber and red. Warning "
+            "indicators and alert icons highlighted between them. Dark fintech "
+            "aesthetic, cinematic lighting, professional data visualization, "
+            "16:9 aspect ratio."
+        ),
+    },
+    "slippage-commission-trading-bot-costs": {
+        "hero": (
+            "A trading dashboard showing the gap between an idealised backtest line "
+            "(emerald, climbing high) and a realistic live trading line (lower, with "
+            "amber annotations showing slippage, spread, and commission cost labels). "
+            "Coin stacks shrinking due to friction costs in the foreground. Dark "
+            "fintech aesthetic, professional data visualization, 16:9 aspect ratio."
+        ),
+    },
+    "trading-bot-tax-reporting-india-us": {
+        "hero": (
+            "A clean dark-themed financial dashboard showing tax document icons "
+            "(Schedule D form, ITR form) alongside trading P&L charts. India and "
+            "USA flag elements subtly displayed in the corners. Calculator and "
+            "tax-percentage symbols. Emerald and gold accents on dark background, "
+            "professional fintech aesthetic, 16:9 aspect ratio."
+        ),
+    },
+    "ensemble-trading-strategies-bots": {
+        "hero": (
+            "Three colored strategy equity curves (emerald trend-following, teal "
+            "mean-reversion, gold breakout) combining into a single smoother "
+            "portfolio curve in white. Each strategy curve has its name label. "
+            "Mathematical Sharpe ratio formula glowing above. Dark fintech "
+            "aesthetic with emerald, teal, and gold accents, 16:9 aspect ratio."
         ),
     },
 }
