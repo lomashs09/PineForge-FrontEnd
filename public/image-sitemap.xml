@@ -113,4 +113,60 @@
       <image:title>Trading Psychology: Master Your Mind for Market Success</image:title>
     </image:image>
   </url>
+  <url>
+    <loc>https://getpineforge.com/blog/metatrader-5-bot-setup-guide</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/write-a-blog-post-about-metatrader-5-bot-setup-guide-hero.webp</image:loc>
+      <image:title>Master Your Trades: The Essential MT5 Trading Bot Setup Guide</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://getpineforge.com/blog/understanding-pay-per-use-trading-platforms</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/understanding-pay-per-use-trading-platforms-hero.webp</image:loc>
+      <image:title>Mastering Your Platform Costs: Pay Per Use Trading vs. Subscriptions</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://getpineforge.com/blog/bollinger-band-trading-strategies</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/write-a-blog-post-about-bollinger-band-trading-strategies-hero.webp</image:loc>
+      <image:title>Mastering a Robust Bollinger Bands Strategy for Market Edge</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://getpineforge.com/blog/complete-beginners-guide-to-trading</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/write-a-blog-post-about-complete-beginners-guide-to-trading-hero.webp</image:loc>
+      <image:title>Your Complete Guide to a Trading Bot for Beginners</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://getpineforge.com/blog/why-you-need-uncorrelated-strategies</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/write-a-blog-post-about-why-you-need-uncorrelated-strategies-hero.webp</image:loc>
+      <image:title>Master Market Volatility: Why You Need Uncorrelated Strategies</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://getpineforge.com/blog/understanding-the-asian-session-range</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/understanding-the-asian-session-range-hero.webp</image:loc>
+      <image:title>Mastering Asian Session Range Trading Strategies for Forex &amp; Gold</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://getpineforge.com/blog/strategyentry-vs-strategyorder-when</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/write-a-blog-post-about-strategyentry-vs-strategyorder-when-hero.webp</image:loc>
+      <image:title>Pine Script strategy.entry vs. strategy.order: Which Commands Your Trades?</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://getpineforge.com/blog/risk-reward-ratios-that-actually-wor</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/write-a-blog-post-about-risk-reward-ratios-that-actually-wor-hero.webp</image:loc>
+      <image:title>Mastering the Risk Reward Ratio: Strategies That Actually Work</image:title>
+    </image:image>
+  </url>
 </urlset>

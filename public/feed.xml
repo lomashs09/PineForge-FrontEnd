@@ -6,7 +6,15 @@
     <atom:link href="https://getpineforge.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>Trading strategies, Pine Script tutorials, and algorithmic trading insights from PineForge.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 16:23:56 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 16:45:44 GMT</lastBuildDate>
+    <item>
+      <title>Mastering the Risk Reward Ratio: Strategies That Actually Work</title>
+      <link>https://getpineforge.com/blog/risk-reward-ratios-that-actually-wor</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/risk-reward-ratios-that-actually-wor</guid>
+      <pubDate>Sun, 17 May 2026 00:00:00 GMT</pubDate>
+      <description>Unlock effective risk reward ratio strategies for consistent trading. Learn how to calculate, apply, and optimize your R:R for profitable outcomes with PineForge.</description>
+      <enclosure url="https://getpineforge.com/blog/write-a-blog-post-about-risk-reward-ratios-that-actually-wor-hero.webp" type="image/webp" />
+    </item>
     <item>
       <title>Walk-Forward Analysis: How to Stop Overfitting Your Trading Bot</title>
       <link>https://getpineforge.com/blog/walk-forward-analysis-trading-bots</link>
@@ -14,6 +22,62 @@
       <pubDate>Sun, 17 May 2026 00:00:00 GMT</pubDate>
       <description>A 98% win rate in your backtest doesn&apos;t mean the strategy works. It means you&apos;ve overfit the data. Walk-forward analysis is the single technique that separates strategies with real edge from curve-fit fantasies — here&apos;s how to use it on PineForge.</description>
       <enclosure url="https://getpineforge.com/blog/walk-forward-hero.webp" type="image/webp" />
+    </item>
+    <item>
+      <title>Pine Script strategy.entry vs. strategy.order: Which Commands Your Trades?</title>
+      <link>https://getpineforge.com/blog/strategyentry-vs-strategyorder-when</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/strategyentry-vs-strategyorder-when</guid>
+      <pubDate>Sat, 16 May 2026 00:00:00 GMT</pubDate>
+      <description>Master \\`pine script strategy.entry\\` and \\`strategy.order\\` for precise trade execution. Understand their differences to build powerful trading strategies.</description>
+      <enclosure url="https://getpineforge.com/blog/write-a-blog-post-about-strategyentry-vs-strategyorder-when-hero.webp" type="image/webp" />
+    </item>
+    <item>
+      <title>Mastering Asian Session Range Trading Strategies for Forex &amp; Gold</title>
+      <link>https://getpineforge.com/blog/understanding-the-asian-session-range</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/understanding-the-asian-session-range</guid>
+      <pubDate>Fri, 15 May 2026 00:00:00 GMT</pubDate>
+      <description>Unlock potential with effective Asian session range trading strategies. Define, identify, and automate your approach to these unique market conditions.</description>
+      <enclosure url="https://getpineforge.com/blog/understanding-the-asian-session-range-hero.webp" type="image/webp" />
+    </item>
+    <item>
+      <title>Master Market Volatility: Why You Need Uncorrelated Strategies</title>
+      <link>https://getpineforge.com/blog/why-you-need-uncorrelated-strategies</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/why-you-need-uncorrelated-strategies</guid>
+      <pubDate>Thu, 14 May 2026 00:00:00 GMT</pubDate>
+      <description>Discover why uncorrelated strategies are essential for robust portfolio performance. Diversify your trading, reduce risk, and achieve consistent returns with PineForge.</description>
+      <enclosure url="https://getpineforge.com/blog/write-a-blog-post-about-why-you-need-uncorrelated-strategies-hero.webp" type="image/webp" />
+    </item>
+    <item>
+      <title>Your Complete Guide to a Trading Bot for Beginners</title>
+      <link>https://getpineforge.com/blog/complete-beginners-guide-to-trading</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/complete-beginners-guide-to-trading</guid>
+      <pubDate>Wed, 13 May 2026 00:00:00 GMT</pubDate>
+      <description>Demystify automated trading. This comprehensive guide simplifies using a trading bot for beginners, empowering you to build and deploy your first strategy.</description>
+      <enclosure url="https://getpineforge.com/blog/write-a-blog-post-about-complete-beginners-guide-to-trading-hero.webp" type="image/webp" />
+    </item>
+    <item>
+      <title>Mastering a Robust Bollinger Bands Strategy for Market Edge</title>
+      <link>https://getpineforge.com/blog/bollinger-band-trading-strategies</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/bollinger-band-trading-strategies</guid>
+      <pubDate>Tue, 12 May 2026 00:00:00 GMT</pubDate>
+      <description>Develop a powerful Bollinger Bands strategy. Understand volatility, identify signals, and automate your trading with PineForge for consistent market advantage.</description>
+      <enclosure url="https://getpineforge.com/blog/write-a-blog-post-about-bollinger-band-trading-strategies-hero.webp" type="image/webp" />
+    </item>
+    <item>
+      <title>Mastering Your Platform Costs: Pay Per Use Trading vs. Subscriptions</title>
+      <link>https://getpineforge.com/blog/understanding-pay-per-use-trading-platforms</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/understanding-pay-per-use-trading-platforms</guid>
+      <pubDate>Sat, 09 May 2026 00:00:00 GMT</pubDate>
+      <description>Understand the differences between pay per use trading and subscription models. PineForge helps you choose the right platform cost structure to maximize your trading efficiency and control.</description>
+      <enclosure url="https://getpineforge.com/blog/understanding-pay-per-use-trading-platforms-hero.webp" type="image/webp" />
+    </item>
+    <item>
+      <title>Master Your Trades: The Essential MT5 Trading Bot Setup Guide</title>
+      <link>https://getpineforge.com/blog/metatrader-5-bot-setup-guide</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/metatrader-5-bot-setup-guide</guid>
+      <pubDate>Fri, 08 May 2026 00:00:00 GMT</pubDate>
+      <description>Automate your trading with a powerful MT5 trading bot. This guide covers setup, configuration, and deployment for MetaTrader 5.</description>
+      <enclosure url="https://getpineforge.com/blog/write-a-blog-post-about-metatrader-5-bot-setup-guide-hero.webp" type="image/webp" />
     </item>
     <item>
       <title>How to Backtest a Gold Trading Bot on the 1-Hour Timeframe (XAUUSD Walkthrough)</title>
