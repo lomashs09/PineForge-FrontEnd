@@ -32,15 +32,19 @@ export default function Backtest() {
   const guidedPreset = searchParams.get('preset') || '';
   const isGuided = Boolean(guidedScriptName || guidedInterval || guidedQuantity || guidedPreset);
 
+  // Defaults align with the most-popular backtest config so new users see
+  // a meaningful result on their first click: Gold Trend Hunter V2 strategy,
+  // XAUUSD 1H timeframe, lot size 3, trailing 12 months. URL query params
+  // (used by the guided onboarding flow) still override these.
   const [scripts, setScripts] = useState([]);
   const [config, setConfig] = useState(null);
   const [scriptId, setScriptId] = useState(searchParams.get('script') || '');
   const [symbol, setSymbol] = useState('XAUUSD');
-  const [interval, setInterval] = useState(guidedInterval || '1d');
+  const [interval, setInterval] = useState(guidedInterval || '1h');
   const [start, setStart] = useState('');
   const [end, setEnd] = useState('');
   const [capital, setCapital] = useState(1000);
-  const [quantity, setQuantity] = useState(guidedQuantity || '');
+  const [quantity, setQuantity] = useState(guidedQuantity || '3');
   const [running, setRunning] = useState(false);
   const [results, setResults] = useState(null);
   const [error, setError] = useState(null);
@@ -55,7 +59,8 @@ export default function Backtest() {
       setScripts(scriptsRes.data);
 
       // Resolve script ID — explicit ?script= wins, then ?scriptName= match,
-      // then first available script.
+      // then Gold Trend Hunter V2 as the default landing experience, then
+      // first available script as a final fallback.
       let resolvedId = scriptId;
       if (!resolvedId && guidedScriptName) {
         const match = scriptsRes.data.find(
@@ -63,17 +68,26 @@ export default function Backtest() {
         );
         if (match) resolvedId = String(match.id);
       }
+      if (!resolvedId) {
+        const goldHunter = scriptsRes.data.find(
+          (s) => s.name?.toLowerCase() === 'gold trend hunter v2'
+        );
+        if (goldHunter) resolvedId = String(goldHunter.id);
+      }
       if (!resolvedId && scriptsRes.data.length > 0) {
         resolvedId = String(scriptsRes.data[0].id);
       }
       if (resolvedId !== scriptId) setScriptId(resolvedId);
 
-      // Set initial dates. Guided preset=last-year overrides interval default.
+      // Default date range is trailing 12 months — matches the
+      // most-recommended backtest length in our docs and the gold-strategy
+      // blog post. Clamp to the interval's max_days so we don't try to
+      // fetch beyond yfinance/Twelve Data limits for short intervals.
       const today = configRes.data.today;
       setEnd(today);
-      const intervalValue = guidedInterval || '1d';
+      const intervalValue = guidedInterval || '1h';
       const maxDays = configRes.data.intervals.find(i => i.value === intervalValue)?.max_days || 365;
-      const targetDays = guidedPreset === 'last-year' ? Math.min(365, maxDays) : maxDays;
+      const targetDays = Math.min(365, maxDays);
       setStart(daysAgo(targetDays, today));
     }).catch(() => {});
   }, []);
