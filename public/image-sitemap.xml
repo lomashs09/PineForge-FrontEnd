@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
+    <loc>https://getpineforge.com/blog/walk-forward-analysis-trading-bots</loc>
+    <image:image>
+      <image:loc>https://getpineforge.com/blog/walk-forward-hero.webp</image:loc>
+      <image:title>Walk-Forward Analysis: How to Stop Overfitting Your Trading Bot</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://getpineforge.com/blog/connect-exness-mt5-trading-bot</loc>
     <image:image>
       <image:loc>https://getpineforge.com/blog/exness-mt5-connect-hero.webp</image:loc>

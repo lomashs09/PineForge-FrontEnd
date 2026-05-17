@@ -6,7 +6,15 @@
     <atom:link href="https://getpineforge.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>Trading strategies, Pine Script tutorials, and algorithmic trading insights from PineForge.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 May 2026 15:52:02 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 16:23:56 GMT</lastBuildDate>
+    <item>
+      <title>Walk-Forward Analysis: How to Stop Overfitting Your Trading Bot</title>
+      <link>https://getpineforge.com/blog/walk-forward-analysis-trading-bots</link>
+      <guid isPermaLink="true">https://getpineforge.com/blog/walk-forward-analysis-trading-bots</guid>
+      <pubDate>Sun, 17 May 2026 00:00:00 GMT</pubDate>
+      <description>A 98% win rate in your backtest doesn&apos;t mean the strategy works. It means you&apos;ve overfit the data. Walk-forward analysis is the single technique that separates strategies with real edge from curve-fit fantasies — here&apos;s how to use it on PineForge.</description>
+      <enclosure url="https://getpineforge.com/blog/walk-forward-hero.webp" type="image/webp" />
+    </item>
     <item>
       <title>How to Backtest a Gold Trading Bot on the 1-Hour Timeframe (XAUUSD Walkthrough)</title>
       <link>https://getpineforge.com/blog/backtest-gold-trading-bot-1h-timeframe</link>
