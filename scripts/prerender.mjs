@@ -255,6 +255,22 @@ async function run() {
     server.close();
   }
 
+  // Write a pristine SPA shell that Vercel can serve for unprerendered
+  // routes (auth-gated routes like /admin, /dashboard, /bots, etc.).
+  //
+  // Why this matters: the catchall rewrite in vercel.json was previously
+  // pointing every unmatched URL to /index.html — which by this stage of
+  // the build is the PRERENDERED HOMEPAGE. So a direct visit to /admin
+  // would serve the homepage's hydrated HTML, React would route to
+  // <Admin/>, and React 19 throws a hydration mismatch (~100 users in
+  // Sentry, JAVASCRIPT-REACT-1, both / and now /admin).
+  //
+  // SPA_SHELL was snapshotted at the top of run() BEFORE any prerender
+  // writes happened, so it's the clean Vite output with an empty
+  // <div id="root"></div>. Vercel rewrite now points to /spa-shell.html.
+  await writeFile(resolve(distDir, 'spa-shell.html'), SPA_SHELL, 'utf8');
+  console.log('[prerender] wrote spa-shell.html (clean fallback for unprerendered routes)');
+
   console.log(`[prerender] done — ${ok} ok, ${fail} failed`);
   if (fail > 0) process.exit(1);
 }
