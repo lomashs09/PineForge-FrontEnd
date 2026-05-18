@@ -3,7 +3,7 @@ import { ArrowLeft, Clock, Calendar, Tag, ArrowRight } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Seo from '../components/Seo';
-import { buildArticleLd, buildBreadcrumbLd } from '../components/seoLd';
+import { buildArticleLd, buildBreadcrumbLd, buildFaqLd, extractFaqsFromMarkdown } from '../components/seoLd';
 import blogPosts from '../data/blogPosts';
 
 export default function BlogPost() {
@@ -19,6 +19,31 @@ export default function BlogPost() {
     .sort((a, b) => (a.category === post.category ? -1 : 1))
     .slice(0, 3);
 
+  // Auto-extract FAQ-style H2s from the post body so we emit FAQPage schema
+  // without having to maintain a separate Q/A list per post. Eligible for
+  // Google's "People also ask" results when 4+ Q/A pairs are present.
+  const faqs = extractFaqsFromMarkdown(post.content);
+  const structuredData = [
+    buildArticleLd(post),
+    buildBreadcrumbLd([
+      { name: 'Home', url: '/' },
+      { name: 'Blog', url: '/blog' },
+      { name: post.title, url: `/blog/${post.slug}` },
+    ]),
+  ];
+  if (faqs.length >= 2) structuredData.push(buildFaqLd(faqs));
+
+  // Extract H2 headings for the table of contents. Anchor IDs use the same
+  // slug logic as the rendered H2 so the in-page jump links work.
+  const tocEntries = [];
+  for (const line of post.content.split('\n')) {
+    const t = line.trim();
+    if (t.startsWith('## ') && !t.startsWith('### ')) {
+      const text = t.slice(3);
+      tocEntries.push({ text, id: slugifyHeading(text) });
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gray-950 text-white">
       <Seo
@@ -30,14 +55,7 @@ export default function BlogPost() {
         publishedTime={post.date}
         modifiedTime={post.date}
         keywords={post.keywords?.join(', ')}
-        structuredData={[
-          buildArticleLd(post),
-          buildBreadcrumbLd([
-            { name: 'Home', url: '/' },
-            { name: 'Blog', url: '/blog' },
-            { name: post.title, url: `/blog/${post.slug}` },
-          ]),
-        ]}
+        structuredData={structuredData}
       />
       <Navbar />
 
@@ -97,6 +115,31 @@ export default function BlogPost() {
           </div>
         </div>
 
+        {/* Table of Contents — eligible for Google's "Jump to" SERP feature
+            and improves dwell time. Hidden on very short posts (<4 sections). */}
+        {tocEntries.length >= 4 && (
+          <nav
+            aria-label="Table of contents"
+            className="mt-8 rounded-xl border border-gray-800 bg-gray-900/50 p-5"
+          >
+            <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-500">
+              On this page
+            </p>
+            <ol className="space-y-1.5 text-sm">
+              {tocEntries.map((entry) => (
+                <li key={entry.id}>
+                  <a
+                    href={`#${entry.id}`}
+                    className="text-gray-300 hover:text-emerald-400 transition-colors"
+                  >
+                    {entry.text}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )}
+
         {/* Content */}
         <div className="prose-pineforge mt-8">
           {post.content.split('\n').map((line, i) => {
@@ -105,9 +148,14 @@ export default function BlogPost() {
 
             // H2
             if (trimmed.startsWith('## ')) {
+              const headingText = trimmed.slice(3);
               return (
-                <h2 key={i} className="mt-10 mb-4 text-2xl font-bold text-white">
-                  {trimmed.slice(3)}
+                <h2
+                  key={i}
+                  id={slugifyHeading(headingText)}
+                  className="mt-10 mb-4 scroll-mt-24 text-2xl font-bold text-white"
+                >
+                  {headingText}
                 </h2>
               );
             }
@@ -283,6 +331,17 @@ function renderInline(text) {
     }
     return part;
   });
+}
+
+/** Produce a stable, URL-safe id from an H2 heading. Matches the
+ *  anchor id rendered on the heading itself so TOC links scroll correctly. */
+function slugifyHeading(text) {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .slice(0, 80);
 }
 
 /** Extract and render code blocks from content */
